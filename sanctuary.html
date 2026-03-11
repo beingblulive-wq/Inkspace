@@ -18,39 +18,60 @@
             color: var(--ink-black);
             font-family: var(--font-sans);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            text-align: center;
             margin: 0;
             padding: 2rem;
-            animation: fadeIn 1.5s ease-out backwards;
+            animation: fadeIn 2s ease-out backwards;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 4rem;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: white;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.03);
+            border-radius: 8px;
         }
         h1 {
             font-family: var(--font-serif);
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 3.2rem;
+            margin-bottom: 2rem;
             color: var(--rose-ember);
+            font-weight: 400;
+            line-height: 1.1;
         }
         p {
             font-size: 1.1rem;
-            opacity: 0.8;
-            max-width: 600px;
-            line-height: 1.6;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        .flourish {
+            width: 40px;
+            height: 2px;
+            background: var(--rose-ember);
+            margin: 0 auto 2rem auto;
+            opacity: 0.5;
         }
         .back-link {
             display: inline-block;
-            margin-top: 3rem;
             text-decoration: none;
-            color: var(--ink-black);
-            font-weight: 500;
-            border-bottom: 1px solid var(--ink-black);
-            padding-bottom: 2px;
-            transition: opacity 0.3s;
+            color: rgba(0, 0, 0, 0.5);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+            padding-bottom: 4px;
+            transition: all 0.3s ease;
         }
         .back-link:hover {
-            opacity: 0.6;
+            color: var(--ink-black);
+            border-color: var(--ink-black);
+            letter-spacing: 2px;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -59,8 +80,11 @@
     </style>
 </head>
 <body>
-    <h1>The Creative Social Sanctuary</h1>
-    <p>This is the heroic shared space for convergence. Development is ongoing.</p>
-    <a href="index.html" class="back-link">Return to the Sanctuary</a>
+    <div class="container">
+        <h1>The Creative Social Sanctuary</h1>
+        <div class="flourish"></div>
+        <p>A shared space where humanity becomes heroic. A convergence point for artists, writers, and youth. The foundation is currently being laid.</p>
+        <a href="index.html" class="back-link">Return to Lobby</a>
+    </div>
 </body>
 </html>

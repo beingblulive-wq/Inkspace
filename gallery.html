@@ -14,43 +14,61 @@
             --gallery-amethyst: #8C5E58;
         }
         body {
-            background-color: var(--sanctuary-cream);
+            background-color: #faf9f6; /* slightly starker white for art gallery */
             color: var(--ink-black);
             font-family: var(--font-sans);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            text-align: center;
             margin: 0;
             padding: 2rem;
-            animation: fadeIn 1.5s ease-out backwards;
+            animation: fadeIn 2s ease-out backwards;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            padding: 4rem;
+            border: 1px solid rgba(0, 0, 0, 0.08); /* slight frame */
+            background: white;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05); /* lifted off wall */
         }
         h1 {
             font-family: var(--font-serif);
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--gallery-amethyst);
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            color: var(--ink-black);
+            font-weight: 300;
+            letter-spacing: 4px;
+            text-transform: uppercase;
         }
         p {
             font-size: 1.1rem;
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        .flourish {
+            width: 60px;
+            height: 1px;
+            background: var(--gallery-amethyst);
+            margin: 0 auto 2rem auto;
             opacity: 0.8;
-            max-width: 600px;
-            line-height: 1.6;
         }
         .back-link {
             display: inline-block;
-            margin-top: 3rem;
             text-decoration: none;
-            color: var(--ink-black);
-            font-weight: 500;
-            border-bottom: 1px solid var(--ink-black);
-            padding-bottom: 2px;
-            transition: opacity 0.3s;
+            color: rgba(0, 0, 0, 0.4);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.8em;
+            transition: all 0.3s ease;
         }
         .back-link:hover {
-            opacity: 0.6;
+            color: var(--gallery-amethyst);
+            letter-spacing: 2px;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -59,8 +77,11 @@
     </style>
 </head>
 <body>
-    <h1>The Exhibition</h1>
-    <p>A visual gallery space for art, blueprints, and expressions. Currently curating the exhibit.</p>
-    <a href="index.html" class="back-link">Return to the Sanctuary</a>
+    <div class="container">
+        <h1>The Exhibition</h1>
+        <div class="flourish"></div>
+        <p>A visual gallery space for art, blueprints, and expressions of the Sanctuary. We are currently curating the exhibit.</p>
+        <a href="index.html" class="back-link">Return to Lobby</a>
+    </div>
 </body>
 </html>

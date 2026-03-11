@@ -18,39 +18,59 @@
             color: var(--ink-black);
             font-family: var(--font-sans);
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            text-align: center;
             margin: 0;
             padding: 2rem;
-            animation: fadeIn 1.5s ease-out backwards;
+            animation: fadeIn 2s ease-out backwards;
+            text-align: center;
+            /* Subtle paper texture hint */
+            background-image: linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px);
+            background-size: 100% 2.5rem;
+        }
+        .container {
+            max-width: 600px;
+            padding: 4rem;
         }
         h1 {
             font-family: var(--font-serif);
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--literature-teal);
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            color: var(--ink-black);
+            font-weight: 400;
+            font-style: italic;
         }
         p {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            max-width: 600px;
-            line-height: 1.6;
+            font-size: 1.15rem;
+            color: #444;
+            line-height: 1.8;
+            margin-bottom: 3rem;
+            font-weight: 300;
+        }
+        .flourish {
+            width: 40px;
+            height: 2px;
+            background: var(--literature-teal);
+            margin: 0 auto 2rem auto;
+            opacity: 0.7;
         }
         .back-link {
             display: inline-block;
-            margin-top: 3rem;
             text-decoration: none;
-            color: var(--ink-black);
-            font-weight: 500;
-            border-bottom: 1px solid var(--ink-black);
-            padding-bottom: 2px;
-            transition: opacity 0.3s;
+            color: rgba(0, 0, 0, 0.5);
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+            padding-bottom: 4px;
+            transition: all 0.3s ease;
         }
         .back-link:hover {
-            opacity: 0.6;
+            color: var(--literature-teal);
+            border-color: var(--literature-teal);
+            letter-spacing: 2px;
         }
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
@@ -59,8 +79,11 @@
     </style>
 </head>
 <body>
-    <h1>The Archive of Ink</h1>
-    <p>This library of written works and literature is expanding. Check back soon for words of power.</p>
-    <a href="index.html" class="back-link">Return to the Sanctuary</a>
+    <div class="container">
+        <h1>The Archive of Ink</h1>
+        <div class="flourish"></div>
+        <p>A library of written works, literature, and the legacy of the invisible pen. The shelves are being stocked; check back soon for words of power.</p>
+        <a href="index.html" class="back-link">Return to Lobby</a>
+    </div>
 </body>
 </html>
