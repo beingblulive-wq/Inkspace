@@ -17,6 +17,8 @@
             --rose-ember: #C94F5C;
             --invisible-blue: #6A8FE6;
             --legacy-gold: #D4A857;
+            --literature-teal: #4A7C59;
+            --gallery-amethyst: #8C5E58;
             
             --font-serif: 'Cormorant Garamond', serif;
             --font-sans: 'Inter', sans-serif;
@@ -156,6 +158,8 @@
         .doorway:nth-child(1) { animation-delay: 0.3s; }
         .doorway:nth-child(2) { animation-delay: 0.6s; }
         .doorway:nth-child(3) { animation-delay: 0.9s; }
+        .doorway:nth-child(4) { animation-delay: 1.2s; }
+        .doorway:nth-child(5) { animation-delay: 1.5s; }
 
         /* The Doorway Header "Glow" underline */
         .doorway::before {
@@ -184,10 +188,14 @@
         .doorway.vault::before { background-color: var(--legacy-gold); }
         .doorway.engine::before { background-color: var(--invisible-blue); }
         .doorway.sanctuary::before { background-color: var(--rose-ember); }
+        .doorway.literature::before { background-color: var(--literature-teal); }
+        .doorway.gallery::before { background-color: var(--gallery-amethyst); }
 
         .doorway.vault:hover { box-shadow: 0 20px 40px rgba(212, 168, 87, 0.1); }
         .doorway.engine:hover { box-shadow: 0 20px 40px rgba(106, 143, 230, 0.1); }
         .doorway.sanctuary:hover { box-shadow: 0 20px 40px rgba(201, 79, 92, 0.1); }
+        .doorway.literature:hover { box-shadow: 0 20px 40px rgba(74, 124, 89, 0.1); }
+        .doorway.gallery:hover { box-shadow: 0 20px 40px rgba(140, 94, 88, 0.1); }
 
         /* Typography within Doorways */
         .doorway-title {
@@ -209,6 +217,8 @@
         .doorway:hover .flourish.vault-flourish { background-color: var(--legacy-gold); }
         .doorway:hover .flourish.engine-flourish { background-color: var(--invisible-blue); }
         .doorway:hover .flourish.sanctuary-flourish { background-color: var(--rose-ember); }
+        .doorway:hover .flourish.literature-flourish { background-color: var(--literature-teal); }
+        .doorway:hover .flourish.gallery-flourish { background-color: var(--gallery-amethyst); }
 
         .inscription {
             font-family: var(--font-serif);
@@ -337,6 +347,22 @@
             <div class="flourish sanctuary-flourish"></div>
             <p class="inscription" style="opacity: 0.6;">A place where shared humanity becomes heroic.</p>
             <p class="description">The shared space where artists, writers, youth, and trauma-informed professionals converge.</p>
+        </div>
+
+        <!-- Doorway 4: The Archive of Ink (Literature) -->
+        <div class="doorway literature">
+            <h2 class="doorway-title">The Archive of Ink</h2>
+            <div class="flourish literature-flourish"></div>
+            <p class="inscription">"Words are pale shadows of forgotten names. As names have power, words have power."<br><br>— Patrick Rothfuss</p>
+            <p class="description">A library of written works, literature, and the legacy of the invisible pen.</p>
+        </div>
+
+        <!-- Doorway 5: The Exhibition (Gallery) -->
+        <div class="doorway gallery">
+            <h2 class="doorway-title">The Exhibition</h2>
+            <div class="flourish gallery-flourish"></div>
+            <p class="inscription">"Art is not what you see, but what you make others see."<br><br>— Edgar Degas</p>
+            <p class="description">A visual gallery space for art, blueprints, and expressions of the Sanctuary.</p>
         </div>
 
     </div>
