@@ -251,6 +251,40 @@
             100% { transform: scale(1.05); opacity: 1; box-shadow: 0 8px 30px rgba(106, 143, 230, 0.6); }
         }
 
+        /* Global Footer */
+        .global-footer {
+            width: 100%;
+            background-color: var(--sanctuary-cream);
+            border-top: 1px solid var(--moonbeam-silver);
+            padding: 2.5rem 2rem;
+            margin-top: 5rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            color: var(--ink-black);
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.3rem;
+        }
+
+        .footer-content a {
+            color: var(--ink-black);
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-content a:hover {
+            opacity: 0.6;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .lobby {
@@ -258,6 +292,9 @@
             }
             .greeting-text {
                 font-size: 1.8rem;
+            }
+            .global-footer {
+                padding: 2rem 1rem;
             }
         }
     </style>
@@ -303,6 +340,18 @@
         </div>
 
     </div>
+
+    <!-- Global Footer -->
+    <footer class="global-footer">
+        <div class="footer-content">
+            <p><strong>Company:</strong> Human Artificial Integrated Technology, LLC</p>
+            <p><strong>Architecture:</strong> Holon-Ai Architecture</p>
+            <p><strong>Ecosystem:</strong> Inkspace website | Inkspace app | Inkling Ai</p>
+            <p><strong>Web:</strong> <a href="http://www.holon-ai.com" target="_blank" rel="noopener noreferrer">www.holon-ai.com</a></p>
+            <p><strong>Contact:</strong> <a href="mailto:benniebell@holon-ai.com">benniebell@holon-ai.com</a> | <a href="mailto:beingblu@live.com">beingblu@live.com</a></p>
+            <p><strong>Location:</strong> Sweet Home, Oregon 97386</p>
+        </div>
+    </footer>
 
     <script>
         const chatInput = document.getElementById('chatInput');
