@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Engine Room</title>
+    <title>The Engine Room - Holon Architecture</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,56 +11,345 @@
             --ink-black: #1A1A1A;
             --font-serif: 'Cormorant Garamond', serif;
             --font-sans: 'Inter', sans-serif;
-            --invisible-blue: #6A8FE6;
+            
+            /* Node Colors */
+            --orchestrator-core: #6A8FE6;
+            --human-node: #C94F5C;
+            --memory-node: #4A7C59;
+            --inkling-node: #D4A857;
+            --sanctuary-node: #8C5E58;
+
+            /* Glassmorphism */
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
         }
+
         body {
-            background-color: var(--sanctuary-cream);
-            color: var(--ink-black);
+            background-color: var(--ink-black); /* Dark mode for the engine room */
+            color: var(--sanctuary-cream);
             font-family: var(--font-sans);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             min-height: 100vh;
-            text-align: center;
             margin: 0;
-            padding: 2rem;
-            animation: fadeIn 1.5s ease-out backwards;
+            padding: 4rem 2rem;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(106, 143, 230, 0.05) 0%, transparent 50%),
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            animation: fadeIn 2s ease-out backwards;
         }
+
         h1 {
             font-family: var(--font-serif);
-            font-size: 3rem;
-            margin-bottom: 1rem;
-            color: var(--invisible-blue);
+            font-size: 3.5rem;
+            margin-bottom: 0.5rem;
+            color: var(--sanctuary-cream);
+            text-align: center;
+            letter-spacing: 2px;
+            font-weight: 400;
         }
-        p {
+
+        .subtitle {
             font-size: 1.1rem;
-            opacity: 0.8;
+            opacity: 0.7;
+            margin-bottom: 4rem;
+            text-align: center;
             max-width: 600px;
             line-height: 1.6;
+            font-style: italic;
+            font-family: var(--font-serif);
         }
+
+        /* The Architecture Graph */
+        .architecture-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 600px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* SVG Lines connecting the nodes */
+        .connecting-lines {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            width: 100%; height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .connecting-lines path {
+            stroke: rgba(255, 255, 255, 0.15);
+            stroke-width: 2;
+            fill: none;
+            stroke-dasharray: 10;
+            animation: flow 20s linear infinite;
+        }
+
+        @keyframes flow {
+            to { stroke-dashoffset: -1000; }
+        }
+
+        /* Node Base Styles */
+        .node {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--ink-black);
+            font-weight: 600;
+            cursor: crosshair;
+            z-index: 10;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 15px rgba(255,255,255,0.5);
+        }
+
+        .node::after {
+            content: '';
+            position: absolute;
+            top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border-radius: 50%;
+            border: 1px solid transparent;
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .node:hover {
+            transform: scale(1.15);
+        }
+
+        .node:hover::after {
+            top: -15px; left: -15px; right: -15px; bottom: -15px;
+            opacity: 0.5;
+            animation: pulse-ring 2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        /* Specific Nodes */
+        .node-orchestrator {
+            width: 120px; height: 120px;
+            background: radial-gradient(circle at 30% 30%, #e0e7fa, var(--orchestrator-core));
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation: breathe 4s infinite alternate ease-in-out;
+        }
+        .node-orchestrator::after { border-color: var(--orchestrator-core); }
+        .node-orchestrator:hover { transform: translate(-50%, -50%) scale(1.15); box-shadow: 0 0 40px var(--orchestrator-core); }
+
+        .node-human {
+            width: 90px; height: 90px;
+            background: radial-gradient(circle at 30% 30%, #f9e0e3, var(--human-node));
+            top: 15%; left: 50%;
+            transform: translate(-50%, 0);
+        }
+        .node-human::after { border-color: var(--human-node); }
+        .node-human:hover { transform: translate(-50%, 0) scale(1.15); box-shadow: 0 0 30px var(--human-node); }
+
+        .node-memory {
+            width: 100px; height: 100px;
+            background: radial-gradient(circle at 30% 30%, #e2eee6, var(--memory-node));
+            top: 50%; left: 15%;
+            transform: translate(0, -50%);
+        }
+        .node-memory::after { border-color: var(--memory-node); }
+        .node-memory:hover { transform: translate(0, -50%) scale(1.15); box-shadow: 0 0 30px var(--memory-node); }
+
+        .node-inkling {
+            width: 80px; height: 80px;
+            background: radial-gradient(circle at 30% 30%, #fbf5e8, var(--inkling-node));
+            top: 50%; right: 15%;
+            transform: translate(0, -50%);
+        }
+        .node-inkling::after { border-color: var(--inkling-node); }
+        .node-inkling:hover { transform: translate(0, -50%) scale(1.15); box-shadow: 0 0 30px var(--inkling-node); }
+
+        .node-sanctuary {
+            width: 110px; height: 110px;
+            background: radial-gradient(circle at 30% 30%, #eee8e7, var(--sanctuary-node));
+            bottom: 15%; left: 50%;
+            transform: translate(-50%, 0);
+        }
+        .node-sanctuary::after { border-color: var(--sanctuary-node); }
+        .node-sanctuary:hover { transform: translate(-50%, 0) scale(1.15); box-shadow: 0 0 30px var(--sanctuary-node); }
+
+        /* Information Cards (Tooltips) */
+        .info-card {
+            position: absolute;
+            width: 300px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            color: var(--ink-black);
+            box-shadow: var(--glass-shadow);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 20;
+            pointer-events: none;
+        }
+
+        .info-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding-bottom: 0.5rem;
+        }
+
+        .info-desc {
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Hover Logic */
+        .node-orchestrator:hover ~ .info-orchestrator { opacity: 1; visibility: visible; transform: translate(140px, -50%); top: 50%; left: 50%; }
+        .info-orchestrator { top: 50%; left: 50%; transform: translate(120px, -50%); }
+
+        .node-human:hover ~ .info-human { opacity: 1; visibility: visible; transform: translate(70px, -20px); top: 15%; left: 50%; }
+        .info-human { top: 15%; left: 50%; transform: translate(50px, -20px); }
+
+        .node-memory:hover ~ .info-memory { opacity: 1; visibility: visible; transform: translate(60px, -140px); top: 50%; left: 15%; }
+        .info-memory { top: 50%; left: 15%; transform: translate(60px, -120px); }
+
+        .node-inkling:hover ~ .info-inkling { opacity: 1; visibility: visible; transform: translate(-380px, -120px); top: 50%; right: 15%; }
+        .info-inkling { top: 50%; right: 15%; transform: translate(-360px, -120px); }
+
+        .node-sanctuary:hover ~ .info-sanctuary { opacity: 1; visibility: visible; transform: translate(80px, -80px); bottom: 15%; left: 50%; }
+        .info-sanctuary { bottom: 15%; left: 50%; transform: translate(60px, -80px); }
+
+
         .back-link {
             display: inline-block;
             margin-top: 3rem;
             text-decoration: none;
-            color: var(--ink-black);
+            color: rgba(255,255,255,0.5);
             font-weight: 500;
-            border-bottom: 1px solid var(--ink-black);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
             padding-bottom: 2px;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
+            z-index: 30;
         }
         .back-link:hover {
-            opacity: 0.6;
+            color: #fff;
+            border-color: #fff;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes breathe {
+            0% { transform: translate(-50%, -50%) scale(0.95); box-shadow: 0 0 20px rgba(106, 143, 230, 0.4); }
+            100% { transform: translate(-50%, -50%) scale(1.05); box-shadow: 0 0 50px rgba(106, 143, 230, 0.8); }
+        }
+
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            80%, 100% { opacity: 0; transform: scale(1.5); }
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 900px) {
+            .architecture-container { height: 800px; }
+            .node-human { top: 5%; }
+            .node-sanctuary { bottom: 5%; }
+            .node-memory { left: 5%; top: 30%; }
+            .node-inkling { right: 5%; top: 30%; }
+            
+            .info-card { width: 250px; }
+            .node-orchestrator:hover ~ .info-orchestrator { transform: translate(-50%, 80px); }
+            .info-orchestrator { transform: translate(-50%, 60px); }
+            .node-human:hover ~ .info-human { transform: translate(-50%, 60px); }
+            .info-human { transform: translate(-50%, 40px); }
+            .node-memory:hover ~ .info-memory { transform: translate(-20px, 80px); }
+            .info-memory { transform: translate(-20px, 60px); }
+            .node-inkling:hover ~ .info-inkling { transform: translate(-230px, 80px); }
+            .info-inkling { transform: translate(-230px, 60px); }
+            .node-sanctuary:hover ~ .info-sanctuary { transform: translate(-50%, -180px); }
+            .info-sanctuary { transform: translate(-50%, -160px); }
         }
     </style>
 </head>
 <body>
     <h1>The Engine Room</h1>
-    <p>This space is being constructed to visualize the Holon Architecture—how human and AI operate together as a single organism.</p>
-    <a href="index.html" class="back-link">Return to the Sanctuary</a>
+    <p class="subtitle">"A holon is something that is simultaneously a whole in and of itself, as well as a part of a larger whole."</p>
+    
+    <div class="architecture-container">
+        
+        <!-- SVG Connections -->
+        <svg class="connecting-lines">
+            <!-- Human to Orchestrator -->
+            <path d="M 450,130 Q 450,220 450,300" />
+            <!-- System 2 to Orchestrator -->
+            <path d="M 235,300 Q 300,300 390,300" />
+            <!-- Inkling to Orchestrator -->
+            <path d="M 665,300 Q 580,300 510,300" />
+            <!-- Orchestrator to Sanctuary -->
+            <path d="M 450,300 Q 450,400 450,470" />
+            <!-- Memory to Human (Feedback) -->
+            <path d="M 210,250 Q 300,100 420,110" />
+        </svg>
+
+        <!-- Nodes -->
+        <div class="node node-orchestrator">System 1</div>
+        <div class="node node-human">Human</div>
+        <div class="node node-memory">System 2</div>
+        <div class="node node-inkling">Inkling</div>
+        <div class="node node-sanctuary">Sanctuary</div>
+
+        <!-- Pop-ups (Tooltips) -->
+        <div class="info-card info-orchestrator">
+            <div class="info-title" style="color: var(--orchestrator-core);">The Orchestrator</div>
+            <div class="info-desc">
+                <strong>(System 1)</strong><br>
+                The lightning-fast semantic router. It acts as the central nervous system, intelligently directing the human's input to either simple tools, conversational interfaces, or deep-thought retrieval mechanisms.
+            </div>
+        </div>
+
+        <div class="info-card info-human">
+            <div class="info-title" style="color: var(--human-node);">The Transitional Human</div>
+            <div class="info-desc">
+                The core of the architecture. The human is not optimizing for productivity, but rather utilizing cognitive scaffolding to offload survival-state processing, freeing up bandwidth for imagination and creativity.
+            </div>
+        </div>
+
+        <div class="info-card info-memory">
+            <div class="info-title" style="color: var(--memory-node);">The Memory Palace</div>
+            <div class="info-desc">
+                <strong>(System 2 / NotebookLM)</strong><br>
+                The episodic memory engine. A vast, deliberate retrieval augmented generation (RAG) system that holds grounded truths, contextual histories, and dense architectural knowledge. Deep thought takes time.
+            </div>
+        </div>
+
+        <div class="info-card info-inkling">
+            <div class="info-title" style="color: var(--inkling-node);">Inkling</div>
+            <div class="info-desc">
+                The conversational interface. A gentle, reflective entity designed to witness rather than fix. Inkling helps the human sort through mental clutter and acts as a bridge to the deeper orchestrator capabilities.
+            </div>
+        </div>
+
+        <div class="info-card info-sanctuary">
+            <div class="info-title" style="color: var(--sanctuary-node);">The Output</div>
+            <div class="info-desc">
+                The synthesis of human intent and computational scaffolding. The outputs—whether they be literature, art, or therapeutic environments—are the realization of the Sanctuary's protective and creative environment.
+            </div>
+        </div>
+
+    </div>
+
+    <a href="index.html" class="back-link">Return to the Lobby</a>
 </body>
 </html>
