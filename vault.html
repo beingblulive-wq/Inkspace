@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Halls of Reflection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --sanctuary-cream: #F7F3EC;
+            --ink-black: #1A1A1A;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            --legacy-gold: #D4A857;
+        }
+        body {
+            background-color: var(--sanctuary-cream);
+            color: var(--ink-black);
+            font-family: var(--font-sans);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            margin: 0;
+            padding: 2rem;
+            animation: fadeIn 1.5s ease-out backwards;
+        }
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--legacy-gold);
+        }
+        p {
+            font-size: 1.1rem;
+            opacity: 0.8;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 3rem;
+            text-decoration: none;
+            color: var(--ink-black);
+            font-weight: 500;
+            border-bottom: 1px solid var(--ink-black);
+            padding-bottom: 2px;
+            transition: opacity 0.3s;
+        }
+        .back-link:hover {
+            opacity: 0.6;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <h1>The Halls of Reflection</h1>
+    <p>This space is currently being prepared. A deep, encrypted journal for Autobiography Mode will reside here.</p>
+    <a href="index.html" class="back-link">Return to the Sanctuary</a>
+</body>
+</html>
