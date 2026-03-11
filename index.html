@@ -73,6 +73,55 @@
             transition: color 0.5s ease;
         }
 
+        /* Chat Interface */
+        .chat-container {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 2s ease-out 1s backwards;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            background: transparent;
+            border: 1px solid var(--moonbeam-silver);
+            border-radius: 30px;
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            color: var(--ink-black);
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-input:focus {
+            border-color: var(--invisible-blue);
+            box-shadow: 0 0 10px rgba(106, 143, 230, 0.2);
+        }
+
+        .chat-input::placeholder {
+            color: #999;
+        }
+
+        .send-btn {
+            background: var(--sanctuary-cream);
+            border: 1px solid var(--moonbeam-silver);
+            color: var(--ink-black);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .send-btn:hover {
+            border-color: var(--invisible-blue);
+            color: var(--invisible-blue);
+        }
+
         /* 2. The UI Layout: The Portal (Spatial Navigation / Lobby) */
         .lobby {
             display: flex;
@@ -218,7 +267,12 @@
     <!-- The Central Greeting -->
     <div class="greeting-container">
         <div class="inkling-avatar"></div>
-        <h1 class="greeting-text">"Welcome to the Sanctuary. I am Inkling. Where do you need to go today?"</h1>
+        <h1 class="greeting-text" id="greetingText">"Welcome to the Sanctuary. I am Inkling. Where do you need to go today?"</h1>
+        
+        <div class="chat-container">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Ask Inkling..." autocomplete="off">
+            <button id="sendBtn" class="send-btn">Send</button>
+        </div>
     </div>
 
     <!-- The Lobby -->
@@ -250,5 +304,52 @@
 
     </div>
 
+    <script>
+        const chatInput = document.getElementById('chatInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const greetingText = document.getElementById('greetingText');
+
+        async function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            // Optimistic UI update
+            chatInput.value = '';
+            greetingText.innerHTML = `<em>Listening...</em>`;
+            greetingText.style.opacity = '0.5';
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message })
+                });
+
+                if (!response.ok) {
+                    throw new Error("API Connection Failed");
+                }
+
+                const data = await response.json();
+                
+                // Animate text transition
+                greetingText.style.opacity = '0';
+                setTimeout(() => {
+                    // Replace newlines with <br> for HTML rendering
+                    greetingText.innerHTML = `"${data.reply.replace(/\n/g, '<br>')}"`;
+                    greetingText.style.opacity = '1';
+                }, 300);
+
+            } catch (error) {
+                console.error(error);
+                greetingText.innerHTML = `"I seem to have lost my connection to the Orchestrator. The Sanctuary remains silent for now."`;
+                greetingText.style.opacity = '1';
+            }
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
 </body>
 </html>
