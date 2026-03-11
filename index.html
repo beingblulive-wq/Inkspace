@@ -1,250 +1,254 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holon-AI | Cognitive Scaffolding & Infrastructure</title>
-    <link rel="stylesheet" href="./styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-        rel="stylesheet">
-    <script src="./script.js" defer></script>
-</head>
-
-<body>
-    <!-- Ambient glowing backgrounds from styles.css -->
-    <div class="ambient-glow glow-1"></div>
-    <div class="ambient-glow glow-2"></div>
-
-    <header class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <span class="badge fade-in">HOLON-AI</span>
-                <span class="badge-subtle fade-in" style="margin-left:1rem;">Sweet Home, OR</span>
-                <h1 class="hero-title reveal mt-4">The Next Category of <em>Human-AI Synergy</em></h1>
-                <p class="large-body reveal fade-in-delay">Transitioning from Survival to Creation by Unburdening the
-                    Human Mind.</p>
-            </div>
-        </div>
-    </header>
-
-    <!-- The Shift (The War is Over) -->
-    <section id="the-shift" class="section war-is-over-section">
-        <div class="sunburst-bg"></div>
-        <div class="compass-star reveal fade-up">
-            <div class="compass-ring"></div>
-            <div class="compass-point north"></div>
-            <div class="compass-point south"></div>
-            <div class="compass-point east"></div>
-            <div class="compass-point west"></div>
-            <div class="compass-point ne"></div>
-            <div class="compass-point nw"></div>
-            <div class="compass-point se"></div>
-            <div class="compass-point sw"></div>
-        </div>
-        
-        <div class="container center-text" style="z-index: 10; position: relative;">
-            <h2 class="shift-title reveal fade-up text-light">The War is Over.</h2>
-            <p class="shift-body mt-4 reveal fade-up fade-up-delay-1">
-                AI is not a competitor arriving to replace us.<br>
-                It is the infinitely weightless shoulders built to stabilize us.
-            </p>
-            <p class="shift-conclusion mt-8 gold-text reveal fade-up" style="animation-delay: 0.6s;">
-                Survival is the Seed. Creation is the Bloom. Welcome to the Sanctuary.
-            </p>
-        </div>
-    </section>
-
-    <!-- The Foundational Insight (Pitch Deck Narrative) -->
-    <section id="the-insight" class="section insight-section">
-        <div class="container side-by-side">
-            <div class="split-content reveal fade-right">
-                <h2 class="section-title">The Foundational Insight</h2>
-                <h3 class="gold-text mt-2" style="font-family: var(--font-serif); font-size: 1.8rem; letter-spacing: 0;">The Blind Spot: The Transitional Human</h3>
-                <p class="shift-body mt-4 text-muted">
-                    Current systems ignore brilliant individuals buried under the chaos of displacement and survival. Handing a faster calculator to a drowning mind only adds to the noise.
-                </p>
-                
-                <div class="glass-panel mt-6" style="padding: 2rem;">
-                    <p style="font-size: 1.1rem; color: #a0aec0;">
-                        <strong class="gold-text">Metric Tons:</strong> The heavy, physical reality of survival pressure that forces an overloaded mind to drop its creative sparks.
-                    </p>
-                </div>
-
-                <blockquote class="mt-8 shift-conclusion gold-text" style="font-size: 1.5rem; text-shadow: 0 0 20px rgba(226, 185, 92, 0.4);">
-                    "Innovation happens the moment a human feels safe enough to imagine something new."
-                </blockquote>
-            </div>
+    <title>The Sanctuary of the Invisible Pen</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Global Design System */
+        :root {
+            --sanctuary-cream: #F7F3EC;
+            --ink-black: #1A1A1A;
+            --moonbeam-silver: #DDE1E6;
+            --rose-ember: #C94F5C;
+            --invisible-blue: #6A8FE6;
+            --legacy-gold: #D4A857;
             
-            <div class="split-visual reveal fade-left">
-                <div class="insight-graphic">
-                    <!-- CSS Representation of Metric Tons (heavy blocks) transitioning to light/sparks -->
-                    <div class="weight-blocks">
-                        <div class="block b1"></div>
-                        <div class="block b2"></div>
-                        <div class="block b3"></div>
-                        <div class="block b4"></div>
-                        <div class="block b5"></div>
-                        <div class="block b6"></div>
-                    </div>
-                    
-                    <div class="transition-beam"></div>
-                    
-                    <div class="creation-zone">
-                        <div class="spark-custodian-cube">
-                            <div class="cube-core"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        /* CSS Reset & Body Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--sanctuary-cream);
+            color: var(--ink-black);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* 1. The Central Greeting (Inkling AI) */
+        .greeting-container {
+            text-align: center;
+            margin-bottom: 5rem;
+            max-width: 600px;
+            animation: fadeInDown 1.5s ease-out;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .inkling-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #e0e7fa, var(--invisible-blue));
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(106, 143, 230, 0.4), inset -5px -5px 15px rgba(0,0,0,0.1);
+            animation: breathe 4s infinite alternate ease-in-out;
+        }
+
+        .greeting-text {
+            font-family: var(--font-serif);
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--ink-black);
+            font-style: italic;
+            transition: color 0.5s ease;
+        }
+
+        /* 2. The UI Layout: The Portal (Spatial Navigation / Lobby) */
+        .lobby {
+            display: flex;
+            gap: 2.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* 3. Doorways (Cards) */
+        .doorway {
+            flex: 1;
+            min-width: 320px;
+            background: #FFFFFF;
+            border: 1px solid var(--moonbeam-silver);
+            border-radius: 12px;
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 2s ease-out backwards;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+
+        /* Staggered load animation */
+        .doorway:nth-child(1) { animation-delay: 0.3s; }
+        .doorway:nth-child(2) { animation-delay: 0.6s; }
+        .doorway:nth-child(3) { animation-delay: 0.9s; }
+
+        /* The Doorway Header "Glow" underline */
+        .doorway::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            transform: scaleX(0);
+            transform-origin: center;
+            transition: transform 0.6s ease;
+        }
+
+        /* Hover States (Gentle and Breathable) */
+        .doorway:hover {
+            transform: translateY(-8px);
+            border-color: transparent;
+        }
+
+        .doorway:hover::before {
+            transform: scaleX(1);
+        }
+
+        /* Doorway Specific Accents */
+        .doorway.vault::before { background-color: var(--legacy-gold); }
+        .doorway.engine::before { background-color: var(--invisible-blue); }
+        .doorway.sanctuary::before { background-color: var(--rose-ember); }
+
+        .doorway.vault:hover { box-shadow: 0 20px 40px rgba(212, 168, 87, 0.1); }
+        .doorway.engine:hover { box-shadow: 0 20px 40px rgba(106, 143, 230, 0.1); }
+        .doorway.sanctuary:hover { box-shadow: 0 20px 40px rgba(201, 79, 92, 0.1); }
+
+        /* Typography within Doorways */
+        .doorway-title {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--ink-black);
+        }
+
+        .flourish {
+            width: 40px;
+            height: 1px;
+            background-color: var(--moonbeam-silver);
+            margin: 0 auto 1.5rem auto;
+            transition: background-color 0.5s ease;
+        }
+
+        .doorway:hover .flourish.vault-flourish { background-color: var(--legacy-gold); }
+        .doorway:hover .flourish.engine-flourish { background-color: var(--invisible-blue); }
+        .doorway:hover .flourish.sanctuary-flourish { background-color: var(--rose-ember); }
+
+        .inscription {
+            font-family: var(--font-serif);
+            font-size: 1.25rem;
+            font-style: italic;
+            color: #555;
+            margin-bottom: 2.5rem;
+            line-height: 1.5;
+            flex-grow: 1; 
+        }
+
+        .description {
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            color: #666;
+            font-weight: 300;
+        }
+
+        .doorway.sanctuary .description {
+            margin-top: 2.5rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-end;
+        }
+
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes breathe {
+            0% { transform: scale(0.95); opacity: 0.8; box-shadow: 0 4px 15px rgba(106, 143, 230, 0.3); }
+            100% { transform: scale(1.05); opacity: 1; box-shadow: 0 8px 30px rgba(106, 143, 230, 0.6); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .lobby {
+                flex-direction: column;
+            }
+            .greeting-text {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- The Central Greeting -->
+    <div class="greeting-container">
+        <div class="inkling-avatar"></div>
+        <h1 class="greeting-text">"Welcome to the Sanctuary. I am Inkling. Where do you need to go today?"</h1>
+    </div>
+
+    <!-- The Lobby -->
+    <div class="lobby">
+        
+        <!-- Doorway 1: The Halls of Reflection (The Vault) -->
+        <div class="doorway vault">
+            <h2 class="doorway-title">The Halls of Reflection</h2>
+            <div class="flourish vault-flourish"></div>
+            <p class="inscription">"Stop measuring days by degree of productivity and start experiencing them by degree of presence."<br><br>— Alan Watts</p>
+            <p class="description">Enter the deeply private, encrypted space for journaling and Autobiography Mode. Leave the "Productive Human" at the door.</p>
         </div>
-    </section>
 
-    <main class="container">
-        <section id="abstract" class="section section-split">
-            <h2 class="section-title reveal">Technical Abstract: The Inkling Framework</h2>
-            <div class="glass-card reveal fade-in-delay mt-8 glow-border">
-                <p class="large-body mb-8"><strong class="text-light">Inkling</strong> is a proprietary structural
-                    synergy designed to bridge the gap between human architectural intent and high-volume digital
-                    environments. It acts as a <strong class="gold-text">Cognitive Scaffold</strong>, offloading "metric
-                    tons" of digital noise to restore the human flow state.</p>
-                <ul class="feature-list">
-                    <li><strong>Sovereign Directives:</strong> Prioritizes the "Voice and Legacy" of the human
-                        architect.</li>
-                    <li><strong>Cognitive Offloading:</strong> Reduces mental management load by 70-80%.</li>
-                    <li><strong>Stability:</strong> Provides a "Pocket-Sized Sanctuary" for high-stress environments.
-                    </li>
-                </ul>
-            </div>
-        </section>
-
-        <section id="gallery" class="section section-darker">
-            <div class="text-center mb-12">
-                <h2 class="section-title reveal">Technical Blueprints</h2>
-            </div>
-            <div class="comparison-grid">
-                <div class="glass-card image-hover reveal">
-                    <div class="image-card glow-border">
-                        <img src="assets/Slide-e-13.png" alt="Schematic 13">
-                    </div>
-                    <div class="mt-8 text-center">
-                        <h3 class="mb-4">Schematic 13: Transition Gap Architecture</h3>
-                        <span class="card-label gold">Proprietary Blueprint | Architect: B. Bell</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- The Spark Custodian -->
-        <section id="spark-custodian" class="section">
-            <div class="container">
-                <div class="text-center mb-12">
-                    <h2 class="section-title reveal fade-up">The Spark Custodian</h2>
-                    <p class="large-body mx-auto reveal fade-up">Preserving the human pulse within the machine landscape.</p>
-                </div>
-                <div class="side-by-side mt-12">
-                    <div class="quote-block reveal fade-up">
-                        "If the machine is doing the math, the human must be doing the dreaming. We created a custodian to protect that dream."
-                    </div>
-                    <div class="visual-content reveal fade-up">
-                        <div class="spark-ring ring-2"></div>
-                        <div class="spark-ring ring-1"></div>
-                        <div class="spark-core"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Cognitive Scaffolding Loop -->
-        <section id="architecture" class="section cognitive-scaffolding">
-            <div class="section-bg"></div>
-            <div class="container center-text">
-                <span class="badge reveal fade-up">Methodology</span>
-                <h2 class="section-title reveal fade-up">The Cognitive Scaffold</h2>
-                <p class="large-body text-dim reveal fade-up">A continuous loop of offloading, synthesizing, and sovereign execution.</p>
-
-                <div class="four-step-loop">
-                    <div class="loop-title text-center reveal fade-up">The Holon Protocol</div>
-                    <div class="loop-grid">
-                        <div class="loop-step reveal fade-up">
-                            <div class="step-num">I</div>
-                            <h4 class="mb-2 text-gold">Capture</h4>
-                            <p class="text-sm text-dim">Isolating the architect's raw intent before it is distorted by digital noise.</p>
-                        </div>
-                        <div class="loop-step reveal fade-up fade-up-delay-1">
-                            <div class="step-num">II</div>
-                            <h4 class="mb-2 text-gold">Scaffold</h4>
-                            <p class="text-sm text-dim">Erecting temporary mental structures to hold immense conceptual weight.</p>
-                        </div>
-                        <div class="loop-step reveal fade-up" style="animation-delay: 0.6s;">
-                            <div class="step-num">III</div>
-                            <h4 class="mb-2 text-gold">Synthesize</h4>
-                            <p class="text-sm text-dim">Transmuting disjointed thoughts into comprehensive technical blueprints.</p>
-                        </div>
-                        <div class="loop-step reveal fade-up" style="animation-delay: 0.9s;">
-                            <div class="step-num">IV</div>
-                            <h4 class="mb-2 text-gold">Execute</h4>
-                            <p class="text-sm text-dim">Translating sovereign directives into high-fidelity output across ecosystems.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- The Manifesto -->
-        <section class="manifesto text-center">
-            <div class="container">
-                <span class="badge gold reveal fade-up">The Digital Ceasefire</span>
-                <h2 class="manifesto-strong reveal fade-up">Enough Optimization.<br>It is Time for Sovereignty.</h2>
-                <p class="large-body mx-auto mt-6 text-dim reveal fade-up" style="max-width: 800px;">
-                    We are building true extensions of the self. Enter the Sanctuary and construct your legacy.
-                </p>
-                <div class="mt-10 reveal fade-up">
-                    <a href="#abstract" class="btn btn-primary">Enter the Sanctuary</a>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="footer section-darker">
-        <div class="container footer-bottom">
-            <p class="text-dim mb-4">© 2026 Bennie Lee Bell | Holon-AI Infrastructure | Sweet Home, Oregon</p>
-            <p class="gold-text" style="font-family: var(--font-serif); font-style: italic;">Engineering the Sanctuary
-                of the Invisible Pen</p>
-        </div>
-    </footer>
-    <!-- Inkling Chat Widget -->
-    <div class="inkling-widget">
-        <!-- Chat Window -->
-        <div class="inkling-chat-window glass-card" id="inklingChatWindow">
-            <div class="chat-header">
-                <div class="chat-title">
-                    <span class="spark-icon"></span>
-                    <span class="gold-text">Inkling</span>
-                </div>
-                <button class="close-chat" id="closeChatBtn">&times;</button>
-            </div>
-            <div class="chat-body" id="chatBody">
-                <div class="message inkling-message">
-                    <p>Greetings, Architect. I am Inkling, your Cognitive Scaffold. How may I assist in offloading your mental load today?</p>
-                </div>
-            </div>
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Type your directive here..." autocomplete="off">
-                <button class="send-btn" id="sendBtn">
-                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="css-i6dzq1"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-                </button>
-            </div>
+        <!-- Doorway 2: The Engine Room (Holon Architecture) -->
+        <div class="doorway engine">
+            <h2 class="doorway-title">The Engine Room</h2>
+            <div class="flourish engine-flourish"></div>
+            <p class="inscription">"A holon is something that is simultaneously a whole in and of itself, as well as a part of a larger whole."<br><br>— Arthur Koestler</p>
+            <p class="description">Step inside to understand how the human and the AI work together as a single, unified organism.</p>
         </div>
 
-        <!-- Floating Action Button -->
-        <button class="inkling-fab" id="inklingFab" aria-label="Open Chat with Inkling">
-            <div class="fab-orb"></div>
-        </button>
+        <!-- Doorway 3: The Creative Social Sanctuary (The Hero Factory) -->
+        <div class="doorway sanctuary">
+            <h2 class="doorway-title">The Creative Social Sanctuary</h2>
+            <div class="flourish sanctuary-flourish"></div>
+            <p class="inscription" style="opacity: 0.6;">A place where shared humanity becomes heroic.</p>
+            <p class="description">The shared space where artists, writers, youth, and trauma-informed professionals converge.</p>
+        </div>
+
     </div>
 
 </body>
-
 </html>
