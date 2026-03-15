@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Halls of Reflection</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --sanctuary-cream: #F7F3EC;
@@ -13,8 +16,10 @@
             --font-sans: 'Inter', sans-serif;
             --legacy-gold: #D4A857;
         }
+
         body {
-            background-color: var(--ink-black); /* Vault is dark and private */
+            background-color: var(--ink-black);
+            /* Vault is dark and private */
             color: var(--sanctuary-cream);
             font-family: var(--font-sans);
             display: flex;
@@ -26,6 +31,7 @@
             animation: fadeIn 2s ease-out backwards;
             text-align: center;
         }
+
         .container {
             max-width: 600px;
             padding: 4rem;
@@ -33,6 +39,7 @@
             background: rgba(255, 255, 255, 0.02);
             border-radius: 8px;
         }
+
         h1 {
             font-family: var(--font-serif);
             font-size: 3.5rem;
@@ -40,6 +47,7 @@
             color: var(--legacy-gold);
             font-weight: 400;
         }
+
         p {
             font-size: 1.1rem;
             opacity: 0.7;
@@ -47,6 +55,7 @@
             margin-bottom: 3rem;
             font-weight: 300;
         }
+
         .flourish {
             width: 40px;
             height: 2px;
@@ -54,6 +63,7 @@
             margin: 0 auto 2rem auto;
             opacity: 0.5;
         }
+
         .back-link {
             display: inline-block;
             text-decoration: none;
@@ -66,23 +76,35 @@
             padding-bottom: 4px;
             transition: all 0.3s ease;
         }
+
         .back-link:hover {
             color: var(--sanctuary-cream);
             border-color: var(--sanctuary-cream);
             letter-spacing: 2px;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>The Halls of Reflection</h1>
         <div class="flourish"></div>
-        <p>A deep, encrypted space for Autobiography Mode and journaling. A sanctuary for the mind, currently resting while preparations are made.</p>
+        <p>A deep, encrypted space for Autobiography Mode and journaling. A sanctuary for the mind, currently resting
+            while preparations are made.</p>
         <a href="index.html" class="back-link">Return to Lobby</a>
     </div>
 </body>
+
 </html>

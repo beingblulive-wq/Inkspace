@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Exhibition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --sanctuary-cream: #F7F3EC;
@@ -13,8 +16,10 @@
             --font-sans: 'Inter', sans-serif;
             --gallery-amethyst: #8C5E58;
         }
+
         body {
-            background-color: #faf9f6; /* slightly starker white for art gallery */
+            background-color: #faf9f6;
+            /* slightly starker white for art gallery */
             color: var(--ink-black);
             font-family: var(--font-sans);
             display: flex;
@@ -26,13 +31,17 @@
             animation: fadeIn 2s ease-out backwards;
             text-align: center;
         }
+
         .container {
             max-width: 600px;
             padding: 4rem;
-            border: 1px solid rgba(0, 0, 0, 0.08); /* slight frame */
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            /* slight frame */
             background: white;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.05); /* lifted off wall */
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+            /* lifted off wall */
         }
+
         h1 {
             font-family: var(--font-serif);
             font-size: 3.5rem;
@@ -42,6 +51,7 @@
             letter-spacing: 4px;
             text-transform: uppercase;
         }
+
         p {
             font-size: 1.1rem;
             color: #666;
@@ -49,6 +59,7 @@
             margin-bottom: 3rem;
             font-weight: 300;
         }
+
         .flourish {
             width: 60px;
             height: 1px;
@@ -56,6 +67,7 @@
             margin: 0 auto 2rem auto;
             opacity: 0.8;
         }
+
         .back-link {
             display: inline-block;
             text-decoration: none;
@@ -66,22 +78,34 @@
             font-size: 0.8em;
             transition: all 0.3s ease;
         }
+
         .back-link:hover {
             color: var(--gallery-amethyst);
             letter-spacing: 2px;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>The Exhibition</h1>
         <div class="flourish"></div>
-        <p>A visual gallery space for art, blueprints, and expressions of the Sanctuary. We are currently curating the exhibit.</p>
+        <p>A visual gallery space for art, blueprints, and expressions of the Sanctuary. We are currently curating the
+            exhibit.</p>
         <a href="index.html" class="back-link">Return to Lobby</a>
     </div>
 </body>
+
 </html>

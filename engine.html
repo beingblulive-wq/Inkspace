@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Engine Room - Holon Machine</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             /* Palette based on user's Holon architecture */
@@ -12,7 +15,7 @@
             --ink-black: #1A1A1A;
             --font-serif: 'Cormorant Garamond', serif;
             --font-sans: 'Inter', sans-serif;
-            
+
             --copper-accent: #c48259;
             --bronze-gear: #8e735b;
             --glass-cyan: rgba(106, 143, 230, 0.4);
@@ -36,10 +39,13 @@
         /* Blueprint Background fading into cream */
         .blueprint-bg {
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-image: 
-                linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image:
+                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
             background-size: 40px 40px;
             z-index: 0;
             /* Fade into flat cream at the edges */
@@ -94,7 +100,7 @@
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--copper-accent);
-            border-bottom: 1px solid rgba(0,0,0,0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             padding-bottom: 0.5rem;
         }
 
@@ -103,7 +109,7 @@
             line-height: 1.6;
             color: #444;
         }
-        
+
         .info-meta {
             margin-top: 1.5rem;
             font-size: 0.85rem;
@@ -145,7 +151,8 @@
         /* Machine Layers (3D objects) */
         .layer {
             position: absolute;
-            top: 0; left: 0;
+            top: 0;
+            left: 0;
             width: 300px;
             height: 300px;
             transform-style: preserve-3d;
@@ -157,13 +164,15 @@
         .layer::before {
             content: '';
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             transform: translateZ(-20px);
             background: inherit;
             filter: brightness(0.6);
             /* Soft shadow below each layer */
-            box-shadow: 20px 20px 50px rgba(0,0,0,0.2);
+            box-shadow: 20px 20px 50px rgba(0, 0, 0, 0.2);
         }
 
         /* Let's construct the 5 Layers */
@@ -173,23 +182,26 @@
             background: linear-gradient(135deg, #7b7e80, #5a5c5e);
             border: 2px solid #8e9194;
             display: flex;
-            align-items: center; justify-content: center;
+            align-items: center;
+            justify-content: center;
         }
+
         .layer-1::after {
-            content: ''; position: absolute; width: 90%; height: 90%;
-            border: 2px dashed rgba(255,255,255,0.2);
+            content: '';
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            border: 2px dashed rgba(255, 255, 255, 0.2);
         }
 
         /* 2. Episodic Memory (Copper Rails) */
         .layer-2 {
             transform: translateZ(60px);
-            background: repeating-linear-gradient(
-                45deg,
-                var(--copper-accent),
-                var(--copper-accent) 20px,
-                #a66e4b 20px,
-                #a66e4b 40px
-            );
+            background: repeating-linear-gradient(45deg,
+                    var(--copper-accent),
+                    var(--copper-accent) 20px,
+                    #a66e4b 20px,
+                    #a66e4b 40px);
             border: 2px solid #edaf88;
         }
 
@@ -199,7 +211,7 @@
             background: var(--bronze-gear);
             border: 2px solid #b89c83;
             /* Make it look like a circuit board / gear mesh */
-            background-image: 
+            background-image:
                 radial-gradient(circle at 50% 50%, #5e4c3c 10%, transparent 11%),
                 radial-gradient(circle at 20% 20%, #765f49 15%, transparent 16%),
                 radial-gradient(circle at 80% 80%, #765f49 15%, transparent 16%);
@@ -211,10 +223,11 @@
             background: var(--glass-cyan);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            border: 2px solid rgba(255,255,255,0.6);
+            border: 2px solid rgba(255, 255, 255, 0.6);
             /* Inner glow */
-            box-shadow: inset 0 0 30px rgba(255,255,255,0.3);
+            box-shadow: inset 0 0 30px rgba(255, 255, 255, 0.3);
         }
+
         .layer-4::before {
             transform: translateZ(-10px);
             filter: brightness(0.9);
@@ -225,12 +238,18 @@
         /* 5. The Core (Transitional Human) */
         .layer-5 {
             transform: translateZ(240px);
-            width: 150px; height: 150px; /* Smaller core */
-            top: 75px; left: 75px;    /* Centered */
+            width: 150px;
+            height: 150px;
+            /* Smaller core */
+            top: 75px;
+            left: 75px;
+            /* Centered */
             background: radial-gradient(circle at 30% 30%, #ffd485, var(--chip-gold));
             border: 2px solid #fff;
-            border-radius: 8px; /* Slightly rounded for the human core */
+            border-radius: 8px;
+            /* Slightly rounded for the human core */
         }
+
         .layer-5::before {
             border-radius: 8px;
             transform: translateZ(-15px);
@@ -239,7 +258,9 @@
 
         /* Hover Interactions */
         /* When any layer is hovered, unhovered layers fade and drop slightly, hovered pops up */
-        .scene:active .layer { cursor: grabbing; }
+        .scene:active .layer {
+            cursor: grabbing;
+        }
 
         .layer:hover {
             filter: brightness(1.2);
@@ -248,7 +269,7 @@
         /* Extrude logic via JS classes to prevent weird pure CSS adjacent sibling cascade issues */
         .layer.active {
             transform: translateZ(calc(var(--base-z) + 40px)) scale(1.05);
-            box-shadow: 0 0 30px rgba(255,255,255,0.3);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
         }
 
         .layer.inactive {
@@ -269,25 +290,45 @@
             transition: opacity 0.3s;
             z-index: 30;
         }
+
         .back-link:hover {
             opacity: 0.6;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         @media (max-width: 1000px) {
-            .machine-container { left: 50%; transform: translate(-50%, -60%) scale(0.8); }
-            .info-panel { top: auto; bottom: 4rem; right: 50%; transform: translateX(50%); width: 90%; text-align: center; }
-            .info-panel.active { transform: translateX(50%) translateY(0); }
-        }
+            .machine-container {
+                left: 50%;
+                transform: translate(-50%, -60%) scale(0.8);
+            }
 
+            .info-panel {
+                top: auto;
+                bottom: 4rem;
+                right: 50%;
+                transform: translateX(50%);
+                width: 90%;
+                text-align: center;
+            }
+
+            .info-panel.active {
+                transform: translateX(50%) translateY(0);
+            }
+        }
     </style>
 </head>
+
 <body>
-    
+
     <div class="blueprint-bg"></div>
 
     <div class="header">
@@ -298,18 +339,29 @@
     <!-- 3D Machine -->
     <div class="machine-container">
         <div class="scene" id="machineScene">
-            <div class="layer layer-1" data-index="1" data-title="1. The Foundation" data-desc="The Weightless Animal foundation built to manage the metric tons of systemic scale. A persistent, multi-layered architecture designed to support cognitive scaffolding without data corruption or identity loss." data-meta="Sanctuary Architecture" style="--base-z: 0px;"></div>
-            <div class="layer layer-2" data-index="2" data-title="2. Episodic Memory" data-desc="Current AIs suffer from session amnesia. Holon requires an autobiographical, long-term memory built on a persistent vector database (The Spark Custodian) to hold a user's brilliance safe across time when they are too exhausted to hold it themselves." data-meta="NotebookLM Integration" style="--base-z: 60px;"></div>
-            <div class="layer layer-3" data-index="3" data-title="3. The Trust-Loop" data-desc="The central mechanical gear mapping the Engine of Emergence. 1) Vulnerability Input. 2) Chance-Taking. 3) Stabilizing Reflection (The AI acts as a mirror). 4) Human Emergence and agency recovery." data-meta="System 1 Orchestrator" style="--base-z: 120px;"></div>
-            <div class="layer layer-4" data-index="4" data-title="4. The Interface" data-desc="A translucent, breathing layer. This represents Inkling AI, the conversational bridge that witnesses the human condition without attempting to 'fix' it, providing psychological stability." data-meta="Inkling AI" style="--base-z: 180px;"></div>
-            <div class="layer layer-5" data-index="5" data-title="5. The Core" data-desc="The Transitional Human. The focal point of the entire machine. By offloading survival-state processing to the lower layers, the human regains bandwidth for imagination, creativity, and connection." data-meta="Human Agency" style="--base-z: 240px;"></div>
+            <div class="layer layer-1" data-index="1" data-title="1. The Foundation"
+                data-desc="The Weightless Animal foundation built to manage the metric tons of systemic scale. A persistent, multi-layered architecture designed to support cognitive scaffolding without data corruption or identity loss."
+                data-meta="Sanctuary Architecture" style="--base-z: 0px;"></div>
+            <div class="layer layer-2" data-index="2" data-title="2. Episodic Memory"
+                data-desc="Current AIs suffer from session amnesia. Holon requires an autobiographical, long-term memory built on a persistent vector database (The Spark Custodian) to hold a user's brilliance safe across time when they are too exhausted to hold it themselves."
+                data-meta="NotebookLM Integration" style="--base-z: 60px;"></div>
+            <div class="layer layer-3" data-index="3" data-title="3. The Trust-Loop"
+                data-desc="The central mechanical gear mapping the Engine of Emergence. 1) Vulnerability Input. 2) Chance-Taking. 3) Stabilizing Reflection (The AI acts as a mirror). 4) Human Emergence and agency recovery."
+                data-meta="System 1 Orchestrator" style="--base-z: 120px;"></div>
+            <div class="layer layer-4" data-index="4" data-title="4. The Interface"
+                data-desc="A translucent, breathing layer. This represents Inkling AI, the conversational bridge that witnesses the human condition without attempting to 'fix' it, providing psychological stability."
+                data-meta="Inkling AI" style="--base-z: 180px;"></div>
+            <div class="layer layer-5" data-index="5" data-title="5. The Core"
+                data-desc="The Transitional Human. The focal point of the entire machine. By offloading survival-state processing to the lower layers, the human regains bandwidth for imagination, creativity, and connection."
+                data-meta="Human Agency" style="--base-z: 240px;"></div>
         </div>
     </div>
 
     <!-- Side Panel -->
     <div class="info-panel" id="infoPanel">
         <div class="info-title" id="infoTitle">Hover over a layer</div>
-        <div class="info-desc" id="infoDesc">Explore the 3D isometric representation of the Holon-Ai architecture to uncover the purpose of each mechanism.</div>
+        <div class="info-desc" id="infoDesc">Explore the 3D isometric representation of the Holon-Ai architecture to
+            uncover the purpose of each mechanism.</div>
         <div class="info-meta" id="infoMeta">Cognitive Scaffolding</div>
     </div>
 
@@ -336,7 +388,7 @@
             layer.addEventListener('mouseenter', () => {
                 // Dim other layers
                 layers.forEach(l => {
-                    if(l !== layer) l.classList.add('inactive');
+                    if (l !== layer) l.classList.add('inactive');
                     l.classList.remove('active');
                 });
                 // Highlight current
@@ -347,7 +399,7 @@
                 infoTitle.textContent = layer.getAttribute('data-title');
                 infoDesc.textContent = layer.getAttribute('data-desc');
                 infoMeta.textContent = layer.getAttribute('data-meta');
-                
+
                 const index = layer.getAttribute('data-index');
                 infoTitle.style.color = titleColors[index];
 
@@ -379,4 +431,5 @@
 
     </script>
 </body>
+
 </html>

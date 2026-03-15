@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanctuary Pad - The Vault</title>
+    <!-- Fonts: Cormorant Garamond for elegant titles, Inter for UI, and a clean serif or monospace for writing -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            /* Themes */
+            --sanctuary-cream: #F7F3EC;
+            --ink-black: #1A1A1A;
+            --muted-gold: #D4A857;
+
+            /* Structural Variables */
+            --bg-color: var(--ink-black);
+            --text-color: var(--sanctuary-cream);
+            --ui-faded: rgba(247, 243, 236, 0.3);
+            --ui-hover: rgba(247, 243, 236, 0.8);
+
+            /* Fonts */
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            --font-write: 'Lora', serif;
+            /* A beautiful reading/writing serif */
+        }
+
+        /* Light Theme Override */
+        body.light-theme {
+            --bg-color: var(--sanctuary-cream);
+            --text-color: var(--ink-black);
+            --ui-faded: rgba(26, 26, 26, 0.3);
+            --ui-hover: rgba(26, 26, 26, 0.8);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: background-color 0.8s ease, color 0.8s ease;
+            overflow-x: hidden;
+            /* Smooth fade in */
+            animation: fadeIn 2s ease-out backwards;
+        }
+
+        /* Header UI - Top Bar */
+        .top-ui {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2.5rem;
+            opacity: 1;
+            /* Default visible */
+            transition: opacity 0.5s ease;
+            z-index: 100;
+            font-family: var(--font-sans);
+        }
+
+        /* When typing in Focus Mode, we fade out UI */
+        body.focus-mode .top-ui,
+        body.focus-mode .bottom-ui {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        /* Nav links and buttons */
+        .nav-link,
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--ui-faded);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            outline: none;
+        }
+
+        .nav-link:hover,
+        .theme-toggle:hover {
+            color: var(--ui-hover);
+        }
+
+        .center-title {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            color: var(--ui-faded);
+            font-style: italic;
+            transition: color 0.3s ease;
+            cursor: default;
+        }
+
+        .center-title:hover {
+            color: var(--ui-hover);
+        }
+
+        /* Main Writing Area Container */
+        .editor-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            padding: 8rem 2rem 6rem 2rem;
+            /* Give room for UI */
+        }
+
+        /* The actual writing pad */
+        .pad {
+            width: 100%;
+            max-width: 750px;
+            font-family: var(--font-write);
+            font-size: 1.25rem;
+            line-height: 1.8;
+            outline: none;
+            border: none;
+            background: transparent;
+            color: var(--text-color);
+            resize: none;
+            /* Placeholder styling */
+            min-height: 50vh;
+            caret-color: var(--muted-gold);
+        }
+
+        [contenteditable]:empty:before {
+            content: attr(placeholder);
+            color: var(--ui-faded);
+            pointer-events: none;
+            display: block;
+            /* For Firefox */
+        }
+
+        /* Bottom UI - Stats */
+        .bottom-ui {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            z-index: 100;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            color: var(--ui-faded);
+            letter-spacing: 1px;
+            pointer-events: none;
+            /* Let clicks pass through to editor if needed */
+        }
+
+        .stat-item {
+            margin: 0 1rem;
+        }
+
+        /* Notification Toast (for saving) */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--text-color);
+            color: var(--bg-color);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+            z-index: 200;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Scrollbar styling for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--ui-faded);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--ui-hover);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Top Navigation -->
+    <div class="top-ui">
+        <a href="index.html" class="nav-link">← The Lobby</a>
+        <div class="center-title">The Vault</div>
+        <button class="theme-toggle" id="themeToggle" title="Toggle Theme (Ctrl+T)">Light</button>
+    </div>
+
+    <!-- The Infinite Canvas -->
+    <div class="editor-container" id="editorContainer">
+        <div class="pad" id="editor" contenteditable="true"
+            placeholder="The page is yours. Start writing to enter focus mode..."></div>
+    </div>
+
+    <!-- Bottom Statistics -->
+    <div class="bottom-ui" id="bottomUi">
+        <span class="stat-item"><span id="wordCount">0</span> words</span>
+        <span class="stat-item">•</span>
+        <span class="stat-item"><span id="readTime">0</span> min read</span>
+    </div>
+
+    <!-- Save Notification -->
+    <div class="toast" id="saveToast">Saved locally</div>
+
+    <script>
+        const editor = document.getElementById('editor');
+        const wordCountDisplay = document.getElementById('wordCount');
+        const readTimeDisplay = document.getElementById('readTime');
+        const themeToggle = document.getElementById('themeToggle');
+        const saveToast = document.getElementById('saveToast');
+
+        let focusTimer = null;
+        let saveTimer = null;
+
+        // --- 1. Initialization & LocalStorage ---
+        const LOCAL_STORAGE_KEY = 'sanctuary_vault_draft';
+        const THEME_KEY = 'sanctuary_vault_theme';
+
+        // Load Content
+        const savedDraft = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (savedDraft) {
+            editor.innerHTML = savedDraft;
+            updateStats();
+        }
+
+        // Load Theme
+        const savedTheme = localStorage.getItem(THEME_KEY);
+        if (savedTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeToggle.textContent = 'Dark';
+        }
+
+        // --- 2. Focus Mode Logic ---
+        // Enter focus mode when typing, exit when mouse moves
+        const enterFocusMode = () => {
+            document.body.classList.add('focus-mode');
+        };
+
+        const exitFocusMode = () => {
+            document.body.classList.remove('focus-mode');
+            // Re-trigger idle timer if we are still active in the tab
+            resetFocusTimer();
+        };
+
+        const resetFocusTimer = () => {
+            clearTimeout(focusTimer);
+            // After 3 seconds of no mouse movement, if they are focused on editor, hide UI
+            focusTimer = setTimeout(() => {
+                if (document.activeElement === editor && editor.textContent.trim() !== '') {
+                    enterFocusMode();
+                }
+            }, 3000);
+        };
+
+        // Event Listeners for Focus
+        document.addEventListener('mousemove', exitFocusMode);
+        editor.addEventListener('keydown', () => {
+            // Instantly hide UI on typing if not empty
+            if (editor.textContent.trim() !== '') {
+                enterFocusMode();
+                clearTimeout(focusTimer);
+            }
+        });
+
+
+        // --- 3. Word Count and Stats ---
+        function updateStats() {
+            const text = editor.innerText || '';
+            // Basic word count regex
+            const words = text.match(/\b[-?(\w+)?]+\b/gi);
+            const count = words ? words.length : 0;
+
+            wordCountDisplay.textContent = count;
+
+            // Avg reading speed ~200 wpm
+            const minutes = Math.ceil(count / 200);
+            readTimeDisplay.textContent = minutes;
+        }
+
+        // --- 4. Auto-save ---
+        function triggerSave() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, editor.innerHTML);
+
+            // Show toast
+            saveToast.classList.add('show');
+            clearTimeout(saveTimer);
+            saveTimer = setTimeout(() => {
+                saveToast.classList.remove('show');
+            }, 2000);
+        }
+
+        // Listen for input to update stats and save
+        editor.addEventListener('input', () => {
+            updateStats();
+            // Debounce save slightly
+            clearTimeout(window.inputSaveTimer);
+            window.inputSaveTimer = setTimeout(triggerSave, 1000);
+        });
+
+        // --- 5. Theme Toggling ---
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            if (document.body.classList.contains('light-theme')) {
+                themeToggle.textContent = 'Dark';
+                localStorage.setItem(THEME_KEY, 'light');
+            } else {
+                themeToggle.textContent = 'Light';
+                localStorage.setItem(THEME_KEY, 'dark');
+            }
+        });
+
+        // Keyboard shortcut for theme (Ctrl/Cmd + T)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+                e.preventDefault();
+                themeToggle.click();
+            }
+        });
+
+        // Focus editor on load if empty
+        if (!savedDraft) {
+            editor.focus();
+        }
+
+    </script>
+</body>
+
+</html>

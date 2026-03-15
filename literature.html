@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Archive of Ink</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --sanctuary-cream: #F7F3EC;
@@ -13,6 +16,7 @@
             --font-sans: 'Inter', sans-serif;
             --literature-teal: #4A7C59;
         }
+
         body {
             background-color: var(--sanctuary-cream);
             color: var(--ink-black);
@@ -26,13 +30,15 @@
             animation: fadeIn 2s ease-out backwards;
             text-align: center;
             /* Subtle paper texture hint */
-            background-image: linear-gradient(rgba(0,0,0,0.01) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(0, 0, 0, 0.01) 1px, transparent 1px);
             background-size: 100% 2.5rem;
         }
+
         .container {
             max-width: 600px;
             padding: 4rem;
         }
+
         h1 {
             font-family: var(--font-serif);
             font-size: 3.5rem;
@@ -41,6 +47,7 @@
             font-weight: 400;
             font-style: italic;
         }
+
         p {
             font-size: 1.15rem;
             color: #444;
@@ -48,6 +55,7 @@
             margin-bottom: 3rem;
             font-weight: 300;
         }
+
         .flourish {
             width: 40px;
             height: 2px;
@@ -55,6 +63,7 @@
             margin: 0 auto 2rem auto;
             opacity: 0.7;
         }
+
         .back-link {
             display: inline-block;
             text-decoration: none;
@@ -67,23 +76,35 @@
             padding-bottom: 4px;
             transition: all 0.3s ease;
         }
+
         .back-link:hover {
             color: var(--literature-teal);
             border-color: var(--literature-teal);
             letter-spacing: 2px;
         }
+
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>The Archive of Ink</h1>
         <div class="flourish"></div>
-        <p>A library of written works, literature, and the legacy of the invisible pen. The shelves are being stocked; check back soon for words of power.</p>
+        <p>A library of written works, literature, and the legacy of the invisible pen. The shelves are being stocked;
+            check back soon for words of power.</p>
         <a href="index.html" class="back-link">Return to Lobby</a>
     </div>
 </body>
+
 </html>
