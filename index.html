@@ -60,12 +60,14 @@
         }
 
         .inkling-avatar {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #e0e7fa, var(--invisible-blue));
+            width: 100px;
+            height: 100px;
+            background-image: url('assets/inkling_mascot.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
             margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(106, 143, 230, 0.4), inset -5px -5px 15px rgba(0, 0, 0, 0.1);
+            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
             animation: breathe 4s infinite alternate ease-in-out;
         }
 
@@ -403,7 +405,7 @@
 
     <!-- The Central Greeting -->
     <div class="greeting-container">
-        <div class="inkling-avatar"></div>
+        <div class="inkling-avatar" role="img" aria-label="Inkling Mascot"></div>
         <h1 class="greeting-text" id="greetingText">"Welcome to the Sanctuary. I am Inkling. Where do you need to go
             today?"</h1>
 
