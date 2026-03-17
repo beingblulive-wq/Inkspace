@@ -60,15 +60,60 @@
         }
 
         .inkling-avatar {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             background-image: url('assets/inkling_mascot.png');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            margin-bottom: 1.5rem;
-            filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.1));
+            margin-bottom: 2rem;
+            filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.15));
             animation: breathe 4s infinite alternate ease-in-out;
+            transition: transform 0.3s ease;
+        }
+
+        .inkling-avatar:hover {
+            transform: scale(1.05);
+        }
+
+        /* Launch Button */
+        .launch-btn-container {
+            margin-top: 3rem;
+            animation: fadeIn 2s ease-out 1.5s backwards;
+        }
+
+        .launch-btn {
+            background: var(--ink-black);
+            color: #fff;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .launch-btn:hover {
+            background: var(--invisible-blue);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(106, 143, 230, 0.3);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .launch-btn svg {
+            width: 20px;
+            height: 20px;
+            transition: transform 1s ease;
+        }
+
+        .launch-btn:hover svg {
+            transform: translateX(3px);
         }
 
         .greeting-text {
@@ -406,8 +451,17 @@
     <!-- The Central Greeting -->
     <div class="greeting-container">
         <div class="inkling-avatar" role="img" aria-label="Inkling Mascot"></div>
-        <h1 class="greeting-text" id="greetingText">"Welcome to the Sanctuary. I am Inkling. Where do you need to go
-            today?"</h1>
+        <h1 class="greeting-text" id="greetingText">"Welcome to the Sanctuary. I am Inkling. Where do you need to go today?"</h1>
+
+        <div class="launch-btn-container">
+            <a href="http://localhost:25808" class="launch-btn">
+                <span>Enter the Sanctuary</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
 
         <div class="chat-container">
             <input type="text" id="chatInput" class="chat-input" placeholder="Ask Inkling..." autocomplete="off">
