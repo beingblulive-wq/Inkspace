@@ -996,3 +996,32 @@ body {
         height: 400px;
     }
 }
+
+/* --- Holon Mascot Canvas --- */
+.holon-wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    margin: 0 auto 1.5rem auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none; /* Let clicks pass through to text if needed */
+}
+
+#holonCanvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: auto; /* Catch the hover events for the JS fracture effect */
+    /* Subtle background glow to physically ground the Holon projection */
+    box-shadow: 0 0 80px rgba(79, 209, 197, 0.05), inset 0 0 40px rgba(226, 185, 92, 0.05);
+    background: radial-gradient(circle, rgba(255,255,255,0.01) 0%, transparent 70%);
+    transition: box-shadow 0.3s ease;
+}
+
+#holonCanvas:hover {
+    box-shadow: 0 0 120px rgba(79, 209, 197, 0.1), inset 0 0 60px rgba(226, 185, 92, 0.1);
+}
