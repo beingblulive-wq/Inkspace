@@ -648,15 +648,23 @@
                     this.vx += dxCenter * 0.0004;
                     this.vy += dyCenter * 0.0004;
 
+                    // Curious Puppy: Gentle attraction, playful bouncing if too close
                     if (mouse.active) {
                         const dxMouse = mouse.x - this.x;
                         const dyMouse = mouse.y - this.y;
                         const distMouse = Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
                         
-                        if (distMouse < 90) { 
-                            const force = (90 - distMouse) / 90;
-                            this.vx -= (dxMouse / distMouse) * force * 2;
-                            this.vy -= (dyMouse / distMouse) * force * 2;
+                        if (distMouse < 180) { // Awareness radius
+                            const force = (180 - distMouse) / 180;
+                            // Gentle pull towards mouse
+                            this.vx += (dxMouse / distMouse) * force * 0.8;
+                            this.vy += (dyMouse / distMouse) * force * 0.8;
+                            
+                            // Slight repulsion if they get too close (playful bumping)
+                            if (distMouse < 30) {
+                                this.vx -= (dxMouse / distMouse) * force * 2.5;
+                                this.vy -= (dyMouse / distMouse) * force * 2.5;
+                            }
                         }
                     }
 
