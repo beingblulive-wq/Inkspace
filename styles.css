@@ -5,7 +5,7 @@
     --text-secondary: #a0aec0;
     --accent-gold: #e2b95c;
     --accent-gold-glow: rgba(226, 185, 92, 0.4);
-    --accent-blue: #4fd1c5;
+    --accent-blue: #00F3FF; /* Updated to Electric Light Blue */
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
     --font-sans: 'Inter', sans-serif;

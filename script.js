@@ -158,8 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const connectionDistSq = 45 * 45; // Pre-calculated distance squared
         const mouseRadiusSq = 80 * 80;
         
-        // Per user request: Only the perty light blue
-        const colorBlue = 'rgba(79, 209, 197, '; 
+        const colorBlue = 'rgba(0, 243, 255, '; // Electric Light Blue
 
         let mouse = { x: width / 2, y: height / 2, active: false };
 
@@ -177,17 +176,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
                 // Slower base velocities for a "calmer" feel
-                this.vx = (Math.random() - 0.5) * 0.8;
-                this.vy = (Math.random() - 0.5) * 0.8;
+                this.vx = (Math.random() - 0.5) * 0.4;
+                this.vy = (Math.random() - 0.5) * 0.4;
                 this.radius = Math.random() * 1.5 + 0.5;
             }
 
             update() {
-                // Gentle centering gravity
-                const dxCenter = (width / 2) - this.x;
-                const dyCenter = (height / 2) - this.y;
-                this.vx += dxCenter * 0.0003;
-                this.vy += dyCenter * 0.0003;
+                // Centering gravity removed per user request: "stay where ever the mouse leaves it"
 
                 // Less reactive mouse repulsion
                 if (mouse.active) {

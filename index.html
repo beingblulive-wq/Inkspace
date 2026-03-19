@@ -612,7 +612,7 @@
 
             const particles = [];
             const particleCount = 40; // Lean & Mean
-            const colorBlue = 'rgba(79, 209, 197, '; 
+            const colorBlue = 'rgba(0, 243, 255, '; // Electric Light Blue
             const connectionDistSq = 45 * 45;
             const mouseRadiusSq = 120 * 120;
 
@@ -631,18 +631,15 @@
                 constructor() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.8;
-                    this.vy = (Math.random() - 0.5) * 0.8;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
                     this.baseRadius = Math.random() * 1.5 + 0.5;
                     this.radius = this.baseRadius;
                 }
 
                 update() {
-                    const dxCenter = (width / 2) - this.x;
-                    const dyCenter = (height / 2) - this.y;
-                    this.vx += dxCenter * 0.0003;
-                    this.vy += dyCenter * 0.0003;
-
+                    // Centering gravity removed per user request: "stay where ever the mouse leaves it"
+                    
                     if (mouse.active) {
                         const dxMouse = mouse.x - this.x;
                         const dyMouse = mouse.y - this.y;
@@ -686,7 +683,7 @@
                 particles.forEach(p => p.update());
 
                 ctx.beginPath();
-                ctx.strokeStyle = `rgba(79, 209, 197, 0.15)`;
+                ctx.strokeStyle = `rgba(0, 243, 255, 0.15)`; // Electric Blue connections
                 ctx.lineWidth = 0.5;
                 for (let i = 0; i < particleCount; i++) {
                     const p1 = particles[i];
