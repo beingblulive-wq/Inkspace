@@ -460,16 +460,14 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) translateZ(0);
             border-radius: 50%;
             pointer-events: auto; 
-            box-shadow: 0 0 80px rgba(79, 209, 197, 0.05), inset 0 0 40px rgba(226, 185, 92, 0.05);
-            background: radial-gradient(circle, rgba(255,255,255,0.01) 0%, transparent 70%);
-            transition: box-shadow 0.3s ease;
+            background: transparent;
         }
 
         #holonCanvas:hover {
-            box-shadow: 0 0 120px rgba(79, 209, 197, 0.1), inset 0 0 60px rgba(226, 185, 92, 0.1);
+            box-shadow: none;
         }
     </style>
 </head>
@@ -602,10 +600,10 @@
             if (e.key === 'Enter') sendMessage();
         });
 
-        // 7. Holon Particle Engine
+        // 7. Holon Particle Engine (Optimized & Blue Only)
         const canvas = document.getElementById('holonCanvas');
         if (canvas) {
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d', { alpha: true });
             
             let width = 300;
             let height = 300;
@@ -613,11 +611,10 @@
             canvas.height = height;
 
             const particles = [];
-            const particleCount = 80;
-            
-            const colorBlue = 'rgba(137, 207, 240, '; // Baby Blue
-            const colorYellow = 'rgba(255, 255, 224, '; // Light Yellow
-            const colorPink = 'rgba(255, 105, 180, '; // Hot Pink
+            const particleCount = 40; // Lean & Mean
+            const colorBlue = 'rgba(79, 209, 197, '; 
+            const connectionDistSq = 45 * 45;
+            const mouseRadiusSq = 120 * 120;
 
             let mouse = { x: width / 2, y: height / 2, active: false };
 
@@ -626,75 +623,42 @@
                 mouse.x = e.clientX - rect.left;
                 mouse.y = e.clientY - rect.top;
                 mouse.active = true;
-                canvas.style.cursor = 'pointer'; 
             });
 
-            canvas.addEventListener('mouseleave', () => {
-                mouse.active = false;
-            });
+            canvas.addEventListener('mouseleave', () => { mouse.active = false; });
 
             class Particle {
                 constructor() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 1.5;
-                    this.vy = (Math.random() - 0.5) * 1.5;
-                    this.baseRadius = Math.random() * 1.8 + 0.5;
+                    this.vx = (Math.random() - 0.5) * 0.8;
+                    this.vy = (Math.random() - 0.5) * 0.8;
+                    this.baseRadius = Math.random() * 1.5 + 0.5;
                     this.radius = this.baseRadius;
-                    
-                    // Assign colors based on new palette
-                    const rand = Math.random();
-                    if (rand < 0.33) this.baseColor = colorBlue;
-                    else if (rand < 0.66) this.baseColor = colorYellow;
-                    else this.baseColor = colorPink;
                 }
 
                 update() {
-                    const centerX = width / 2;
-                    const centerY = height / 2;
-                    const dxCenter = centerX - this.x;
-                    const dyCenter = centerY - this.y;
-                    const distToCenter = Math.sqrt(dxCenter * dxCenter + dyCenter * dyCenter);
+                    const dxCenter = (width / 2) - this.x;
+                    const dyCenter = (height / 2) - this.y;
+                    this.vx += dxCenter * 0.0003;
+                    this.vy += dyCenter * 0.0003;
 
-                    // Gentle gravity pulling particles toward the center mass (Holon)
-                    this.vx += dxCenter * 0.0004;
-                    this.vy += dyCenter * 0.0004;
-
-                    // Curious Puppy: Gentle attraction, playful bouncing if too close
                     if (mouse.active) {
                         const dxMouse = mouse.x - this.x;
                         const dyMouse = mouse.y - this.y;
-                        const distMouse = Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
+                        const distSq = dxMouse * dxMouse + dyMouse * dyMouse;
                         
-                        if (distMouse < 180) { // Awareness radius
-                            const force = (180 - distMouse) / 180;
-                            // Gentle pull towards mouse
-                            this.vx += (dxMouse / distMouse) * force * 0.8;
-                            this.vy += (dyMouse / distMouse) * force * 0.8;
-                            
-                            // Slight repulsion if they get too close (playful bumping)
-                            if (distMouse < 30) {
-                                this.vx -= (dxMouse / distMouse) * force * 2.5;
-                                this.vy -= (dyMouse / distMouse) * force * 2.5;
-                            }
-                        }
-                        // Reset radius when interacting
-                        this.radius = this.radius * 0.95 + this.baseRadius * 0.05;
-                    } else {
-                        // Returning to "Home Spot": Stretching and Growing
-                        if (distToCenter < 50) {
-                            // Grow a bit when near center and idle
-                            this.radius = this.radius * 0.95 + (this.baseRadius * 1.8) * 0.05;
-                            // Add a little "stretch" by subtly increasing velocity spread
-                            this.vx += (Math.random() - 0.5) * 0.1;
-                            this.vy += (Math.random() - 0.5) * 0.1;
-                        } else {
-                            this.radius = this.radius * 0.95 + this.baseRadius * 0.05;
+                        if (distSq < mouseRadiusSq) {
+                            const dist = Math.sqrt(distSq);
+                            const force = (120 - dist) / 120;
+                            // Slower, less reactive puppy-like pull
+                            this.vx += (dxMouse / dist) * force * 0.4;
+                            this.vy += (dyMouse / dist) * force * 0.4;
                         }
                     }
 
-                    this.vx *= 0.95;
-                    this.vy *= 0.95;
+                    this.vx *= 0.96;
+                    this.vy *= 0.96;
                     this.x += this.vx;
                     this.y += this.vy;
                 }
@@ -702,46 +666,44 @@
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = this.baseColor + '0.9)';
+                    ctx.fillStyle = colorBlue + '0.7)';
                     ctx.fill();
-                    // Inner glow
-                    ctx.shadowBlur = 4;
-                    ctx.shadowColor = this.baseColor + '0.5)';
                 }
             }
 
-            for (let i = 0; i < particleCount; i++) {
-                particles.push(new Particle());
-            }
+            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
 
-            function animateHolon() {
+            let lastTime = 0;
+            const fpsInterval = 1000 / 30; // 30 FPS Cap
+
+            function animateHolon(currentTime) {
+                requestAnimationFrame(animateHolon);
+                const elapsed = currentTime - lastTime;
+                if (elapsed < fpsInterval) return;
+                lastTime = currentTime - (elapsed % fpsInterval);
+
                 ctx.clearRect(0, 0, width, height);
                 particles.forEach(p => p.update());
 
-                for (let i = 0; i < particles.length; i++) {
-                    for (let j = i + 1; j < particles.length; j++) {
-                        const p1 = particles[i];
+                ctx.beginPath();
+                ctx.strokeStyle = `rgba(79, 209, 197, 0.15)`;
+                ctx.lineWidth = 0.5;
+                for (let i = 0; i < particleCount; i++) {
+                    const p1 = particles[i];
+                    for (let j = i + 1; j < particleCount; j++) {
                         const p2 = particles[j];
                         const dx = p1.x - p2.x;
                         const dy = p1.y - p2.y;
-                        const dist = Math.sqrt(dx*dx + dy*dy);
-
-                        if (dist < 45) { 
-                            ctx.beginPath();
+                        if (dx * dx + dy * dy < connectionDistSq) {
                             ctx.moveTo(p1.x, p1.y);
                             ctx.lineTo(p2.x, p2.y);
-                            const opacity = Math.pow(1 - (dist / 45), 1.5);
-                            ctx.strokeStyle = `rgba(160, 174, 192, ${opacity * 0.4})`;
-                            ctx.lineWidth = 0.6;
-                            ctx.stroke();
                         }
                     }
-                    particles[i].draw();
                 }
-                requestAnimationFrame(animateHolon);
+                ctx.stroke();
+                particles.forEach(p => p.draw());
             }
-
-            animateHolon();
+            requestAnimationFrame(animateHolon);
         }
     </script>
 </body>
