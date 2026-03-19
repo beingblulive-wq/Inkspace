@@ -32,11 +32,13 @@ body {
 .ambient-glow {
     position: fixed;
     border-radius: 50%;
-    filter: blur(120px);
+    filter: blur(80px); /* Reduced from 120px */
     z-index: -1;
-    opacity: 0.5;
+    opacity: 0.3; /* Reduced for stealth */
     pointer-events: none;
-    animation: drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+    transform: translateZ(0); 
+    animation: drift 30s infinite alternate linear;
 }
 
 .glow-1 {
@@ -71,10 +73,11 @@ body {
     align-items: center;
     padding: 1.5rem 4rem;
     background: rgba(7, 9, 19, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(8px); /* Reduced from 12px */
+    -webkit-backdrop-filter: blur(8px);
     z-index: 100;
     border-bottom: 1px solid var(--glass-border);
+    will-change: transform;
     transition: all 0.5s ease;
 }
 
@@ -85,6 +88,7 @@ body {
     letter-spacing: 1px;
     background: linear-gradient(90deg, #fff, var(--accent-gold));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -251,8 +255,9 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 3rem;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(8px); /* Reduced from 16px */
+    -webkit-backdrop-filter: blur(8px);
+    will-change: transform, opacity;
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -1013,15 +1018,14 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    will-change: transform;
+    transform: translate(-50%, -50%) translateZ(0);
     border-radius: 50%;
-    pointer-events: auto; /* Catch the hover events for the JS fracture effect */
-    /* Subtle background glow to physically ground the Holon projection */
-    box-shadow: 0 0 80px rgba(79, 209, 197, 0.05), inset 0 0 40px rgba(226, 185, 92, 0.05);
-    background: radial-gradient(circle, rgba(255,255,255,0.01) 0%, transparent 70%);
-    transition: box-shadow 0.3s ease;
+    pointer-events: auto;
+    background: transparent;
+    transition: none;
 }
 
 #holonCanvas:hover {
-    box-shadow: 0 0 120px rgba(79, 209, 197, 0.1), inset 0 0 60px rgba(226, 185, 92, 0.1);
+    box-shadow: none;
 }

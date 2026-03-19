@@ -143,10 +143,10 @@ document.addEventListener('DOMContentLoaded', () => {
         chatBody.scrollTop = chatBody.scrollHeight;
     }
 
-    // 7. Holon Particle Engine
+    // 7. Holon Particle Engine (Optimized "Lean & Mean")
     const canvas = document.getElementById('holonCanvas');
     if (canvas) {
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: true });
         
         let width = 300;
         let height = 300;
@@ -154,13 +154,13 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.height = height;
 
         const particles = [];
-        const particleCount = 80;
+        const particleCount = 40; // Reduced for performance
+        const connectionDistSq = 45 * 45; // Pre-calculated distance squared
+        const mouseRadiusSq = 80 * 80;
         
-        // Brand colors for the particles
-        const colorBlue = 'rgba(79, 209, 197, '; // --accent-blue
-        const colorGold = 'rgba(226, 185, 92, '; // --accent-gold
+        // Per user request: Only the perty light blue
+        const colorBlue = 'rgba(79, 209, 197, '; 
 
-        // Interaction state
         let mouse = { x: width / 2, y: height / 2, active: false };
 
         canvas.addEventListener('mousemove', (e) => {
@@ -168,101 +168,100 @@ document.addEventListener('DOMContentLoaded', () => {
             mouse.x = e.clientX - rect.left;
             mouse.y = e.clientY - rect.top;
             mouse.active = true;
-            canvas.style.cursor = 'pointer'; // indicates it's interactive
         });
 
-        canvas.addEventListener('mouseleave', () => {
-            mouse.active = false;
-        });
+        canvas.addEventListener('mouseleave', () => { mouse.active = false; });
 
         class Particle {
             constructor() {
                 this.x = Math.random() * width;
                 this.y = Math.random() * height;
-                this.vx = (Math.random() - 0.5) * 1.5;
-                this.vy = (Math.random() - 0.5) * 1.5;
-                this.radius = Math.random() * 1.8 + 0.5;
-                // Randomly assign bio-electric blue or structural gold
-                this.baseColor = Math.random() > 0.4 ? colorBlue : colorGold;
+                // Slower base velocities for a "calmer" feel
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.radius = Math.random() * 1.5 + 0.5;
             }
 
             update() {
-                // Gentle gravity pulling particles toward the center mass (Holon)
+                // Gentle centering gravity
                 const dxCenter = (width / 2) - this.x;
                 const dyCenter = (height / 2) - this.y;
-                this.vx += dxCenter * 0.0004;
-                this.vy += dyCenter * 0.0004;
+                this.vx += dxCenter * 0.0003;
+                this.vy += dyCenter * 0.0003;
 
-                // Mouse repulsion: simulating the fracture/split into individual Inklings
+                // Less reactive mouse repulsion
                 if (mouse.active) {
                     const dxMouse = mouse.x - this.x;
                     const dyMouse = mouse.y - this.y;
-                    const distMouse = Math.sqrt(dxMouse*dxMouse + dyMouse*dyMouse);
+                    const distSq = dxMouse * dxMouse + dyMouse * dyMouse;
                     
-                    if (distMouse < 90) { // Repulsion radius
-                        const force = (90 - distMouse) / 90;
-                        this.vx -= (dxMouse / distMouse) * force * 2;
-                        this.vy -= (dyMouse / distMouse) * force * 2;
+                    if (distSq < mouseRadiusSq) {
+                        const dist = Math.sqrt(distSq);
+                        const force = (80 - dist) / 80;
+                        this.vx -= (dxMouse / dist) * force * 1.2; // Softened repulsion
+                        this.vy -= (dyMouse / dist) * force * 1.2;
                     }
                 }
 
-                // Apply velocity and friction (viscosity feeling)
-                this.vx *= 0.95;
-                this.vy *= 0.95;
+                this.vx *= 0.96; // Slightly more friction/viscosity
+                this.vy *= 0.96;
                 this.x += this.vx;
                 this.y += this.vy;
             }
 
-            draw() {
+            drawNode() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = this.baseColor + '0.9)';
+                ctx.fillStyle = colorBlue + '0.7)';
                 ctx.fill();
             }
         }
 
-        // Initialize particles
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
+        for (let i = 0; i < particleCount; i++) particles.push(new Particle());
 
-        function animateHolon() {
-            // Clear frame
+        // FPS Control settings (30 FPS cap)
+        let lastTime = 0;
+        const fpsInterval = 1000 / 30;
+
+        function animateHolon(currentTime) {
+            requestAnimationFrame(animateHolon);
+
+            const elapsed = currentTime - lastTime;
+            if (elapsed < fpsInterval) return;
+            lastTime = currentTime - (elapsed % fpsInterval);
+
             ctx.clearRect(0, 0, width, height);
 
-            // Update & Draw Particles
+            // Update all particles
             particles.forEach(p => p.update());
 
-            // Connect nearest-neighbor particles (Interconnected Geometry)
-            for (let i = 0; i < particles.length; i++) {
-                for (let j = i + 1; j < particles.length; j++) {
-                    const p1 = particles[i];
+            // Batch connection drawing (Spatial partitioning not strictly needed for 40, 
+            // but optimized loops and pre-calc help immensely)
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(79, 209, 197, 0.15)`; // Blue tint for connections
+            ctx.lineWidth = 0.5;
+
+            for (let i = 0; i < particleCount; i++) {
+                const p1 = particles[i];
+                for (let j = i + 1; j < particleCount; j++) {
                     const p2 = particles[j];
                     const dx = p1.x - p2.x;
                     const dy = p1.y - p2.y;
-                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    const dSq = dx * dx + dy * dy;
 
-                    if (dist < 45) { // Connection threshold
-                        ctx.beginPath();
+                    if (dSq < connectionDistSq) {
                         ctx.moveTo(p1.x, p1.y);
                         ctx.lineTo(p2.x, p2.y);
-                        // Dynamic opacity based on proximity (closer = brighter)
-                        const opacity = Math.pow(1 - (dist / 45), 1.5);
-                        
-                        // Mix wire color based on connection
-                        ctx.strokeStyle = `rgba(160, 174, 192, ${opacity * 0.4})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
                     }
                 }
-                
-                // Draw nodes on top of lines
-                particles[i].draw();
             }
-            requestAnimationFrame(animateHolon);
+            ctx.stroke();
+
+            // Draw nodes after segments
+            particles.forEach(p => p.drawNode());
         }
 
-        animateHolon();
+        requestAnimationFrame(animateHolon);
     }
 
 });
