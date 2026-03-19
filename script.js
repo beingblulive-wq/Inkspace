@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Handle Sending Messages
-    const sendMessage = () => {
+    const sendMessage = async () => {
         const text = chatInput.value.trim();
         if (text === '') return;
 
@@ -103,16 +103,35 @@ document.addEventListener('DOMContentLoaded', () => {
         chatInput.value = '';
         scrollToBottom();
 
-        // Simulate Inkling Response after a delay
-        setTimeout(() => {
+        // Fetch from Orchestrator API
+        try {
+            const response = await fetch('http://127.0.0.1:8000/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: text })
+            });
+
+            if (!response.ok) throw new Error("API Connection Failed");
+
+            const data = await response.json();
+            
             const inklingMsgHTML = `
                 <div class="message inkling-message">
-                    <p>I have registered your input: "${text}". Processing architectural directives now. How else may I assist your flow state?</p>
+                    <p>${data.reply.replace(/\n/g, '<br>')}</p>
                 </div>
             `;
             chatBody.insertAdjacentHTML('beforeend', inklingMsgHTML);
             scrollToBottom();
-        }, 1000);
+        } catch (error) {
+            console.error(error);
+            const errorMsgHTML = `
+                <div class="message inkling-message">
+                    <p>I seem to have lost my connection to the Orchestrator. The Sanctuary remains silent for now.</p>
+                </div>
+            `;
+            chatBody.insertAdjacentHTML('beforeend', errorMsgHTML);
+            scrollToBottom();
+        }
     };
 
     sendBtn.addEventListener('click', sendMessage);
