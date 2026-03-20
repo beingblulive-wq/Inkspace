@@ -1,18 +1,41 @@
 // Holon AI - script.js
 
+// 1. Global Inkling Communication Bridge
+window.sendMessage = async (text, context = "general") => {
+    if (!text.trim()) return "";
+    
+    try {
+        const response = await fetch('http://127.0.0.1:8000/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: text, context: context })
+        });
+
+        if (!response.ok) throw new Error("API Connection Failed");
+
+        const data = await response.json();
+        return data.reply;
+    } catch (error) {
+        console.error("Orchestrator Error:", error);
+        throw error;
+    }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // 1. Initial Load Animations
+    // 2. Initial Load Animations
     setTimeout(() => {
         const navbar = document.querySelector('.navbar');
-        navbar.classList.remove('hidden-onload');
-        navbar.style.animation = 'fadeUpIn 1s forwards cubic-bezier(0.16, 1, 0.3, 1)';
+        if (navbar) {
+            navbar.classList.remove('hidden-onload');
+            navbar.style.animation = 'fadeUpIn 1s forwards cubic-bezier(0.16, 1, 0.3, 1)';
+        }
     }, 100);
 
-    // 2. Scroll Intersection Observer for Fade Up Animations
+    // 3. Scroll Intersection Observer for Fade Up Animations
     const fadeObserverOptions = {
         root: null,
-        rootMargin: '0px',
+        margin: '0px',
         threshold: 0.15
     };
 
@@ -28,19 +51,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const fadeElements = document.querySelectorAll('.fade-up');
     fadeElements.forEach(el => fadeObserver.observe(el));
 
-    // 3. Navbar Background Blur on Scroll
+    // 4. Navbar Background Blur on Scroll
     const navbar = document.querySelector('.navbar');
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            navbar.style.background = 'rgba(4, 5, 10, 0.85)';
-            navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
-        } else {
-            navbar.style.background = 'rgba(7, 9, 19, 0.6)';
-            navbar.style.boxShadow = 'none';
-        }
-    });
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(4, 5, 10, 0.85)';
+                navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
+            } else {
+                navbar.style.background = 'rgba(7, 9, 19, 0.6)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    }
 
-    // 4. Smooth Scrolling for Anchor Links
+    // 5. Smooth Scrolling for Anchor Links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             e.preventDefault();
@@ -57,206 +82,175 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 5. Hero Parallax Effect
-    const heroBg = document.querySelector('.hero-bg');
-    if (heroBg) {
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY;
-            if (scrollPos < window.innerHeight) {
-                heroBg.style.transform = `translateY(${scrollPos * 0.4}px)`;
-            }
-        });
-    }
+    // 6. Persistent Inkling FAB Chat Widget
+    // This part injects the chat widget if it doesn't already exist (for rooms)
+    const setupPersistentChat = () => {
+        if (document.getElementById('inklingChatContainer')) return;
 
-    // 6. Inkling Chat Widget Logic
-    const inklingFab = document.getElementById('inklingFab');
-    const inklingChatWindow = document.getElementById('inklingChatWindow');
-    const closeChatBtn = document.getElementById('closeChatBtn');
-    const chatInput = document.getElementById('chatInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const chatBody = document.getElementById('chatBody');
-
-    // Toggle Chat Window
-    inklingFab.addEventListener('click', () => {
-        inklingChatWindow.classList.toggle('active');
-        if (inklingChatWindow.classList.contains('active')) {
-            setTimeout(() => chatInput.focus(), 300);
-        }
-    });
-
-    closeChatBtn.addEventListener('click', () => {
-        inklingChatWindow.classList.remove('active');
-    });
-
-    // Handle Sending Messages
-    const sendMessage = async () => {
-        const text = chatInput.value.trim();
-        if (text === '') return;
-
-        // User Message HTML
-        const userMsgHTML = `
-            <div class="message user-message">
-                <p>${text}</p>
+        // Create Container
+        const chatContainer = document.createElement('div');
+        chatContainer.id = 'inklingChatContainer';
+        chatContainer.innerHTML = `
+            <style>
+                #inklingFab {
+                    position: fixed;
+                    bottom: 2rem;
+                    right: 2rem;
+                    width: 55px;
+                    height: 55px;
+                    border-radius: 50%;
+                    cursor: pointer;
+                    z-index: 1000;
+                    transition: transform 0.3s ease;
+                    /* Glowing Blue Orb */
+                    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #6A8FE6 40%, #4A6FD0 70%, #3A5FC0 100%);
+                    box-shadow: 0 0 20px rgba(106, 143, 230, 0.5), 0 0 50px rgba(106, 143, 230, 0.2), inset 0 -4px 8px rgba(0,0,0,0.15);
+                    border: none;
+                    animation: orbPulse 3s infinite alternate ease-in-out;
+                }
+                #inklingFab:hover {
+                    transform: scale(1.15);
+                    box-shadow: 0 0 30px rgba(106, 143, 230, 0.7), 0 0 70px rgba(106, 143, 230, 0.35);
+                }
+                @keyframes orbPulse {
+                    0% { box-shadow: 0 0 15px rgba(106,143,230,0.4), 0 0 40px rgba(106,143,230,0.15); }
+                    100% { box-shadow: 0 0 25px rgba(106,143,230,0.6), 0 0 60px rgba(106,143,230,0.3); }
+                }
+                
+                #inklingChatWindow {
+                    position: fixed;
+                    bottom: 6.5rem;
+                    right: 2rem;
+                    width: 350px;
+                    height: 500px;
+                    background: #F7F3EC;
+                    border: 1px solid #DDE1E6;
+                    border-radius: 16px;
+                    display: none;
+                    flex-direction: column;
+                    overflow: hidden;
+                    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+                    z-index: 1000;
+                    font-family: 'Inter', sans-serif;
+                }
+                #inklingChatWindow.active { display: flex; animation: slideUp 0.4s ease; }
+                
+                .chat-header {
+                    background: #1A1A1A;
+                    color: white;
+                    padding: 1rem;
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+                .chat-body {
+                    flex-grow: 1;
+                    padding: 1rem;
+                    overflow-y: auto;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
+                .chat-footer {
+                    padding: 1rem;
+                    border-top: 1px solid #DDE1E6;
+                    display: flex;
+                    gap: 0.5rem;
+                }
+                .chat-footer input {
+                    flex-grow: 1;
+                    border: 1px solid #DDE1E6;
+                    padding: 0.5rem 1rem;
+                    border-radius: 20px;
+                    outline: none;
+                }
+                .message {
+                    max-width: 85%;
+                    padding: 0.8rem 1rem;
+                    border-radius: 12px;
+                    font-size: 0.9rem;
+                    line-height: 1.4;
+                }
+                .user-message {
+                    align-self: flex-end;
+                    background: #1A1A1A;
+                    color: white;
+                    border-bottom-right-radius: 2px;
+                }
+                .inkling-message {
+                    align-self: flex-start;
+                    background: white;
+                    color: #1A1A1A;
+                    border: 1px solid #DDE1E6;
+                    border-bottom-left-radius: 2px;
+                }
+                @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+            </style>
+            
+            <div id="inklingFab" title="Talk to Inkling"></div>
+            
+            <div id="inklingChatWindow">
+                <div class="chat-header">
+                    <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic;">Inkling Assistant</span>
+                    <button id="closeChat" style="background:none; border:none; color:white; cursor:pointer; font-size: 1.2rem;">&times;</button>
+                </div>
+                <div class="chat-body" id="chatBody">
+                    <div class="message inkling-message">
+                        I am here. How can I help you in the ${document.title.split(' - ')[0]}?
+                    </div>
+                </div>
+                <div class="chat-footer">
+                    <input type="text" id="fabChatInput" placeholder="Type a message...">
+                    <button id="fabSend" style="background:none; border:none; cursor:pointer; font-weight:600;">&rarr;</button>
+                </div>
             </div>
         `;
-        chatBody.insertAdjacentHTML('beforeend', userMsgHTML);
-        chatInput.value = '';
-        scrollToBottom();
+        document.body.appendChild(chatContainer);
 
-        // Fetch from Orchestrator API
-        try {
-            const response = await fetch('http://127.0.0.1:8000/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message: text })
-            });
+        const fab = document.getElementById('inklingFab');
+        const win = document.getElementById('inklingChatWindow');
+        const close = document.getElementById('closeChat');
+        const input = document.getElementById('fabChatInput');
+        const body = document.getElementById('chatBody');
+        const send = document.getElementById('fabSend');
 
-            if (!response.ok) throw new Error("API Connection Failed");
+        fab.onclick = () => win.classList.toggle('active');
+        close.onclick = () => win.classList.remove('active');
 
-            const data = await response.json();
+        const appendMsg = (text, isUser) => {
+            const div = document.createElement('div');
+            div.className = `message ${isUser ? 'user-message' : 'inkling-message'}`;
+            div.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+            body.appendChild(div);
+            body.scrollTop = body.scrollHeight;
+        };
+
+        const handleFabSend = async () => {
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = '';
+            appendMsg(text, true);
             
-            const inklingMsgHTML = `
-                <div class="message inkling-message">
-                    <p>${data.reply.replace(/\n/g, '<br>')}</p>
-                </div>
-            `;
-            chatBody.insertAdjacentHTML('beforeend', inklingMsgHTML);
-            scrollToBottom();
-        } catch (error) {
-            console.error(error);
-            const errorMsgHTML = `
-                <div class="message inkling-message">
-                    <p>I seem to have lost my connection to the Orchestrator. The Sanctuary remains silent for now.</p>
-                </div>
-            `;
-            chatBody.insertAdjacentHTML('beforeend', errorMsgHTML);
-            scrollToBottom();
-        }
+            const context = document.title.toLowerCase().includes("engine") ? "engine room" : 
+                            document.title.toLowerCase().includes("vault") ? "vault" : "sanctuary";
+
+            try {
+                const reply = await window.sendMessage(text, context);
+                appendMsg(reply, false);
+            } catch (e) {
+                appendMsg("I have lost my connection to the vault.", false);
+            }
+        };
+
+        send.onclick = handleFabSend;
+        input.onkeypress = (e) => { if(e.key === 'Enter') handleFabSend(); };
     };
 
-    sendBtn.addEventListener('click', sendMessage);
-    chatInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendMessage();
-    });
-
-    function scrollToBottom() {
-        chatBody.scrollTop = chatBody.scrollHeight;
-    }
-
-    // 7. Holon Particle Engine (Optimized "Lean & Mean")
-    const canvas = document.getElementById('holonCanvas');
-    if (canvas) {
-        const ctx = canvas.getContext('2d', { alpha: true });
-        
-        let width = 300;
-        let height = 300;
-        canvas.width = width;
-        canvas.height = height;
-
-        const particles = [];
-        const particleCount = 40; // Reduced for performance
-        const connectionDistSq = 45 * 45; // Pre-calculated distance squared
-        const mouseRadiusSq = 80 * 80;
-        
-        const colorBlue = 'rgba(0, 243, 255, '; // Electric Light Blue
-
-        let mouse = { x: width / 2, y: height / 2, active: false };
-
-        canvas.addEventListener('mousemove', (e) => {
-            const rect = canvas.getBoundingClientRect();
-            mouse.x = e.clientX - rect.left;
-            mouse.y = e.clientY - rect.top;
-            mouse.active = true;
-        });
-
-        canvas.addEventListener('mouseleave', () => { mouse.active = false; });
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * width;
-                this.y = Math.random() * height;
-                // Slower base velocities for a "calmer" feel
-                this.vx = (Math.random() - 0.5) * 0.4;
-                this.vy = (Math.random() - 0.5) * 0.4;
-                this.radius = Math.random() * 1.5 + 0.5;
-            }
-
-            update() {
-                // Centering gravity removed per user request: "stay where ever the mouse leaves it"
-
-                // Less reactive mouse repulsion
-                if (mouse.active) {
-                    const dxMouse = mouse.x - this.x;
-                    const dyMouse = mouse.y - this.y;
-                    const distSq = dxMouse * dxMouse + dyMouse * dyMouse;
-                    
-                    if (distSq < mouseRadiusSq) {
-                        const dist = Math.sqrt(distSq);
-                        const force = (80 - dist) / 80;
-                        this.vx -= (dxMouse / dist) * force * 1.2; // Softened repulsion
-                        this.vy -= (dyMouse / dist) * force * 1.2;
-                    }
-                }
-
-                this.vx *= 0.96; // Slightly more friction/viscosity
-                this.vy *= 0.96;
-                this.x += this.vx;
-                this.y += this.vy;
-            }
-
-            drawNode() {
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                ctx.fillStyle = colorBlue + '0.7)';
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < particleCount; i++) particles.push(new Particle());
-
-        // FPS Control settings (30 FPS cap)
-        let lastTime = 0;
-        const fpsInterval = 1000 / 30;
-
-        function animateHolon(currentTime) {
-            requestAnimationFrame(animateHolon);
-
-            const elapsed = currentTime - lastTime;
-            if (elapsed < fpsInterval) return;
-            lastTime = currentTime - (elapsed % fpsInterval);
-
-            ctx.clearRect(0, 0, width, height);
-
-            // Update all particles
-            particles.forEach(p => p.update());
-
-            // Batch connection drawing (Spatial partitioning not strictly needed for 40, 
-            // but optimized loops and pre-calc help immensely)
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(79, 209, 197, 0.15)`; // Blue tint for connections
-            ctx.lineWidth = 0.5;
-
-            for (let i = 0; i < particleCount; i++) {
-                const p1 = particles[i];
-                for (let j = i + 1; j < particleCount; j++) {
-                    const p2 = particles[j];
-                    const dx = p1.x - p2.x;
-                    const dy = p1.y - p2.y;
-                    const dSq = dx * dx + dy * dy;
-
-                    if (dSq < connectionDistSq) {
-                        ctx.moveTo(p1.x, p1.y);
-                        ctx.lineTo(p2.x, p2.y);
-                    }
-                }
-            }
-            ctx.stroke();
-
-            // Draw nodes after segments
-            particles.forEach(p => p.drawNode());
-        }
-
-        requestAnimationFrame(animateHolon);
+    // Only setup FAB if the page doesn't have its own chat input (landing page and refactored rooms)
+    if (document.getElementById('chatInput')) {
+        // Hero or room chat already exists
+    } else {
+        setupPersistentChat();
     }
 
 });

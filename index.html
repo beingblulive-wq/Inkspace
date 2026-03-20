@@ -74,46 +74,110 @@
 
         .inkling-avatar:hover {
             transform: scale(1.05);
+            /* Multi-color Glow: Burnt Orange, Red, Blue */
+            box-shadow: 0 0 40px rgba(196, 130, 89, 0.4), 0 0 60px rgba(201, 79, 92, 0.3), 0 0 80px rgba(106, 143, 230, 0.2);
         }
 
-        /* Launch Button */
-        .launch-btn-container {
-            margin-top: 3rem;
+        /* Corner Navigation Orbs */
+        .corner-nav {
+            position: fixed;
+            bottom: 3rem;
+            left: 0;
+            right: 0;
+            padding: 0 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        .nav-orb-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            pointer-events: auto;
             animation: fadeIn 2s ease-out 1.5s backwards;
         }
 
-        .launch-btn {
-            background: var(--ink-black);
-            color: #fff;
-            padding: 1rem 2.5rem;
-            border-radius: 50px;
-            font-family: var(--font-sans);
-            font-weight: 500;
+        .nav-orb {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
             text-decoration: none;
-            font-size: 1.1rem;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 0.8rem;
+            justify-content: center;
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: none;
+            animation: orbPulse 4s infinite alternate ease-in-out;
+            cursor: pointer;
         }
 
-        .launch-btn:hover {
-            background: var(--invisible-blue);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(106, 143, 230, 0.3);
-            border-color: rgba(255, 255, 255, 0.2);
+        .orb-blue {
+            background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #6A8FE6 40%, #4A6FD0 70%, #3A5FC0 100%);
+            box-shadow: 0 0 20px rgba(106, 143, 230, 0.4), 0 0 50px rgba(106, 143, 230, 0.15);
         }
 
-        .launch-btn svg {
-            width: 20px;
-            height: 20px;
-            transition: transform 1s ease;
+        .orb-rose {
+            background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--rose-ember) 40%, #A93F4C 70%, #892F3C 100%);
+            box-shadow: 0 0 20px rgba(201, 79, 92, 0.4), 0 0 50px rgba(201, 79, 92, 0.15);
         }
 
-        .launch-btn:hover svg {
-            transform: translateX(3px);
+        .nav-orb:hover {
+            transform: scale(1.15) translateY(-5px);
+            /* Multi-color Glow for Sanctuary */
+            box-shadow: 0 0 35px rgba(196, 130, 89, 0.5), 0 0 60px rgba(201, 79, 92, 0.4), 0 0 80px rgba(106, 143, 230, 0.3);
+        }
+
+        .orb-rose:hover {
+            /* Intense Rose Glow */
+            box-shadow: 0 0 40px rgba(201, 79, 92, 0.6), 0 0 80px rgba(201, 79, 92, 0.3);
+        }
+
+        .nav-orb svg {
+            width: 24px;
+            height: 24px;
+            stroke: rgba(255, 255, 255, 0.9);
+            transition: transform 0.4s ease;
+        }
+
+        .nav-label {
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            font-style: italic;
+            color: var(--ink-black);
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-orb-container:hover .nav-label {
+            opacity: 0.9;
+        }
+
+        @keyframes orbPulse {
+            0% { transform: scale(1); filter: brightness(1); }
+            100% { transform: scale(1.03); filter: brightness(1.1); }
+        }
+
+        .lobby-header {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .lobby-title {
+            font-family: var(--font-serif);
+            font-size: 2.5rem;
+            font-style: italic;
+        }
+
+        .lobby-divider {
+            width: 60px;
+            height: 1px;
+            background: var(--moonbeam-silver);
+            margin: 1rem auto;
         }
 
         .greeting-text {
@@ -149,8 +213,13 @@
         }
 
         .chat-input:focus {
-            border-color: var(--invisible-blue);
-            box-shadow: 0 0 10px rgba(106, 143, 230, 0.2);
+            border-color: var(--rose-ember);
+            box-shadow: 0 0 15px rgba(201, 79, 92, 0.3);
+        }
+
+        .chat-input:hover {
+            border-color: var(--rose-ember);
+            box-shadow: 0 0 10px rgba(201, 79, 92, 0.2);
         }
 
         .chat-input::placeholder {
@@ -170,190 +239,11 @@
         }
 
         .send-btn:hover {
-            border-color: var(--invisible-blue);
-            color: var(--invisible-blue);
+            border-color: var(--rose-ember);
+            color: var(--rose-ember);
+            box-shadow: 0 0 10px rgba(201, 79, 92, 0.2);
         }
 
-        /* 2. The UI Layout: The Portal (Spatial Navigation / Lobby) */
-        .lobby {
-            display: flex;
-            gap: 2.5rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 1200px;
-            width: 100%;
-        }
-
-        /* 3. Doorways (Cards) */
-        .doorway {
-            flex: 1;
-            min-width: 320px;
-            background: #FFFFFF;
-            border: 1px solid var(--moonbeam-silver);
-            border-radius: 12px;
-            padding: 3rem 2.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 2s ease-out backwards;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
-            text-decoration: none;
-        }
-
-        /* Staggered load animation */
-        .doorway:nth-child(1) {
-            animation-delay: 0.3s;
-        }
-
-        .doorway:nth-child(2) {
-            animation-delay: 0.6s;
-        }
-
-        .doorway:nth-child(3) {
-            animation-delay: 0.9s;
-        }
-
-        .doorway:nth-child(4) {
-            animation-delay: 1.2s;
-        }
-
-        .doorway:nth-child(5) {
-            animation-delay: 1.5s;
-        }
-
-        /* The Doorway Header "Glow" underline */
-        .doorway::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            transform: scaleX(0);
-            transform-origin: center;
-            transition: transform 0.6s ease;
-        }
-
-        /* Hover States (Gentle and Breathable) */
-        .doorway:hover {
-            transform: translateY(-8px);
-            border-color: transparent;
-        }
-
-        .doorway:hover::before {
-            transform: scaleX(1);
-        }
-
-        /* Doorway Specific Accents */
-        .doorway.vault::before {
-            background-color: var(--legacy-gold);
-        }
-
-        .doorway.engine::before {
-            background-color: var(--invisible-blue);
-        }
-
-        .doorway.sanctuary::before {
-            background-color: var(--rose-ember);
-        }
-
-        .doorway.literature::before {
-            background-color: var(--literature-teal);
-        }
-
-        .doorway.gallery::before {
-            background-color: var(--gallery-amethyst);
-        }
-
-        .doorway.vault:hover {
-            box-shadow: 0 20px 40px rgba(212, 168, 87, 0.1);
-        }
-
-        .doorway.engine:hover {
-            box-shadow: 0 20px 40px rgba(106, 143, 230, 0.1);
-        }
-
-        .doorway.sanctuary:hover {
-            box-shadow: 0 20px 40px rgba(201, 79, 92, 0.1);
-        }
-
-        .doorway.literature:hover {
-            box-shadow: 0 20px 40px rgba(74, 124, 89, 0.1);
-        }
-
-        .doorway.gallery:hover {
-            box-shadow: 0 20px 40px rgba(140, 94, 88, 0.1);
-        }
-
-        /* Typography within Doorways */
-        .doorway-title {
-            font-family: var(--font-serif);
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--ink-black);
-        }
-
-        .flourish {
-            width: 40px;
-            height: 1px;
-            background-color: var(--moonbeam-silver);
-            margin: 0 auto 1.5rem auto;
-            transition: background-color 0.5s ease;
-        }
-
-        .doorway:hover .flourish.vault-flourish {
-            background-color: var(--legacy-gold);
-        }
-
-        .doorway:hover .flourish.engine-flourish {
-            background-color: var(--invisible-blue);
-        }
-
-        .doorway:hover .flourish.sanctuary-flourish {
-            background-color: var(--rose-ember);
-        }
-
-        .doorway:hover .flourish.literature-flourish {
-            background-color: var(--literature-teal);
-        }
-
-        .doorway:hover .flourish.gallery-flourish {
-            background-color: var(--gallery-amethyst);
-        }
-
-        .inscription {
-            font-family: var(--font-serif);
-            font-size: 1.25rem;
-            font-style: italic;
-            color: #555;
-            margin-bottom: 2.5rem;
-            line-height: 1.5;
-            flex-grow: 1;
-        }
-
-        .inscription.heroic {
-            opacity: 0.6;
-        }
-
-        .description {
-            font-family: var(--font-sans);
-            font-size: 0.95rem;
-            color: #666;
-            font-weight: 300;
-        }
-
-        .doorway.sanctuary .description {
-            margin-top: 2.5rem;
-            flex-grow: 1;
-            display: flex;
-            align-items: flex-end;
-        }
 
 
         /* Animations */
@@ -444,7 +334,7 @@
             }
         }
 
-        /* --- Holon Mascot Canvas --- */
+        /* --- Holon Mascot Canvas (Blue-tinted) --- */
         .holon-wrapper {
             position: relative;
             width: 300px;
@@ -453,7 +343,9 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            pointer-events: none; 
+            pointer-events: none;
+            /* Blue luminous tint to match orbs */
+            filter: hue-rotate(10deg) saturate(1.5) brightness(1.1);
         }
 
         #holonCanvas {
@@ -474,70 +366,38 @@
 
 <body>
 
-    <!-- The Central Greeting -->
+    <!-- The Central Greeting & Chat Hero -->
     <div class="greeting-container">
         <div class="holon-wrapper">
             <canvas id="holonCanvas"></canvas>
         </div>
-        <h1 class="greeting-text" id="greetingText">"Welcome to the Sanctuary. I am Inkling. Where do you need to go today?"</h1>
-
+        <h1 class="greeting-text" id="greetingText">"I am Inkling. Your witness in the Sanctuary. How can I guide your brilliance today?"</h1>
 
         <div class="chat-container">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Ask Inkling..." autocomplete="off">
+            <input type="text" id="chatInput" class="chat-input" placeholder="Speak to Inkling..." autocomplete="off">
             <button id="sendBtn" class="send-btn">Send</button>
+        </div>
+
+        <!-- Navigation Orbs (Fixed at Corners) -->
+        <div class="corner-nav">
+            <!-- Lower Left: Rose Ember Orb (Inkpad) -->
+            <div class="nav-orb-container left">
+                <a href="Inkpad.html" class="nav-orb orb-rose" title="Open Inkpad"></a>
+                <span class="nav-label">Inkpad</span>
+            </div>
+
+            <!-- Lower Right: Blue Sanctuary Orb (Lobby) -->
+            <div class="nav-orb-container right">
+                <a href="lobby.html" class="nav-orb orb-blue" title="Enter the Sanctuary">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14m-7-7l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <span class="nav-label">Enter the Sanctuary</span>
+            </div>
         </div>
     </div>
 
-    <!-- The Lobby -->
-    <div class="lobby">
-
-        <!-- Doorway 1: The Halls of Reflection (The Vault) -->
-        <a href="vault.html" class="doorway vault">
-            <h2 class="doorway-title">The Halls of Reflection</h2>
-            <div class="flourish vault-flourish"></div>
-            <p class="inscription">"Stop measuring days by degree of productivity and start experiencing them by degree
-                of presence."<br><br>— Alan Watts</p>
-            <p class="description">Enter the deeply private, encrypted space for journaling and Autobiography Mode.
-                Leave the "Productive Human" at the door.</p>
-        </a>
-
-        <!-- Doorway 2: The Engine Room (Holon Architecture) -->
-        <a href="engine.html" class="doorway engine">
-            <h2 class="doorway-title">The Engine Room</h2>
-            <div class="flourish engine-flourish"></div>
-            <p class="inscription">"A holon is something that is simultaneously a whole in and of itself, as well as a
-                part of a larger whole."<br><br>— Arthur Koestler</p>
-            <p class="description">Step inside to understand how the human and the AI work together as a single, unified
-                organism.</p>
-        </a>
-
-        <!-- Doorway 3: The Creative Social Sanctuary (The Hero Factory) -->
-        <a href="sanctuary.html" class="doorway sanctuary">
-            <h2 class="doorway-title">The Creative Social Sanctuary</h2>
-            <div class="flourish sanctuary-flourish"></div>
-            <p class="inscription heroic">A place where shared humanity becomes heroic.</p>
-            <p class="description">The shared space where artists, writers, youth, and trauma-informed professionals
-                converge.</p>
-        </a>
-
-        <!-- Doorway 4: The Archive of Ink (Literature) -->
-        <a href="literature.html" class="doorway literature">
-            <h2 class="doorway-title">The Archive of Ink</h2>
-            <div class="flourish literature-flourish"></div>
-            <p class="inscription">"Words are pale shadows of forgotten names. As names have power, words have
-                power."<br><br>— Patrick Rothfuss</p>
-            <p class="description">A library of written works, literature, and the legacy of the invisible pen.</p>
-        </a>
-
-        <!-- Doorway 5: The Exhibition (Gallery) -->
-        <a href="gallery.html" class="doorway gallery">
-            <h2 class="doorway-title">The Exhibition</h2>
-            <div class="flourish gallery-flourish"></div>
-            <p class="inscription">"Art is not what you see, but what you make others see."<br><br>— Edgar Degas</p>
-            <p class="description">A visual gallery space for art, blueprints, and expressions of the Sanctuary.</p>
-        </a>
-
-    </div>
 
     <!-- Global Footer -->
     <footer class="global-footer">
@@ -553,52 +413,37 @@
         </div>
     </footer>
 
+    <script src="script.js"></script>
     <script>
+        // Hero Chat Integration
         const chatInput = document.getElementById('chatInput');
         const sendBtn = document.getElementById('sendBtn');
         const greetingText = document.getElementById('greetingText');
 
-        async function sendMessage() {
-            const message = chatInput.value.trim();
-            if (!message) return;
-
-            // Optimistic UI update
+        async function handleSend() {
+            const msg = chatInput.value.trim();
+            if(!msg) return;
+            
             chatInput.value = '';
-            greetingText.innerHTML = `<em>Listening...</em>`;
-            greetingText.style.opacity = '0.5';
-
+            greetingText.style.opacity = '0.4';
+            greetingText.innerHTML = `<em>Consulting the vault...</em>`;
+            
             try {
-                const response = await fetch('http://127.0.0.1:8000/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: message })
-                });
-
-                if (!response.ok) {
-                    throw new Error("API Connection Failed");
-                }
-
-                const data = await response.json();
-
-                // Animate text transition
+                // We use use the global sendMessage function from script.js which handles the fetch
+                const reply = await sendMessage(msg, "lobby");
+                
                 greetingText.style.opacity = '0';
                 setTimeout(() => {
-                    // Replace newlines with <br> for HTML rendering
-                    greetingText.innerHTML = `"${data.reply.replace(/\n/g, '<br>')}"`;
+                    greetingText.innerHTML = `"${reply.replace(/\n/g, '<br>')}"`;
                     greetingText.style.opacity = '1';
                 }, 300);
-
-            } catch (error) {
-                console.error(error);
+            } catch (e) {
                 greetingText.innerHTML = `"I seem to have lost my connection to the Orchestrator. The Sanctuary remains silent for now."`;
-                greetingText.style.opacity = '1';
             }
         }
-
-        sendBtn.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
+        
+        sendBtn.addEventListener('click', handleSend);
+        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
 
         // 7. Holon Particle Engine (Optimized & Blue Only)
         const canvas = document.getElementById('holonCanvas');
@@ -612,9 +457,9 @@
 
             const particles = [];
             const particleCount = 40; // Lean & Mean
-            const colorBlue = 'rgba(0, 243, 255, '; // Electric Light Blue
-            const connectionDistSq = 45 * 45;
-            const mouseRadiusSq = 120 * 120;
+            const colorBlue = 'rgba(0, 160, 255, ';
+            const connectionDistSq = 50 * 50; 
+            const mouseRadiusSq = 200 * 200; // Increased mouse range
 
             let mouse = { x: width / 2, y: height / 2, active: false };
 
@@ -631,15 +476,12 @@
                 constructor() {
                     this.x = Math.random() * width;
                     this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.4;
-                    this.vy = (Math.random() - 0.5) * 0.4;
-                    this.baseRadius = Math.random() * 1.5 + 0.5;
-                    this.radius = this.baseRadius;
+                    this.vx = (Math.random() - 0.5) * 0.3;
+                    this.vy = (Math.random() - 0.5) * 0.3;
+                    this.radius = Math.random() * 1.5 + 0.5;
                 }
 
                 update() {
-                    // Centering gravity removed per user request: "stay where ever the mouse leaves it"
-                    
                     if (mouse.active) {
                         const dxMouse = mouse.x - this.x;
                         const dyMouse = mouse.y - this.y;
@@ -647,15 +489,15 @@
                         
                         if (distSq < mouseRadiusSq) {
                             const dist = Math.sqrt(distSq);
-                            const force = (120 - dist) / 120;
-                            // Slower, less reactive puppy-like pull
-                            this.vx += (dxMouse / dist) * force * 0.4;
-                            this.vy += (dyMouse / dist) * force * 0.4;
+                            const force = (200 - dist) / 200;
+                            // Playful, puppy-like pull
+                            this.vx += (dxMouse / dist) * force * 0.5;
+                            this.vy += (dyMouse / dist) * force * 0.5;
                         }
                     }
 
-                    this.vx *= 0.96;
-                    this.vy *= 0.96;
+                    this.vx *= 0.95;
+                    this.vy *= 0.95;
                     this.x += this.vx;
                     this.y += this.vy;
                 }
@@ -663,44 +505,40 @@
                 draw() {
                     ctx.beginPath();
                     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = colorBlue + '0.7)';
+                    ctx.fillStyle = colorBlue + '0.8)';
                     ctx.fill();
                 }
             }
 
             for (let i = 0; i < particleCount; i++) particles.push(new Particle());
 
-            let lastTime = 0;
-            const fpsInterval = 1000 / 30; // 30 FPS Cap
-
-            function animateHolon(currentTime) {
+            function animateHolon() {
                 requestAnimationFrame(animateHolon);
-                const elapsed = currentTime - lastTime;
-                if (elapsed < fpsInterval) return;
-                lastTime = currentTime - (elapsed % fpsInterval);
-
                 ctx.clearRect(0, 0, width, height);
                 particles.forEach(p => p.update());
 
-                ctx.beginPath();
-                ctx.strokeStyle = `rgba(0, 243, 255, 0.15)`; // Electric Blue connections
-                ctx.lineWidth = 0.5;
                 for (let i = 0; i < particleCount; i++) {
                     const p1 = particles[i];
                     for (let j = i + 1; j < particleCount; j++) {
                         const p2 = particles[j];
                         const dx = p1.x - p2.x;
                         const dy = p1.y - p2.y;
-                        if (dx * dx + dy * dy < connectionDistSq) {
+                        const distSq = dx * dx + dy * dy;
+                        if (distSq < connectionDistSq) {
+                            ctx.beginPath();
+                            // Crackling spark effect
+                            const sparkAlpha = (Math.random() * 0.3 + 0.1).toFixed(2);
+                            ctx.strokeStyle = `rgba(100, 200, 255, ${sparkAlpha})`;
+                            ctx.lineWidth = Math.random() * 0.7 + 0.3;
                             ctx.moveTo(p1.x, p1.y);
                             ctx.lineTo(p2.x, p2.y);
+                            ctx.stroke();
                         }
                     }
                 }
-                ctx.stroke();
                 particles.forEach(p => p.draw());
             }
-            requestAnimationFrame(animateHolon);
+            animateHolon();
         }
     </script>
 </body>

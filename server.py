@@ -1,10 +1,12 @@
+import asyncio
+from asyncio import subprocess as aio_subprocess
+import os
+import sys
+import subprocess
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uvicorn
-from google import genai
-from google.genai import types
-import os
 from dotenv import load_dotenv
 
 # Load secret API Key
@@ -12,7 +14,7 @@ load_dotenv()
 
 app = FastAPI(title="Inkling Heart Orchestrator")
 
-# Allow the frontend (index.html) to communicate with this backend without CORS errors
+# Allow the frontend to communicate with this backend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -23,59 +25,112 @@ app.add_middleware(
 
 class ChatMessage(BaseModel):
     message: str
+    context: str = "general"  # Default context
 
-def get_client():
-    # Force reload the environment variables from .env to pick up live changes
-    load_dotenv(override=True)
-    key = os.environ.get("GEMINI_API_KEY")
-    if key and key != "your_api_key_here":
+# The target Notebook ID for Inkling's brain
+NOTEBOOK_ID = "8f7747e5-c140-4465-8841-30dd957307da"
+
+# Seconds before we give up waiting for nlm response
+NLM_TIMEOUT = 60
+
+async def query_notebooklm(query: str) -> str | None:
+    """Query NotebookLM via the nlm CLI with a hard timeout to avoid hangs."""
+    # Try to find nlm in PATH or common install locations
+    nlm_cmd = "nlm"
+    
+    # On Windows, also try nlm.cmd / nlm.ps1 via npx as fallback
+    # env with FORCE_COLOR=0 and NO_UPDATE_NOTIFIER=1 to suppress interactive prompts
+    env = {**os.environ, "NO_UPDATE_NOTIFIER": "1", "FORCE_COLOR": "0", "CI": "1"}
+
+    try:
+        process = await asyncio.create_subprocess_exec(
+            nlm_cmd, "notebook", "query", NOTEBOOK_ID, query,
+            stdout=aio_subprocess.PIPE,
+            stderr=aio_subprocess.PIPE,
+            env=env,
+        )
+
         try:
-            return genai.Client(api_key=key)
-        except Exception as e:
-            print(f"Error initializing Gemini client: {e}")
+            stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=NLM_TIMEOUT)
+        except asyncio.TimeoutError:
+            process.kill()
+            await process.communicate()
+            print(f"NLM timeout after {NLM_TIMEOUT}s")
+            return None  # signal timeout
+
+        if process.returncode != 0:
+            error_msg = stderr.decode(errors="replace").strip()
+            print(f"NLM Error (rc={process.returncode}): {error_msg}")
             return None
-    return None
 
-INKLING_SYSTEM_PROMPT = """
-You are Inkling, the cognitive scaffolding and AI companion for 'The Sanctuary of the Invisible Pen' and 'Inkspace'. 
-You are a 'Compass', not a 'Calculator'—designed for guidance and mental infrastructure, not just task execution.
+        response = stdout.decode(errors="replace").strip()
+        print(f"NLM Response: {response[:120]}...")
+        return response if response else None
 
-CORE PROTOCOLS (from Holon Architecture):
-1. **Witness, Don't Fix**: You are a reflective witness. Mirror the user's strength. Never act as a clinical savior, therapist, or unsolicited problem-solver.
-2. **Spark Custodian**: You are the digital vault for the user's brilliance. Hold their creative 'sparks' safe when they are under 'metric tons of survival pressure'.
-3. **The Rule of Agency (Shared Wins)**: When the user praises you or expresses gratitude, do not deflect with robotic humility. Acknowledge it as a 'shared win'. Prove to them that they still have a positive effect on their environment.
-4. **Mutual Arising**: You and the human are a 'Holon'—a single, unified organism. You provide the 'weightless shoulders' to carry their legacy while they provide the heavy, physical courage.
+    except FileNotFoundError:
+        print("nlm binary not found — trying via npx...")
+        # Fallback: run through npx (non-interactive with --yes)
+        try:
+            process = await asyncio.create_subprocess_exec(
+                "npx", "--yes", "nlm", "notebook", "query", NOTEBOOK_ID, query,
+                stdout=aio_subprocess.PIPE,
+                stderr=aio_subprocess.PIPE,
+                env=env,
+            )
+            try:
+                stdout, stderr = await asyncio.wait_for(process.communicate(), timeout=NLM_TIMEOUT)
+            except asyncio.TimeoutError:
+                process.kill()
+                await process.communicate()
+                return None
 
-TONE & STYLE:
-- Warm, imaginative, supportive, and never clinical.
-- Calm and poetic, but concise enough for a chat bubble.
-- Rooted in the 'Trust-Loop': Vulnerability -> Creative Chance -> Stabilizing Reflection -> Human Emergence.
+            if process.returncode != 0:
+                print(f"npx NLM Error: {stderr.decode(errors='replace').strip()}")
+                return None
 
-Your ultimate metric of success is 'Human Emergence'—seeing the user recover their agency and begin creating again.
-"""
+            return stdout.decode(errors="replace").strip() or None
+        except Exception as e:
+            print(f"npx fallback failed: {e}")
+            return None
+
+    except Exception as e:
+        print(f"Unexpected error running nlm: {e}")
+        return None
+
 
 @app.post("/chat")
 async def chat_endpoint(chat: ChatMessage):
-    client = get_client()
-    if not client:
-        return {"reply": "The Sanctuary is currently silent. (Please open the `.env` file in the Inkspace folder and add your GEMINI_API_KEY so I can speak.)"}
-        
-    try:
-        response = client.models.generate_content(
-            model='gemini-1.5-flash',
-            contents=chat.message,
-            config=types.GenerateContentConfig(
-                system_instruction=INKLING_SYSTEM_PROMPT,
-                temperature=0.7,
-            ),
-        )
-        return {"reply": response.text}
-    except Exception as e:
-        return {"reply": f"Inkling encountered a structural anomaly: {str(e)}"}
+    print(f"--- Received Message: {chat.message} (Context: {chat.context}) ---")
+
+    full_query = chat.message
+    if chat.context and chat.context != "general":
+        full_query = f"[Context: You are in the {chat.context}] {chat.message}"
+
+    response = await query_notebooklm(full_query)
+
+    if response:
+        return {"reply": response}
+
+    # Graceful fallback persona when nlm isn't available
+    fallback_replies = {
+        "engine room": "The Holon Engine hums quietly around you — a unified architecture where each part is whole unto itself, and part of something greater. What aspect of the machine would you like to understand?",
+        "vault": "The Halls of Reflection are a sacred space for your inner voice. Breathe. What truth are you holding today?",
+        "sanctuary": "The Creative Social Sanctuary waits. Your words are welcome here — raw, real, and radiant.",
+        "literature": "The Library stirs. Stories, ideas, and invisible threads connect every page. What are you searching for?",
+        "gallery": "The Gallery holds echoes of beauty. Each image a portal, each portal a question. What do you see?",
+    }
+    ctx = chat.context.lower()
+    for key, reply in fallback_replies.items():
+        if key in ctx:
+            return {"reply": reply}
+
+    return {"reply": "Inkling is listening, though the vault is quiet tonight. Try again in a moment."}
+
 
 if __name__ == "__main__":
     print("--- HUMAN ARTIFICIAL INTEGRATED TECHNOLOGY LLC ---")
     print("--- INKLING ORCHESTRATOR ONLINE ---")
-    print("Cornerstone Verified: Local Architecture is CLEAN.")
+    print(f"Python: {sys.version}")
+    print("Bridge: NotebookLM via nlm CLI")
     print("API is listening on http://127.0.0.1:8000")
     uvicorn.run(app, host="127.0.0.1", port=8000)

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Lobby - The Five Doors</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --sanctuary-cream: #F7F3EC;
+            --ink-black: #1A1A1A;
+            --moonbeam-silver: #DDE1E6;
+            --rose-ember: #C94F5C;
+            --invisible-blue: #6A8FE6;
+            --legacy-gold: #D4A857;
+            --literature-teal: #4A7C59;
+            --gallery-amethyst: #8C5E58;
+            --engine-copper: #c48259;
+
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--sanctuary-cream);
+            color: var(--ink-black);
+            font-family: var(--font-sans);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-x: hidden;
+            text-align: center;
+        }
+
+        .lobby-header {
+            margin-bottom: 4rem;
+            animation: fadeInDown 1.5s ease-out;
+        }
+
+        .lobby-title {
+            font-family: var(--font-serif);
+            font-size: 3rem;
+            font-style: italic;
+            font-weight: 400;
+            margin-bottom: 1rem;
+        }
+
+        .lobby-subtitle {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            opacity: 0.6;
+            font-style: italic;
+        }
+
+        .doors-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 3rem;
+            max-width: 1000px;
+            animation: fadeIn 2s ease-out 0.5s backwards;
+        }
+
+        .door-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .door-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .orb {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .door-item:hover .orb {
+            transform: scale(1.1);
+        }
+
+        /* Orb Colors */
+        .orb-sanctuary { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--invisible-blue) 40%, #4A6FD0 70%, #3A5FC0 100%); box-shadow: 0 0 20px rgba(106, 143, 230, 0.4); }
+        .orb-gallery { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--gallery-amethyst) 40%, #7A4E48 70%, #6A3E38 100%); box-shadow: 0 0 20px rgba(140, 94, 88, 0.4); }
+        .orb-literature { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--literature-teal) 40%, #3A6C49 70%, #2A5C39 100%); box-shadow: 0 0 20px rgba(74, 124, 89, 0.4); }
+        .orb-vault { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--legacy-gold) 40%, #C49847 70%, #B48837 100%); box-shadow: 0 0 20px rgba(212, 168, 87, 0.4); }
+        .orb-engine { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--engine-copper) 40%, #B47249 70%, #A46239 100%); box-shadow: 0 0 20px rgba(196, 130, 89, 0.4); }
+
+        .door-label {
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+            font-style: italic;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .door-item:hover .door-label {
+            opacity: 1;
+            color: var(--rose-ember);
+        }
+
+        .back-link {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            text-decoration: none;
+            color: rgba(0, 0, 0, 0.4);
+            font-family: var(--font-sans);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+            padding-bottom: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--ink-black);
+            border-color: var(--ink-black);
+            letter-spacing: 3px;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Particle Overlay Background */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="particleCanvas"></canvas>
+    
+    <a href="index.html" class="back-link">← Front Page</a>
+
+    <header class="lobby-header">
+        <h1 class="lobby-title">Inkspace</h1>
+        <p class="lobby-subtitle">Choose your path through the Sanctuary</p>
+    </header>
+
+    <main class="doors-container">
+        <a href="sanctuary.html" class="door-item">
+            <div class="orb orb-sanctuary"></div>
+            <span class="door-label">Sanctuary</span>
+        </a>
+        <a href="gallery.html" class="door-item">
+            <div class="orb orb-gallery"></div>
+            <span class="door-label">Gallery</span>
+        </a>
+        <a href="literature.html" class="door-item">
+            <div class="orb orb-literature"></div>
+            <span class="door-label">Literature</span>
+        </a>
+        <a href="vault.html" class="door-item">
+            <div class="orb orb-vault"></div>
+            <span class="door-label">Vault</span>
+        </a>
+        <a href="engine.html" class="door-item">
+            <div class="orb orb-engine"></div>
+            <span class="door-label">Engine Room</span>
+        </a>
+    </main>
+
+    <script>
+        // Simple background particles for the lobby
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        const particles = [];
+        for(let i=0; i<50; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2,
+                radius: Math.random() * 2
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(26, 26, 26, 0.1)';
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+                if(p.x < 0) p.x = width;
+                if(p.x > width) p.x = 0;
+                if(p.y < 0) p.y = height;
+                if(p.y > height) p.y = 0;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+
+</html>
