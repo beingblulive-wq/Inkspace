@@ -118,28 +118,6 @@
             background: transparent;
         }
 
-        .back-link {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            text-decoration: none;
-            color: rgba(0, 0, 0, 0.5);
-            font-weight: 400;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-            padding-bottom: 4px;
-            transition: all 0.3s ease;
-            z-index: 100;
-        }
-
-        .back-link:hover {
-            color: var(--rose-ember);
-            border-color: var(--rose-ember);
-            letter-spacing: 2px;
-        }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
@@ -147,8 +125,11 @@
     </style>
 </head>
 
-<body>
-    <a href="lobby.html" class="back-link">← Return to Lobby</a>
+<body class="sanctuary-page">
+    <nav class="back-nav">
+        <a href="index.html" class="back-link">← Front Page</a>
+        <a href="lobby.html" class="back-link">Return to Lobby</a>
+    </nav>
 
     <div class="greeting-container">
         <div class="holon-wrapper">
@@ -159,6 +140,34 @@
         <div class="chat-container">
             <input type="text" id="chatInput" class="chat-input" placeholder="Speak to Inkling..." autocomplete="off">
             <button id="sendBtn" class="send-btn">Send</button>
+        </div>
+    </div>
+
+    <!-- Bottom Mini-Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-orb-container">
+            <a href="sanctuary.html" class="nav-orb orb-blue" title="Sanctuary"></a>
+            <span class="nav-label">Sanctuary</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="gallery.html" class="nav-orb orb-amethyst" title="Gallery"></a>
+            <span class="nav-label">Gallery</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="literature.html" class="nav-orb orb-teal" title="Literature"></a>
+            <span class="nav-label">Literature</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="vault.html" class="nav-orb orb-gold" title="Vault"></a>
+            <span class="nav-label">Vault</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="engine.html" class="nav-orb orb-copper" title="Engine Room"></a>
+            <span class="nav-label">Engine</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="Inkpad.html" class="nav-orb orb-rose" title="Inkpad"></a>
+            <span class="nav-label">Inkpad</span>
         </div>
     </div>
 

@@ -78,89 +78,6 @@
             box-shadow: 0 0 40px rgba(196, 130, 89, 0.4), 0 0 60px rgba(201, 79, 92, 0.3), 0 0 80px rgba(106, 143, 230, 0.2);
         }
 
-        /* Corner Navigation Orbs */
-        .corner-nav {
-            position: fixed;
-            bottom: 3rem;
-            left: 0;
-            right: 0;
-            padding: 0 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        .nav-orb-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            pointer-events: auto;
-            animation: fadeIn 2s ease-out 1.5s backwards;
-        }
-
-        .nav-orb {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            border: none;
-            animation: orbPulse 4s infinite alternate ease-in-out;
-            cursor: pointer;
-        }
-
-        .orb-blue {
-            background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #6A8FE6 40%, #4A6FD0 70%, #3A5FC0 100%);
-            box-shadow: 0 0 20px rgba(106, 143, 230, 0.4), 0 0 50px rgba(106, 143, 230, 0.15);
-        }
-
-        .orb-rose {
-            background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--rose-ember) 40%, #A93F4C 70%, #892F3C 100%);
-            box-shadow: 0 0 20px rgba(201, 79, 92, 0.4), 0 0 50px rgba(201, 79, 92, 0.15);
-        }
-
-        .nav-orb:hover {
-            transform: scale(1.15) translateY(-5px);
-            /* Multi-color Glow for Sanctuary */
-            box-shadow: 0 0 35px rgba(196, 130, 89, 0.5), 0 0 60px rgba(201, 79, 92, 0.4), 0 0 80px rgba(106, 143, 230, 0.3);
-        }
-
-        .orb-rose:hover {
-            /* Intense Rose Glow */
-            box-shadow: 0 0 40px rgba(201, 79, 92, 0.6), 0 0 80px rgba(201, 79, 92, 0.3);
-        }
-
-        .nav-orb svg {
-            width: 24px;
-            height: 24px;
-            stroke: rgba(255, 255, 255, 0.9);
-            transition: transform 0.4s ease;
-        }
-
-        .nav-label {
-            font-family: var(--font-serif);
-            font-size: 1rem;
-            font-style: italic;
-            color: var(--ink-black);
-            opacity: 0.5;
-            transition: opacity 0.3s ease;
-        }
-
-        .nav-orb-container:hover .nav-label {
-            opacity: 0.9;
-        }
-
-        @keyframes orbPulse {
-            0% { transform: scale(1); filter: brightness(1); }
-            100% { transform: scale(1.03); filter: brightness(1.1); }
-        }
-
         .lobby-header {
             width: 100%;
             text-align: center;
@@ -378,22 +295,31 @@
             <button id="sendBtn" class="send-btn">Send</button>
         </div>
 
-        <!-- Navigation Orbs (Fixed at Corners) -->
-        <div class="corner-nav">
-            <!-- Lower Left: Rose Ember Orb (Inkpad) -->
-            <div class="nav-orb-container left">
-                <a href="Inkpad.html" class="nav-orb orb-rose" title="Open Inkpad"></a>
-                <span class="nav-label">Inkpad</span>
+        <!-- Bottom Navigation Orbs (Consistent with Mockup) -->
+        <div class="bottom-nav">
+            <div class="nav-orb-container">
+                <a href="sanctuary.html" class="nav-orb orb-blue" title="Sanctuary"></a>
+                <span class="nav-label">Sanctuary</span>
             </div>
-
-            <!-- Lower Right: Blue Sanctuary Orb (Lobby) -->
-            <div class="nav-orb-container right">
-                <a href="lobby.html" class="nav-orb orb-blue" title="Enter the Sanctuary">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M5 12h14m-7-7l7 7-7 7" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </a>
-                <span class="nav-label">Enter the Sanctuary</span>
+            <div class="nav-orb-container">
+                <a href="gallery.html" class="nav-orb orb-amethyst" title="Gallery"></a>
+                <span class="nav-label">Gallery</span>
+            </div>
+            <div class="nav-orb-container">
+                <a href="literature.html" class="nav-orb orb-teal" title="Literature"></a>
+                <span class="nav-label">Literature</span>
+            </div>
+            <div class="nav-orb-container">
+                <a href="vault.html" class="nav-orb orb-gold" title="Vault"></a>
+                <span class="nav-label">Vault</span>
+            </div>
+            <div class="nav-orb-container">
+                <a href="engine.html" class="nav-orb orb-copper" title="Engine Room"></a>
+                <span class="nav-label">Engine Room</span>
+            </div>
+            <div class="nav-orb-container">
+                <a href="Inkpad.html" class="nav-orb orb-rose" title="Inkpad"></a>
+                <span class="nav-label">Inkpad</span>
             </div>
         </div>
     </div>

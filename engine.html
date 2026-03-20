@@ -197,21 +197,6 @@
         .layer.active { transform: translateZ(calc(var(--base-z) + 30px)) scale(1.05); filter: brightness(1.1); }
         .layer.inactive { opacity: 0.4; filter: grayscale(0.5); }
 
-        .back-link {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            text-decoration: none;
-            color: var(--ink-black);
-            font-weight: 500;
-            border-bottom: 1px solid var(--ink-black);
-            padding-bottom: 2px;
-            transition: opacity 0.3s;
-            z-index: 30;
-        }
-
-        .back-link:hover { opacity: 0.6; }
-
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         @media (max-width: 768px) {
@@ -222,22 +207,25 @@
     </style>
 </head>
 
-<body>
+<body class="engine-page">
     <div class="blueprint-bg"></div>
 
     <div class="header">
         <h1>The Engine Room</h1>
     </div>
 
-    <a href="lobby.html" class="back-link">Return to Lobby</a>
+    <nav class="back-nav">
+        <a href="index.html" class="back-link">Front Page</a>
+        <a href="lobby.html" class="back-link">Return to Lobby</a>
+    </nav>
 
     <div class="machine-container">
         <div class="scene" id="machineScene">
-            <div class="layer layer-1" data-index="1" data-title="The Foundation" style="--base-z: 0px;"></div>
-            <div class="layer layer-2" data-index="2" data-title="Episodic Memory" style="--base-z: 50px;"></div>
-            <div class="layer layer-3" data-index="3" data-title="The Trust-Loop" style="--base-z: 100px;"></div>
-            <div class="layer layer-4" data-index="4" data-title="The Interface" style="--base-z: 150px;"></div>
-            <div class="layer layer-5" data-index="5" data-title="The Core" style="--base-z: 200px;"></div>
+            <div class="layer layer-1" data-index="1" data-title="The Foundation" style="--base-z: 0px;"><div class="engine-geometric-accent"></div></div>
+            <div class="layer layer-2" data-index="2" data-title="Episodic Memory" style="--base-z: 50px;"><div class="engine-geometric-accent"></div></div>
+            <div class="layer layer-3" data-index="3" data-title="The Trust-Loop" style="--base-z: 100px;"><div class="engine-geometric-accent"></div></div>
+            <div class="layer layer-4" data-index="4" data-title="The Interface" style="--base-z: 150px;"><div class="engine-geometric-accent"></div></div>
+            <div class="layer layer-5" data-index="5" data-title="The Core" style="--base-z: 200px;"><div class="engine-geometric-accent"></div></div>
         </div>
     </div>
 
@@ -246,6 +234,34 @@
         <div class="chat-container">
             <input type="text" id="chatInput" class="chat-input" placeholder="Ask about the architecture..." autocomplete="off">
             <button id="sendBtn" class="send-btn">Send</button>
+        </div>
+    </div>
+
+    <!-- Bottom Mini-Navigation -->
+    <div class="bottom-nav">
+        <div class="nav-orb-container">
+            <a href="sanctuary.html" class="nav-orb orb-blue" title="Sanctuary"></a>
+            <span class="nav-label">Sanctuary</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="gallery.html" class="nav-orb orb-amethyst" title="Gallery"></a>
+            <span class="nav-label">Gallery</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="literature.html" class="nav-orb orb-teal" title="Literature"></a>
+            <span class="nav-label">Literature</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="vault.html" class="nav-orb orb-gold" title="Vault"></a>
+            <span class="nav-label">Vault</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="engine.html" class="nav-orb orb-copper" title="Engine Room"></a>
+            <span class="nav-label">Engine</span>
+        </div>
+        <div class="nav-orb-container">
+            <a href="Inkpad.html" class="nav-orb orb-rose" title="Inkpad"></a>
+            <span class="nav-label">Inkpad</span>
         </div>
     </div>
 

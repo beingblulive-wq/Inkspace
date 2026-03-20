@@ -68,60 +68,74 @@
         }
 
         .doors-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 3rem;
-            max-width: 1000px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+            padding: 2rem;
             animation: fadeIn 2s ease-out 0.5s backwards;
         }
 
-        .door-item {
+        .door-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-decoration: none;
+            color: inherit;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1rem;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            text-align: center;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.02);
         }
 
-        .door-item:hover {
+        .door-card:hover {
             transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
         }
 
-        .orb {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .door-item:hover .orb {
-            transform: scale(1.1);
-        }
-
-        /* Orb Colors */
-        .orb-sanctuary { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--invisible-blue) 40%, #4A6FD0 70%, #3A5FC0 100%); box-shadow: 0 0 20px rgba(106, 143, 230, 0.4); }
-        .orb-gallery { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--gallery-amethyst) 40%, #7A4E48 70%, #6A3E38 100%); box-shadow: 0 0 20px rgba(140, 94, 88, 0.4); }
-        .orb-literature { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--literature-teal) 40%, #3A6C49 70%, #2A5C39 100%); box-shadow: 0 0 20px rgba(74, 124, 89, 0.4); }
-        .orb-vault { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--legacy-gold) 40%, #C49847 70%, #B48837 100%); box-shadow: 0 0 20px rgba(212, 168, 87, 0.4); }
-        .orb-engine { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), var(--engine-copper) 40%, #B47249 70%, #A46239 100%); box-shadow: 0 0 20px rgba(196, 130, 89, 0.4); }
-
-        .door-label {
+        .door-title {
             font-family: var(--font-serif);
-            font-size: 1.2rem;
-            font-style: italic;
-            opacity: 0.8;
-            transition: opacity 0.3s ease;
+            font-size: 1.8rem;
+            font-weight: 400;
+            margin-bottom: 1.5rem;
+            color: var(--ink-black);
         }
 
-        .door-item:hover .door-label {
-            opacity: 1;
-            color: var(--rose-ember);
+        .door-divider {
+            width: 40px;
+            height: 1px;
+            background: var(--moonbeam-silver);
+            margin-bottom: 2rem;
         }
+
+        .door-poem {
+            font-family: var(--font-serif);
+            font-size: 1.1rem;
+            font-style: italic;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            color: #666;
+            flex-grow: 1;
+        }
+
+        .door-description {
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #888;
+            max-width: 250px;
+        }
+
+        /* Card-specific hover accents */
+        .card-sanctuary:hover { border-bottom: 4px solid var(--invisible-blue); }
+        .card-gallery:hover { border-bottom: 4px solid var(--gallery-amethyst); }
+        .card-literature:hover { border-bottom: 4px solid var(--literature-teal); }
+        .card-vault:hover { border-bottom: 4px solid var(--legacy-gold); }
+        .card-engine:hover { border-bottom: 4px solid var(--engine-copper); }
 
         .back-link {
             position: fixed;
@@ -179,25 +193,44 @@
     </header>
 
     <main class="doors-container">
-        <a href="sanctuary.html" class="door-item">
-            <div class="orb orb-sanctuary"></div>
-            <span class="door-label">Sanctuary</span>
+        <!-- The Creative Social Sanctuary -->
+        <a href="sanctuary.html" class="door-card card-sanctuary">
+            <h2 class="door-title">The Creative Social Sanctuary</h2>
+            <div class="door-divider"></div>
+            <p class="door-poem">"A place where shared humanity becomes heroic."</p>
+            <p class="door-description">The shared space where artists, writers, youth, and trauma-informed professionals converge.</p>
         </a>
-        <a href="gallery.html" class="door-item">
-            <div class="orb orb-gallery"></div>
-            <span class="door-label">Gallery</span>
+
+        <!-- The Exhibition (Gallery) -->
+        <a href="gallery.html" class="door-card card-gallery">
+            <h2 class="door-title">The Exhibition</h2>
+            <div class="door-divider"></div>
+            <p class="door-poem">"Art is not what you see, but what you make others see."<br><small>— Edgar Degas</small></p>
+            <p class="door-description">A visual gallery space for art, blueprints, and expressions of the Sanctuary.</p>
         </a>
-        <a href="literature.html" class="door-item">
-            <div class="orb orb-literature"></div>
-            <span class="door-label">Literature</span>
+
+        <!-- The Archive of Ink (Literature) -->
+        <a href="literature.html" class="door-card card-literature">
+            <h2 class="door-title">The Archive of Ink</h2>
+            <div class="door-divider"></div>
+            <p class="door-poem">"Words are pale shadows of forgotten names. As names have power, words have power."<br><small>— Patrick Rothfuss</small></p>
+            <p class="door-description">A library of written works, literature, and the legacy of the invisible pen.</p>
         </a>
-        <a href="vault.html" class="door-item">
-            <div class="orb orb-vault"></div>
-            <span class="door-label">Vault</span>
+
+        <!-- The Halls of Reflection (Vault) -->
+        <a href="vault.html" class="door-card card-vault">
+            <h2 class="door-title">The Halls of Reflection</h2>
+            <div class="door-divider"></div>
+            <p class="door-poem">"Stop measuring days by degree of productivity and start experiencing them by degree of presence."<br><small>— Alan Watts</small></p>
+            <p class="door-description">Enter the deeply private, encrypted space for journaling and Autobiography Mode.</p>
         </a>
-        <a href="engine.html" class="door-item">
-            <div class="orb orb-engine"></div>
-            <span class="door-label">Engine Room</span>
+
+        <!-- The Engine Room -->
+        <a href="engine.html" class="door-card card-engine">
+            <h2 class="door-title">The Engine Room</h2>
+            <div class="door-divider"></div>
+            <p class="door-poem">"A holon is something that is simultaneously a whole in and of itself, as well as a part of a larger whole."<br><small>— Arthur Koestler</small></p>
+            <p class="door-description">Step inside to understand how the human and the AI work together as a single, unified organism.</p>
         </a>
     </main>
 
