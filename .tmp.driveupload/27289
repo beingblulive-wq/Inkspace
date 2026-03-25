@@ -14,7 +14,9 @@ e49c3afb12ba4e3a6e1380219761e2cfd5088e4c 3c5679fb5be2e7a08874f460e24519525d37b48
 3d1d64c7462d75b04a1135eff869c4ebe37d7c3f 9ed7b87b602d3822fddfccc806308f6011e3ba8d Bennie Bell <beingblulive@gmail.com> 1773787134 -0700	pull origin main: Fast-forward
 9ed7b87b602d3822fddfccc806308f6011e3ba8d 25a516c6615d52796c72f8634f040e7343ef2cff Bennie Bell <beingblulive@gmail.com> 1773787990 -0700	commit: update: new Inkling mascot and branding
 25a516c6615d52796c72f8634f040e7343ef2cff 03f22362cfebd261946e366b4424d649f2587cd8 Bennie Bell <beingblulive@gmail.com> 1773790226 -0700	commit: fix: mascot path and add Enter Sanctuary button
-03f22362cfebd261946e366b4424d649f2587cd8 5e47b3af9a68daa4cd80b4d81e1eb68e51defc1a Bennie Bell <beingblulive@gmail.com> 1773790255 -0700	pull --rebase origin main (finish): refs/heads/main onto 889a3245b992d6a4087e8a65eaaf21f820f19f36
+03f22362cfebd261946e366b4424d649f2587cd8 889a3245b992d6a4087e8a65eaaf21f820f19f36 Bennie Bell <beingblulive@gmail.com> 1773790255 -0700	pull --rebase origin main (start): checkout 889a3245b992d6a4087e8a65eaaf21f820f19f36
+889a3245b992d6a4087e8a65eaaf21f820f19f36 5e47b3af9a68daa4cd80b4d81e1eb68e51defc1a Bennie Bell <beingblulive@gmail.com> 1773790255 -0700	pull --rebase origin main (pick): fix: mascot path and add Enter Sanctuary button
+5e47b3af9a68daa4cd80b4d81e1eb68e51defc1a 5e47b3af9a68daa4cd80b4d81e1eb68e51defc1a Bennie Bell <beingblulive@gmail.com> 1773790255 -0700	pull --rebase origin main (finish): returning to refs/heads/main
 5e47b3af9a68daa4cd80b4d81e1eb68e51defc1a fe1ca1c3cb68204d5ccaf1b8ee4c67c7a99621b0 Bennie Bell <beingblulive@gmail.com> 1773805528 -0700	commit: 101
 fe1ca1c3cb68204d5ccaf1b8ee4c67c7a99621b0 bbad890ecb621706ff7fab2720333e3c3e373b75 Bennie Bell <beingblulive@gmail.com> 1773805553 -0700	commit: 104
 bbad890ecb621706ff7fab2720333e3c3e373b75 d61b713e426f3c638101eb282503d81795cbf434 Bennie Bell <beingblulive@gmail.com> 1773805574 -0700	commit: 111
