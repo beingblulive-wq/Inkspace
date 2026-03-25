@@ -1,0 +1,71 @@
+0000000000000000000000000000000000000000 461171bad7064c61b4491b21fa58902f790f1c19 Bennie Bell <beingblulive@gmail.com> 1773118352 -0700	clone: from https://github.com/beingblulive-wq/Inkspace.git
+461171bad7064c61b4491b21fa58902f790f1c19 3154ecaae99bd4ce05e841f7213e337548f02cdc Bennie Bell <beingblulive@gmail.com> 1773121874 -0700	commit: feat: Deploy Holon AI Landing Page (The Shift, Foundational Insight, Sandbox)
+3154ecaae99bd4ce05e841f7213e337548f02cdc 59cb6035fa075c45275a85242009bba138f8fde6 Bennie Bell <beingblulive@gmail.com> 1773219222 -0700	commit: Deploying new Sanctuary MVP
+59cb6035fa075c45275a85242009bba138f8fde6 98ed90673348b0d9f5f03d190cb7d37c14146308 Bennie Bell <beingblulive@gmail.com> 1773224124 -0700	commit: Adding chat capability
+98ed90673348b0d9f5f03d190cb7d37c14146308 5cf45396e9117360a1a413f01c081b1261033caf Bennie Bell <beingblulive@gmail.com> 1773232387 -0700	commit: feat: Add Global Footer below doorways
+5cf45396e9117360a1a413f01c081b1261033caf b8e71fe2111c8f4b19b21c3a18ce86d6f19740f1 Bennie Bell <beingblulive@gmail.com> 1773232785 -0700	commit: feat: Add Literature and Gallery doorways
+b8e71fe2111c8f4b19b21c3a18ce86d6f19740f1 967e2da1b5755e93f6a440e58da8a1bc4a17f46c Bennie Bell <beingblulive@gmail.com> 1773233822 -0700	commit: feat: Wire up all 5 doorways to internal placeholder pages and fix CSS inline styling lints
+967e2da1b5755e93f6a440e58da8a1bc4a17f46c 1f6e029d6357a6b75dfeda9709e0874fc2f0d1ac Bennie Bell <beingblulive@gmail.com> 1773235825 -0700	commit: feat: Redesign Engine Room with interactive Holon Architecture diagram and information cards
+1f6e029d6357a6b75dfeda9709e0874fc2f0d1ac eeaa1a2eba67603096a0156d2e276a27fd3227b1 Bennie Bell <beingblulive@gmail.com> 1773237203 -0700	commit: feat: Overhaul Engine Room into interactive 3D Isometric Machine representation
+eeaa1a2eba67603096a0156d2e276a27fd3227b1 a50e13e3f83930b3f135d795cd9db7228b7b2e43 Bennie Bell <beingblulive@gmail.com> 1773238180 -0700	commit: style: Upgrade placeholder pages with minimal, elegant designs matching site aesthetic
+a50e13e3f83930b3f135d795cd9db7228b7b2e43 e49c3afb12ba4e3a6e1380219761e2cfd5088e4c Bennie Bell <beingblulive@gmail.com> 1773576395 -0700	commit: q
+e49c3afb12ba4e3a6e1380219761e2cfd5088e4c 3c5679fb5be2e7a08874f460e24519525d37b481 Bennie Bell <beingblulive@gmail.com> 1773620635 -0700	commit: s
+3c5679fb5be2e7a08874f460e24519525d37b481 3d1d64c7462d75b04a1135eff869c4ebe37d7c3f Bennie Bell <beingblulive@gmail.com> 1773716619 -0700	pull --ff --recurse-submodules --progress origin: Fast-forward
+3d1d64c7462d75b04a1135eff869c4ebe37d7c3f 9ed7b87b602d3822fddfccc806308f6011e3ba8d Bennie Bell <beingblulive@gmail.com> 1773787134 -0700	pull origin main: Fast-forward
+9ed7b87b602d3822fddfccc806308f6011e3ba8d 25a516c6615d52796c72f8634f040e7343ef2cff Bennie Bell <beingblulive@gmail.com> 1773787990 -0700	commit: update: new Inkling mascot and branding
+25a516c6615d52796c72f8634f040e7343ef2cff 03f22362cfebd261946e366b4424d649f2587cd8 Bennie Bell <beingblulive@gmail.com> 1773790226 -0700	commit: fix: mascot path and add Enter Sanctuary button
+03f22362cfebd261946e366b4424d649f2587cd8 5e47b3af9a68daa4cd80b4d81e1eb68e51defc1a Bennie Bell <beingblulive@gmail.com> 1773790255 -0700	pull --rebase origin main (finish): refs/heads/main onto 889a3245b992d6a4087e8a65eaaf21f820f19f36
+5e47b3af9a68daa4cd80b4d81e1eb68e51defc1a fe1ca1c3cb68204d5ccaf1b8ee4c67c7a99621b0 Bennie Bell <beingblulive@gmail.com> 1773805528 -0700	commit: 101
+fe1ca1c3cb68204d5ccaf1b8ee4c67c7a99621b0 bbad890ecb621706ff7fab2720333e3c3e373b75 Bennie Bell <beingblulive@gmail.com> 1773805553 -0700	commit: 104
+bbad890ecb621706ff7fab2720333e3c3e373b75 d61b713e426f3c638101eb282503d81795cbf434 Bennie Bell <beingblulive@gmail.com> 1773805574 -0700	commit: 111
+d61b713e426f3c638101eb282503d81795cbf434 1cdaf59a2dddfeec2b30f1eb1c3dbae1b6426ea8 Bennie Bell <beingblulive@gmail.com> 1773805594 -0700	commit: 110
+1cdaf59a2dddfeec2b30f1eb1c3dbae1b6426ea8 51c172e28444fcc916ef7e1f270a1eacdeedab35 Bennie Bell <beingblulive@gmail.com> 1773805621 -0700	commit: 113
+51c172e28444fcc916ef7e1f270a1eacdeedab35 57fe0b208e8558f583b0bb7b1903285e6d645813 Bennie Bell <beingblulive@gmail.com> 1773812665 -0700	pull --ff --recurse-submodules --progress origin: Merge made by the 'ort' strategy.
+57fe0b208e8558f583b0bb7b1903285e6d645813 310e9ec8a1f955cb2db67d58b6a7551cd101640e Bennie Bell <beingblulive@gmail.com> 1773901010 -0700	commit: inkling interface
+310e9ec8a1f955cb2db67d58b6a7551cd101640e 876bd86338ca0fd8d4b2e044928fb6dbd989d3f7 Bennie Bell <beingblulive@gmail.com> 1773901429 -0700	merge origin/main: Merge made by the 'ort' strategy.
+876bd86338ca0fd8d4b2e044928fb6dbd989d3f7 605b1ee0b96174e534f7c5c7d90b3e1a501c14a0 Bennie Bell <beingblulive@gmail.com> 1773901957 -0700	commit: Security: Add .gitignore to prevent API key leaks
+605b1ee0b96174e534f7c5c7d90b3e1a501c14a0 5d805d5b190b8203d552360fe53d3e6c7333c411 Bennie Bell <beingblulive@gmail.com> 1773905060 -0700	commit: Feature: Add Interactive Holon Prototype
+5d805d5b190b8203d552360fe53d3e6c7333c411 956adc7f5284f2cf4ba04b8d4ea436cb3dea1407 Bennie Bell <beingblulive@gmail.com> 1773905502 -0700	commit: Fix: Safely inject JS and CSS directly into the document container for Holon animation.
+956adc7f5284f2cf4ba04b8d4ea436cb3dea1407 275b8d011c723b103e0f33748432d20951233521 Bennie Bell <beingblulive@gmail.com> 1773905556 -0700	commit: Fix CSS syntax error in media query
+275b8d011c723b103e0f33748432d20951233521 2cc1f357e8a9a2043712a81070fb074bd2c43341 Bennie Bell <beingblulive@gmail.com> 1773906089 -0700	commit: Tweak: Curious puppy physical interaction on Holon Canvas
+2cc1f357e8a9a2043712a81070fb074bd2c43341 e1e679d008359695ed3f8d14a9f571189e1c097c Bennie Bell <beingblulive@gmail.com> 1773906192 -0700	commit: UI: Refine Holon mascot with 'curious puppy' physics and new color palette (baby blue, light yellow, hot pink)
+e1e679d008359695ed3f8d14a9f571189e1c097c 77cd21d45436a9bfe6f32c47ab9900bb7e72d4b1 Bennie Bell <beingblulive@gmail.com> 1773911970 -0700	commit: Optimize Inkling performance and refine aesthetics (blue only, no glow)
+77cd21d45436a9bfe6f32c47ab9900bb7e72d4b1 fe445ea719712a602a51c38ead54feb64a46bb62 Bennie Bell <beingblulive@gmail.com> 1773912022 -0700	commit: Optimize index.html mascot and sync with plan (blue only, no glow, 30fps)
+fe445ea719712a602a51c38ead54feb64a46bb62 60ef07fd97601d99705c7af1e07f3cab94b35c76 Bennie Bell <beingblulive@gmail.com> 1773912452 -0700	commit: Refine mascot: Electric Light Blue and 'stay where left' behavior
+60ef07fd97601d99705c7af1e07f3cab94b35c76 e58958b327702c4b0ceb7b702262b37bf00326d4 Bennie Bell <beingblulive@gmail.com> 1773974435 -0700	commit: web site
+e58958b327702c4b0ceb7b702262b37bf00326d4 ae765df55df255d6dcfdcaeea693ce2d7bc8212d Bennie Bell <beingblulive@gmail.com> 1773974473 -0700	commit: again
+ae765df55df255d6dcfdcaeea693ce2d7bc8212d 96d138c2065358b54c3a8fdff3cc1d1d5b0a5391 Bennie Bell <beingblulive@gmail.com> 1773974497 -0700	commit: ag
+96d138c2065358b54c3a8fdff3cc1d1d5b0a5391 bdc601e5aabfd5bcbab8f0f017ce8d25720ca9be Bennie Bell <beingblulive@gmail.com> 1774000865 -0700	pull --ff --recurse-submodules --progress origin: Merge made by the 'ort' strategy.
+bdc601e5aabfd5bcbab8f0f017ce8d25720ca9be 7131de1dc9e5e05d500a1a012b30ffd14e64be1c Bennie Bell <beingblulive@gmail.com> 1774009574 -0700	commit: l
+7131de1dc9e5e05d500a1a012b30ffd14e64be1c 9f4379320ca609e0c98783e30e4bd7e366289bf9 Bennie Bell <beingblulive@gmail.com> 1774055710 -0700	commit: 1
+9f4379320ca609e0c98783e30e4bd7e366289bf9 268dde0f059a3578afae7deadc2844fcdaf73d59 Bennie Bell <beingblulive@gmail.com> 1774423243 -0700	commit: update
+268dde0f059a3578afae7deadc2844fcdaf73d59 18913f98c95092ac5403b4785f3e7cc911e61a92 Bennie Bell <beingblulive@gmail.com> 1774423262 -0700	commit: 49 files
+18913f98c95092ac5403b4785f3e7cc911e61a92 de713bba4ada787020fb09a21bc21b161b21c9ca Bennie Bell <beingblulive@gmail.com> 1774423285 -0700	commit: 245
+de713bba4ada787020fb09a21bc21b161b21c9ca 6f73286dc7ed070eaeb10f19c85ab23c1d960efd Bennie Bell <beingblulive@gmail.com> 1774423559 -0700	commit: more
+6f73286dc7ed070eaeb10f19c85ab23c1d960efd 3fe81ea2d9015c7f23c68c3b51a75c4bbf481976 Bennie Bell <beingblulive@gmail.com> 1774423607 -0700	commit: more 2
+3fe81ea2d9015c7f23c68c3b51a75c4bbf481976 2e9e64d912560638aa2f657a4ffb2ec42f82b318 Bennie Bell <beingblulive@gmail.com> 1774423666 -0700	commit: 1
+2e9e64d912560638aa2f657a4ffb2ec42f82b318 70a2f6d1d248ae1f4d30c7500c8385044926792e Bennie Bell <beingblulive@gmail.com> 1774423680 -0700	commit: 3
+70a2f6d1d248ae1f4d30c7500c8385044926792e 5e84e68fb58191e1a5832e9aafd3c10fc1623b6e Bennie Bell <beingblulive@gmail.com> 1774423688 -0700	commit: 4
+5e84e68fb58191e1a5832e9aafd3c10fc1623b6e 384cffbbaeb95972c38c8dca3a3bdf9a6644ad56 Bennie Bell <beingblulive@gmail.com> 1774423698 -0700	commit: 5
+384cffbbaeb95972c38c8dca3a3bdf9a6644ad56 f5110a2ba5ef3d76ae5e7765a2992801cc350ec4 Bennie Bell <beingblulive@gmail.com> 1774423707 -0700	commit: 12
+f5110a2ba5ef3d76ae5e7765a2992801cc350ec4 982b268b0e0652f0ce34be52b2eeb88f6e795323 Bennie Bell <beingblulive@gmail.com> 1774423715 -0700	commit: 31
+982b268b0e0652f0ce34be52b2eeb88f6e795323 9f2c2715dc8b1a3fcb59cc820904ad87eee9f5cb Bennie Bell <beingblulive@gmail.com> 1774423741 -0700	commit: 23
+9f2c2715dc8b1a3fcb59cc820904ad87eee9f5cb 0c3fed51f6e39a687593e6becb91dbb60460b815 Bennie Bell <beingblulive@gmail.com> 1774423749 -0700	commit: 33
+0c3fed51f6e39a687593e6becb91dbb60460b815 b38cd8a56ccd98f45d8b80681f51a9eec76eea47 Bennie Bell <beingblulive@gmail.com> 1774423757 -0700	commit: 13
+b38cd8a56ccd98f45d8b80681f51a9eec76eea47 89309659ae971ab834299728b5b28e49772c4841 Bennie Bell <beingblulive@gmail.com> 1774423762 -0700	commit: 2
+89309659ae971ab834299728b5b28e49772c4841 1114460613d23f2de1afcad4e3384843ea5c6619 Bennie Bell <beingblulive@gmail.com> 1774423784 -0700	commit: 131
+1114460613d23f2de1afcad4e3384843ea5c6619 abf36504211817550e577ae574d1cd0f1dc1aad3 Bennie Bell <beingblulive@gmail.com> 1774435877 -0700	commit: empty
+abf36504211817550e577ae574d1cd0f1dc1aad3 cf96f632cde1c977a2a8f74fb68b235889e3268b Bennie Bell <beingblulive@gmail.com> 1774435930 -0700	commit: 1
+cf96f632cde1c977a2a8f74fb68b235889e3268b bd2b873a6f6228c39d7380c88bdf0a091510b877 Bennie Bell <beingblulive@gmail.com> 1774435942 -0700	commit: 2
+bd2b873a6f6228c39d7380c88bdf0a091510b877 60c6616da65c2da77014665aafe3cd01bc6904bb Bennie Bell <beingblulive@gmail.com> 1774435946 -0700	commit: 1
+60c6616da65c2da77014665aafe3cd01bc6904bb 25169f40b771cfb73f150e377525df3f75c5a030 Bennie Bell <beingblulive@gmail.com> 1774435951 -0700	commit: 1
+25169f40b771cfb73f150e377525df3f75c5a030 9cf724bda30ae75ae42cf3494d7cd6ee6ae7befd Bennie Bell <beingblulive@gmail.com> 1774435955 -0700	commit: 1
+9cf724bda30ae75ae42cf3494d7cd6ee6ae7befd 523a6a423a090b502ab4c97ebaf6b91c0a9dfb52 Bennie Bell <beingblulive@gmail.com> 1774435960 -0700	commit: 1
+523a6a423a090b502ab4c97ebaf6b91c0a9dfb52 0475ea4d07992ba7615d4868d1378bfe2eb59ad9 Bennie Bell <beingblulive@gmail.com> 1774435964 -0700	commit: 1
+0475ea4d07992ba7615d4868d1378bfe2eb59ad9 bab3de3ab2ddd78cb76ce3548e5a586490b90277 Bennie Bell <beingblulive@gmail.com> 1774435967 -0700	commit: 1
+bab3de3ab2ddd78cb76ce3548e5a586490b90277 34473e1d1a60b9b791448a9a8255ce920d9ed2cd Bennie Bell <beingblulive@gmail.com> 1774435972 -0700	commit: 1
+34473e1d1a60b9b791448a9a8255ce920d9ed2cd 4593767c1b7b075556394f64f7602fbe466f24a5 Bennie Bell <beingblulive@gmail.com> 1774435976 -0700	commit: 1
+4593767c1b7b075556394f64f7602fbe466f24a5 1ba3540030c849b125353d1d9df74ad0bf357c02 Bennie Bell <beingblulive@gmail.com> 1774435979 -0700	commit: 1
+1ba3540030c849b125353d1d9df74ad0bf357c02 277f6cec81c894fbf6ca7e06175d02f3f80ec0a2 Bennie Bell <beingblulive@gmail.com> 1774435984 -0700	commit: 1
+277f6cec81c894fbf6ca7e06175d02f3f80ec0a2 e767de5721ce6010f63fb8366f30a6ba8bf62a5c Bennie Bell <beingblulive@gmail.com> 1774436086 -0700	commit: 1
+e767de5721ce6010f63fb8366f30a6ba8bf62a5c f2d78e0fde580ea008f9d46ae8236e994ab0b17b Bennie Bell <beingblulive@gmail.com> 1774436107 -0700	commit: 2
