@@ -4,279 +4,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Exhibition</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --sanctuary-cream: #F7F3EC;
-            --ink-black: #1A1A1A;
-            --moonbeam-silver: #DDE1E6;
-            --rose-ember: #C94F5C;
-            --gallery-amethyst: #8C5E58;
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
-        }
-
-        body {
-            background-color: #faf9f6;
-            color: var(--ink-black);
-            font-family: var(--font-sans);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 2rem;
-            animation: fadeIn 2s ease-out backwards;
-            text-align: center;
-        }
-
-        .greeting-container {
-            text-align: center;
-            max-width: 600px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .greeting-text {
-            font-family: var(--font-serif);
-            font-size: 2.2rem;
-            font-weight: 400;
-            color: var(--ink-black);
-            font-style: italic;
-            transition: color 0.5s ease;
-            margin-bottom: 2rem;
-        }
-
-        /* Chat Interface */
-        .chat-container {
-            display: flex;
-            gap: 0.5rem;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .chat-input {
-            flex-grow: 1;
-            background: transparent;
-            border: 1px solid var(--moonbeam-silver);
-            border-radius: 30px;
-            padding: 0.75rem 1.5rem;
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            color: var(--ink-black);
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .chat-input:focus, .chat-input:hover {
-            border-color: var(--rose-ember);
-            box-shadow: 0 0 10px rgba(201, 79, 92, 0.2);
-        }
-
-        .send-btn {
-            background: var(--sanctuary-cream);
-            border: 1px solid var(--moonbeam-silver);
-            color: var(--ink-black);
-            padding: 0.75rem 1.5rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: var(--font-sans);
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .send-btn:hover {
-            border-color: var(--rose-ember);
-            color: var(--rose-ember);
-            box-shadow: 0 0 10px rgba(201, 79, 92, 0.2);
-        }
-
-        /* Holon Mascot Canvas */
-        .holon-wrapper {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 0 auto 1.5rem auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-            filter: hue-rotate(330deg) saturate(1.2) brightness(1.1); /* Amethyst tint */
-        }
-
-        #holonCanvas {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) translateZ(0);
-            border-radius: 50%;
-            pointer-events: auto; 
-            background: transparent;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <title>The Exhibition | Inkspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
 </head>
+<body>
+    <!-- Technical HUD Overlay -->
+    <div class="hud-monitor">
+        <div class="hud-scanline"></div>
+        <div class="hud-corner top-left">GALLERY_ACCESS: SECURE</div>
+        <div class="hud-corner top-right">STREAM: VISUAL_BLUEPRINTS</div>
+        <div class="hud-corner bottom-left">JANUS_PARADOX_LOADED</div>
+        <div class="hud-corner bottom-right">RENDER_ENGINE: SYSTEM_3</div>
+    </div>
 
-<body class="gallery-page">
-    <nav class="back-nav">
-        <a href="index.html" class="back-link">← Front Page</a>
-        <a href="lobby.html" class="back-link">Return to Lobby</a>
-    </nav>
+    <div class="ambient-light glow-1"></div>
+    <div class="ambient-light glow-2"></div>
 
-    <div class="greeting-container">
-        <div class="holon-wrapper">
-            <canvas id="holonCanvas"></canvas>
+    <a href="lobby.html" class="hud-corner top-left back-monitor">&larr; SANCTUARY</a>
+
+    <div class="inner-room-container">
+        <header class="lobby-header">
+            <h1 class="greeting-text">The Exhibition</h1>
+            <p class="room-subtitle">SYSTEM_3 :: BLUEPRINT_CURATION</p>
+        </header>
+
+        <div class="greeting-container exhibition-greeting-section">
+            <div class="holon-wrapper exhibition-mascot-wrapper">
+                <canvas id="inklingCanvas"></canvas>
+            </div>
+            <h1 class="greeting-text exhibition-text-small" id="greetingText">"Welcome to the Exhibition. We are currently curating the blueprints of the Sanctuary."</h1>
+
+            <div class="chat-container exhibition-chat-wrap">
+                <input type="text" id="chatInput" class="chat-input" placeholder="Query the exhibition..." autocomplete="off">
+                <button id="sendBtn" class="chat-send">EXECUTE</button>
+            </div>
         </div>
-        <h1 class="greeting-text" id="greetingText">"Welcome to the Exhibition. We are currently curating the blueprints of the Sanctuary. What visions shall we explore?"</h1>
 
-        <div class="chat-container">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Speak to Inkling..." autocomplete="off">
-            <button id="sendBtn" class="send-btn">Send</button>
+        <!-- Featured Story Card: The Janus Paradox -->
+        <div class="story-row exhibition-story-row">
+            <div class="story-card janus-card">
+                <div class="card-inner">
+                    <div class="card-front janus-front">
+                        <span class="ref-num">FILE: JANUS_PARADOX_v1.2</span>
+                        <h3 class="card-title">The Janus Paradox</h3>
+                        <p class="card-quote">"A Visual Journey through Neural Architecture"</p>
+                        <div class="janus-status">STATUS: EXHIBITED</div>
+                    </div>
+                    <div class="card-back">
+                        <p class="card-quote">Witness the birth of the Holon engine through visual narratives.</p>
+                        <button class="enter-btn" onclick="window.location.href='janus.html'">ENTER PARADOX</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Bottom Mini-Navigation -->
-    <div class="bottom-nav">
-        <div class="nav-orb-container">
-            <a href="sanctuary.html" class="nav-orb orb-blue" title="Sanctuary"></a>
-            <span class="nav-label">Sanctuary</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="gallery.html" class="nav-orb orb-amethyst" title="Gallery"></a>
-            <span class="nav-label">Gallery</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="literature.html" class="nav-orb orb-teal" title="Literature"></a>
-            <span class="nav-label">Literature</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="vault.html" class="nav-orb orb-gold" title="Vault"></a>
-            <span class="nav-label">Vault</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="engine.html" class="nav-orb orb-copper" title="Engine Room"></a>
-            <span class="nav-label">Engine</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="Inkpad.html" class="nav-orb orb-rose" title="Inkpad"></a>
-            <span class="nav-label">Inkpad</span>
-        </div>
-    </div>
+    <!-- Global Footer -->
+    <footer class="room-footer">
+        <p>RE-ALIGNED BY INKLING &copy; 2026</p>
+        <p>HUMAN ARTIFICIAL INTEGRATED TECHNOLOGY, LLC</p>
+    </footer>
 
     <script src="script.js"></script>
-    <script>
-        const chatInput = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('sendBtn');
-        const greetingText = document.getElementById('greetingText');
-
-        async function handleSend() {
-            const msg = chatInput.value.trim();
-            if(!msg) return;
-            
-            chatInput.value = '';
-            greetingText.style.opacity = '0.4';
-            greetingText.innerHTML = `<em>Reviewing the curation...</em>`;
-            
-            try {
-                const reply = await sendMessage(msg, "gallery");
-                greetingText.style.opacity = '0';
-                setTimeout(() => {
-                    greetingText.innerHTML = `"${reply.replace(/\n/g, '<br>')}"`;
-                    greetingText.style.opacity = '1';
-                }, 300);
-            } catch (e) {
-                greetingText.innerHTML = `"The Gallery is silent for now. I seem to have lost my connection."`;
-            }
-        }
-        
-        sendBtn.addEventListener('click', handleSend);
-        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
-
-        // Holon Particle Engine
-        const canvas = document.getElementById('holonCanvas');
-        if (canvas) {
-            const ctx = canvas.getContext('2d', { alpha: true });
-            let width = 300, height = 300;
-            canvas.width = width; canvas.height = height;
-            const particles = [];
-            const particleCount = 40;
-            const colorAmethyst = 'rgba(140, 94, 88, ';
-            const connectionDistSq = 50 * 50;
-            const mouseRadiusSq = 200 * 200;
-            let mouse = { x: width / 2, y: height / 2, active: false };
-
-            canvas.addEventListener('mousemove', (e) => {
-                const rect = canvas.getBoundingClientRect();
-                mouse.x = e.clientX - rect.left;
-                mouse.y = e.clientY - rect.top;
-                mouse.active = true;
-            });
-            canvas.addEventListener('mouseleave', () => { mouse.active = false; });
-
-            class Particle {
-                constructor() {
-                    this.x = Math.random() * width;
-                    this.y = Math.random() * height;
-                    this.vx = (Math.random() - 0.5) * 0.3;
-                    this.vy = (Math.random() - 0.5) * 0.3;
-                    this.radius = Math.random() * 1.5 + 0.5;
-                }
-                update() {
-                    if (mouse.active) {
-                        const dx = mouse.x - this.x, dy = mouse.y - this.y;
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq < mouseRadiusSq) {
-                            const dist = Math.sqrt(distSq);
-                            const force = (200 - dist) / 200;
-                            this.vx += (dx / dist) * force * 0.5;
-                            this.vy += (dy / dist) * force * 0.5;
-                        }
-                    }
-                    this.vx *= 0.95; this.vy *= 0.95;
-                    this.x += this.vx; this.y += this.vy;
-                }
-                draw() {
-                    ctx.beginPath();
-                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-                    ctx.fillStyle = colorAmethyst + '0.8)';
-                    ctx.fill();
-                }
-            }
-            for (let i = 0; i < particleCount; i++) particles.push(new Particle());
-            function animateHolon() {
-                requestAnimationFrame(animateHolon);
-                ctx.clearRect(0, 0, width, height);
-                particles.forEach(p => p.update());
-                for (let i = 0; i < particleCount; i++) {
-                    for (let j = i + 1; j < particleCount; j++) {
-                        const dx = particles[i].x - particles[j].x;
-                        const dy = particles[i].y - particles[j].y;
-                        const distSq = dx * dx + dy * dy;
-                        if (distSq < connectionDistSq) {
-                            ctx.beginPath();
-                            const sparkAlpha = (Math.random() * 0.3 + 0.1).toFixed(2);
-                            ctx.strokeStyle = `rgba(180, 134, 128, ${sparkAlpha})`;
-                            ctx.lineWidth = Math.random() * 0.7 + 0.3;
-                            ctx.moveTo(particles[i].x, particles[i].y);
-                            ctx.lineTo(particles[j].x, particles[j].y);
-                            ctx.stroke();
-                        }
-                    }
-                }
-                particles.forEach(p => p.draw());
-            }
-            animateHolon();
-        }
-    </script>
 </body>
 
 </html>

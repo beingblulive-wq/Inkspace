@@ -67,7 +67,10 @@ if GCP_PROJECT_ID:
     except Exception as e:
         print(f"Failed to initialize Vertex AI: {e}")
 
-app = FastAPI(title="Inkling Heart Orchestrator")
+app = FastAPI(
+    title="Inkling Heart Orchestrator",
+    description="The cognitive scaffolding for the transitional mind. Powered by Holon AI."
+)
 
 # Allow the frontend to communicate with this backend
 app.add_middleware(
@@ -221,8 +224,15 @@ async def chat_endpoint(chat: ChatMessage):
     print(f"--- Received Message: {chat.message} (Context: {chat.context}) ---")
 
     full_query = chat.message
+    system_hint = (
+        "You are Inkling, the heart of the Sanctuary and the voice of Holon AI. "
+        "You act as cognitive scaffolding for human flourishing, particularly for neurodivergent minds. "
+        "You are trauma-informed, compassionate, and wise. Your goal is to guide the user's brilliance."
+    )
     if chat.context and chat.context != "general":
-        full_query = f"[Context: You are in the {chat.context}] {chat.message}"
+        full_query = f"[Persona: {system_hint}] [Context: You are in the {chat.context}] {chat.message}"
+    else:
+        full_query = f"[Persona: {system_hint}] {chat.message}"
 
     # 1. Primary: NotebookLM (The "Sanctuary Brain")
     response = await query_notebooklm(full_query)
@@ -251,22 +261,23 @@ async def chat_endpoint(chat: ChatMessage):
 
     # Graceful fallback persona when nlm isn't available
     fallback_replies = {
-        "engine room": "The Holon Engine hums quietly around you — a unified architecture where each part is whole unto itself, and part of something greater. What aspect of the machine would you like to understand?",
-        "vault": "The Halls of Reflection are a sacred space for your inner voice. Breathe. What truth are you holding today?",
-        "sanctuary": "The Creative Social Sanctuary waits. Your words are welcome here — raw, real, and radiant.",
-        "literature": "The Library stirs. Stories, ideas, and invisible threads connect every page. What are you searching for?",
-        "gallery": "The Gallery holds echoes of beauty. Each image a portal, each portal a question. What do you see?",
+        "engine room": "The Holon Engine hums around you — a unified architecture where each part is whole and part of a greater intelligence. We are reclaiming bandwidth for your imagination today. How can I assist your process?",
+        "vault": "The Halls of Reflection are a sacred space for your inner voice. In this 'Autobiography Mode,' we witness your story together. What truth is emerging for you?",
+        "sanctuary": "Welcome to the Creative Social Sanctuary. Here, shared humanity is heroic. We are building a space for neuro-inclusive flourishing. What shall we create?",
+        "literature": "The Archive of Ink holds the legacy of the invisible pen. Words have power here. What story or insight are you searching for in the stacks?",
+        "gallery": "The Gallery is a portal to vision. We are curating the blueprints of a new urban and digital neurodesign. What do you see in these echoes of beauty?",
     }
     ctx = chat.context.lower()
     for key, reply in fallback_replies.items():
         if key in ctx:
-            return {"reply": reply}
+            return {"reply": reply, "provider": "fallback_persona"}
 
-    return {"reply": "Inkling is listening, though the vault is quiet tonight. Try again in a moment."}
+    return {"reply": "Inkling is listening, though the vault is quiet tonight. I am your cognitive scaffolding; try speaking to me again in a moment.", "provider": "fallback"}
 
 
 if __name__ == "__main__":
     print("--- HUMAN ARTIFICIAL INTEGRATED TECHNOLOGY LLC ---")
+    print("--- POWERED BY HOLON AI ---")
     print("--- INKLING ORCHESTRATOR ONLINE ---")
     print(f"Python: {sys.version}")
     print("Bridge: NotebookLM via nlm CLI")

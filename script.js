@@ -1,256 +1,238 @@
-// Holon AI - script.js
-
-// 1. Global Inkling Communication Bridge
-window.sendMessage = async (text, context = "general") => {
-    if (!text.trim()) return "";
-    
-    try {
-        const response = await fetch('http://127.0.0.1:8000/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: text, context: context })
-        });
-
-        if (!response.ok) throw new Error("API Connection Failed");
-
-        const data = await response.json();
-        return data.reply;
-    } catch (error) {
-        console.error("Orchestrator Error:", error);
-        throw error;
-    }
-};
-
 document.addEventListener('DOMContentLoaded', () => {
-
-    // 2. Initial Load Animations
-    setTimeout(() => {
-        const navbar = document.querySelector('.navbar');
-        if (navbar) {
-            navbar.classList.remove('hidden-onload');
-            navbar.style.animation = 'fadeUpIn 1s forwards cubic-bezier(0.16, 1, 0.3, 1)';
-        }
-    }, 100);
-
-    // 3. Scroll Intersection Observer for Fade Up Animations
-    const fadeObserverOptions = {
-        root: null,
-        margin: '0px',
-        threshold: 0.15
-    };
-
-    const fadeObserver = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target); 
-            }
+    
+    // 1. Card Flip & Parallax Tilt Logic
+    const cards = document.querySelectorAll('.story-card');
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            card.classList.toggle('flipped');
         });
-    }, fadeObserverOptions);
 
-    const fadeElements = document.querySelectorAll('.fade-up');
-    fadeElements.forEach(el => fadeObserver.observe(el));
-
-    // 4. Navbar Background Blur on Scroll
-    const navbar = document.querySelector('.navbar');
-    if (navbar) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(4, 5, 10, 0.85)';
-                navbar.style.boxShadow = '0 4px 30px rgba(0, 0, 0, 0.5)';
-            } else {
-                navbar.style.background = 'rgba(7, 9, 19, 0.6)';
-                navbar.style.boxShadow = 'none';
+        card.addEventListener('mousemove', (e) => {
+            if (card.classList.contains('flipped')) {
+                card.style.transform = 'rotateY(180deg)'; // Keep flip state
+                return;
             }
-        });
-    }
-
-    // 5. Smooth Scrolling for Anchor Links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href');
-            if (targetId === '#') return;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
             
-            const targetElement = document.querySelector(targetId);
-            if (targetElement) {
-                targetElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (centerY - y) / 10;
+            const rotateY = (x - centerX) / 10;
+            
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        card.addEventListener('mouseleave', () => {
+            if (card.classList.contains('flipped')) {
+                card.style.transform = 'rotateY(180deg)';
+            } else {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
             }
         });
     });
 
-    // 6. Persistent Inkling FAB Chat Widget
-    // This part injects the chat widget if it doesn't already exist (for rooms)
-    const setupPersistentChat = () => {
-        if (document.getElementById('inklingChatContainer')) return;
-
-        // Create Container
-        const chatContainer = document.createElement('div');
-        chatContainer.id = 'inklingChatContainer';
-        chatContainer.innerHTML = `
-            <style>
-                #inklingFab {
-                    position: fixed;
-                    bottom: 2rem;
-                    right: 2rem;
-                    width: 55px;
-                    height: 55px;
-                    border-radius: 50%;
-                    cursor: pointer;
-                    z-index: 1000;
-                    transition: transform 0.3s ease;
-                    /* Glowing Blue Orb */
-                    background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #6A8FE6 40%, #4A6FD0 70%, #3A5FC0 100%);
-                    box-shadow: 0 0 20px rgba(106, 143, 230, 0.5), 0 0 50px rgba(106, 143, 230, 0.2), inset 0 -4px 8px rgba(0,0,0,0.15);
-                    border: none;
-                    animation: orbPulse 3s infinite alternate ease-in-out;
-                }
-                #inklingFab:hover {
-                    transform: scale(1.15);
-                    box-shadow: 0 0 30px rgba(106, 143, 230, 0.7), 0 0 70px rgba(106, 143, 230, 0.35);
-                }
-                @keyframes orbPulse {
-                    0% { box-shadow: 0 0 15px rgba(106,143,230,0.4), 0 0 40px rgba(106,143,230,0.15); }
-                    100% { box-shadow: 0 0 25px rgba(106,143,230,0.6), 0 0 60px rgba(106,143,230,0.3); }
-                }
-                
-                #inklingChatWindow {
-                    position: fixed;
-                    bottom: 6.5rem;
-                    right: 2rem;
-                    width: 350px;
-                    height: 500px;
-                    background: #F7F3EC;
-                    border: 1px solid #DDE1E6;
-                    border-radius: 16px;
-                    display: none;
-                    flex-direction: column;
-                    overflow: hidden;
-                    box-shadow: 0 20px 50px rgba(0,0,0,0.2);
-                    z-index: 1000;
-                    font-family: 'Inter', sans-serif;
-                }
-                #inklingChatWindow.active { display: flex; animation: slideUp 0.4s ease; }
-                
-                .chat-header {
-                    background: #1A1A1A;
-                    color: white;
-                    padding: 1rem;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                }
-                .chat-body {
-                    flex-grow: 1;
-                    padding: 1rem;
-                    overflow-y: auto;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 1rem;
-                }
-                .chat-footer {
-                    padding: 1rem;
-                    border-top: 1px solid #DDE1E6;
-                    display: flex;
-                    gap: 0.5rem;
-                }
-                .chat-footer input {
-                    flex-grow: 1;
-                    border: 1px solid #DDE1E6;
-                    padding: 0.5rem 1rem;
-                    border-radius: 20px;
-                    outline: none;
-                }
-                .message {
-                    max-width: 85%;
-                    padding: 0.8rem 1rem;
-                    border-radius: 12px;
-                    font-size: 0.9rem;
-                    line-height: 1.4;
-                }
-                .user-message {
-                    align-self: flex-end;
-                    background: #1A1A1A;
-                    color: white;
-                    border-bottom-right-radius: 2px;
-                }
-                .inkling-message {
-                    align-self: flex-start;
-                    background: white;
-                    color: #1A1A1A;
-                    border: 1px solid #DDE1E6;
-                    border-bottom-left-radius: 2px;
-                }
-                @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-            </style>
-            
-            <div id="inklingFab" title="Talk to Inkling"></div>
-            
-            <div id="inklingChatWindow">
-                <div class="chat-header">
-                    <span style="font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-style: italic;">Inkling Assistant</span>
-                    <button id="closeChat" style="background:none; border:none; color:white; cursor:pointer; font-size: 1.2rem;">&times;</button>
-                </div>
-                <div class="chat-body" id="chatBody">
-                    <div class="message inkling-message">
-                        I am here. How can I help you in the ${document.title.split(' - ')[0]}?
-                    </div>
-                </div>
-                <div class="chat-footer">
-                    <input type="text" id="fabChatInput" placeholder="Type a message...">
-                    <button id="fabSend" style="background:none; border:none; cursor:pointer; font-weight:600;">&rarr;</button>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(chatContainer);
-
-        const fab = document.getElementById('inklingFab');
-        const win = document.getElementById('inklingChatWindow');
-        const close = document.getElementById('closeChat');
-        const input = document.getElementById('fabChatInput');
-        const body = document.getElementById('chatBody');
-        const send = document.getElementById('fabSend');
-
-        fab.onclick = () => win.classList.toggle('active');
-        close.onclick = () => win.classList.remove('active');
-
-        const appendMsg = (text, isUser) => {
-            const div = document.createElement('div');
-            div.className = `message ${isUser ? 'user-message' : 'inkling-message'}`;
-            div.innerHTML = `<p>${text.replace(/\n/g, '<br>')}</p>`;
-            body.appendChild(div);
-            body.scrollTop = body.scrollHeight;
-        };
-
-        const handleFabSend = async () => {
-            const text = input.value.trim();
-            if (!text) return;
-            input.value = '';
-            appendMsg(text, true);
-            
-            const context = document.title.toLowerCase().includes("engine") ? "engine room" : 
-                            document.title.toLowerCase().includes("vault") ? "vault" : "sanctuary";
-
-            try {
-                const reply = await window.sendMessage(text, context);
-                appendMsg(reply, false);
-            } catch (e) {
-                appendMsg("I have lost my connection to the vault.", false);
+    // 2. Orb Navigation (Scroll to Row)
+    const orbs = document.querySelectorAll('.orb');
+    orbs.forEach(orb => {
+        orb.addEventListener('click', () => {
+            const rowId = orb.getAttribute('data-row');
+            const targetRow = document.getElementById(rowId);
+            if (targetRow) {
+                targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-        };
+            // Visual Pulse
+            orb.classList.add('orb-clicking');
+            setTimeout(() => { orb.classList.remove('orb-clicking'); }, 400);
+        });
+    });
 
-        send.onclick = handleFabSend;
-        input.onkeypress = (e) => { if(e.key === 'Enter') handleFabSend(); };
-    };
-
-    // Only setup FAB if the page doesn't have its own chat input (landing page and refactored rooms)
-    if (document.getElementById('chatInput')) {
-        // Hero or room chat already exists
-    } else {
-        setupPersistentChat();
+    // 3. Next Orb Logic
+    const nextOrb = document.querySelector('.orb-next');
+    if (nextOrb) {
+        nextOrb.addEventListener('click', () => {
+            window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
+        });
     }
 
+    // 4. Inkling Typewriter Greeting
+    const greetingText = document.querySelector('.greeting-text');
+    if (greetingText) {
+        const fullText = greetingText.innerText;
+        greetingText.innerText = '';
+        let i = 0;
+        function typeWriter() {
+            if (i < fullText.length) {
+                greetingText.innerHTML += fullText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 30);
+            }
+        }
+        typeWriter();
+    }
+
+    // 5. Living Inkling (Mascot) Implementation
+    const mascotContainer = document.querySelector('.avatar-container');
+    if (mascotContainer) {
+        const canvas = document.getElementById('inkling-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = 140;
+        canvas.height = 140;
+        
+        let particles = [];
+        let state = 'orb'; 
+        const mouse = { x: null, y: null };
+        const colors = {
+            primary: '#D4A857', // Accent Gold / Rose Gold
+            glow: 'rgba(212, 168, 87, 0.4)',
+            spark: '#ffffff'
+        };
+        
+        mascotContainer.addEventListener('mousemove', (e) => {
+            const rect = mascotContainer.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+        });
+
+        mascotContainer.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
+
+        mascotContainer.addEventListener('click', () => {
+            if (state === 'orb') {
+                state = 'bursting';
+                // Trigger "Spark" burst
+                for(let i=0; i<30; i++) {
+                    particles.push(new Particle(true));
+                }
+                setTimeout(() => { state = 'living'; }, 600);
+            }
+        });
+
+        class Particle {
+            constructor(isSpark = false) {
+                this.isSpark = isSpark;
+                this.init();
+            }
+
+            init() {
+                this.x = canvas.width / 2;
+                this.y = canvas.height / 2;
+                this.size = Math.random() * 3 + 1;
+                const angle = Math.random() * Math.PI * 2;
+                const force = this.isSpark ? Math.random() * 8 + 4 : Math.random() * 3 + 1;
+                this.speedX = Math.cos(angle) * force;
+                this.speedY = Math.sin(angle) * force;
+                this.life = 1.0;
+                this.decay = Math.random() * 0.02 + 0.01;
+                this.color = this.isSpark ? colors.spark : colors.primary;
+            }
+
+            update() {
+                if (state === 'living' || state === 'bursting') {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.speedX *= 0.96;
+                    this.speedY *= 0.96;
+
+                    // Living drift
+                    if (state === 'living') {
+                        this.speedX += (Math.random() - 0.5) * 0.2;
+                        this.speedY += (Math.random() - 0.5) * 0.2;
+
+                        // Mouse attraction
+                        if (mouse.x !== null && mouse.y !== null) {
+                            let dx = mouse.x - this.x;
+                            let dy = mouse.y - this.y;
+                            let dist = Math.sqrt(dx*dx + dy*dy);
+                            if (dist < 60) {
+                                this.speedX += dx * 0.02;
+                                this.speedY += dy * 0.02;
+                            }
+                        }
+                        
+                        // Containment
+                        const distFromCenter = Math.sqrt(Math.pow(this.x - canvas.width/2, 2) + Math.pow(this.y - canvas.height/2, 2));
+                        if (distFromCenter > 60) {
+                            this.speedX += (canvas.width/2 - this.x) * 0.01;
+                            this.speedY += (canvas.height/2 - this.y) * 0.01;
+                        }
+                    }
+
+                    if (this.isSpark) {
+                        this.life -= this.decay;
+                    }
+                }
+            }
+
+            draw() {
+                ctx.globalAlpha = this.isSpark ? this.life : 0.8;
+                ctx.fillStyle = this.color;
+                
+                // Geometric Shard Shape
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y - this.size);
+                ctx.lineTo(this.x + this.size*1.5, this.y);
+                ctx.lineTo(this.x, this.y + this.size);
+                ctx.lineTo(this.x - this.size*0.5, this.y);
+                ctx.closePath();
+                ctx.fill();
+                ctx.globalAlpha = 1.0;
+            }
+        }
+
+        function init() {
+            particles = [];
+            for (let i = 0; i < 80; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function drawOrb() {
+            const time = Date.now() * 0.002;
+            const pulse = Math.sin(time) * 5;
+            
+            ctx.shadowBlur = 30 + pulse;
+            ctx.shadowColor = colors.primary;
+            ctx.fillStyle = colors.primary;
+            
+            // Draw geometric core orb
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, 20 + pulse/2, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.shadowBlur = 0;
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath();
+            ctx.arc(canvas.width / 2, canvas.height / 2, 35, 0, Math.PI * 2);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (state === 'orb') {
+                drawOrb();
+            } else {
+                particles.forEach((p, index) => {
+                    p.update();
+                    p.draw();
+                    if (p.isSpark && p.life <= 0) {
+                        particles.splice(index, 1);
+                    }
+                });
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    }
 });

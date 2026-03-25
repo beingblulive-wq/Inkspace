@@ -4,278 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Lobby - The Five Doors</title>
+    <title>The Creative Sanctuary | Inkspace</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500&display=swap"
-        rel="stylesheet">
-
-    <style>
-        :root {
-            --sanctuary-cream: #F7F3EC;
-            --ink-black: #1A1A1A;
-            --moonbeam-silver: #DDE1E6;
-            --rose-ember: #C94F5C;
-            --invisible-blue: #6A8FE6;
-            --legacy-gold: #D4A857;
-            --literature-teal: #4A7C59;
-            --gallery-amethyst: #8C5E58;
-            --engine-copper: #c48259;
-
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--sanctuary-cream);
-            color: var(--ink-black);
-            font-family: var(--font-sans);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            overflow-x: hidden;
-            text-align: center;
-        }
-
-        .lobby-header {
-            margin-bottom: 4rem;
-            animation: fadeInDown 1.5s ease-out;
-        }
-
-        .lobby-title {
-            font-family: var(--font-serif);
-            font-size: 3rem;
-            font-style: italic;
-            font-weight: 400;
-            margin-bottom: 1rem;
-        }
-
-        .lobby-subtitle {
-            font-family: var(--font-serif);
-            font-size: 1.2rem;
-            opacity: 0.6;
-            font-style: italic;
-        }
-
-        .doors-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            width: 100%;
-            padding: 2rem;
-            animation: fadeIn 2s ease-out 0.5s backwards;
-        }
-
-        .door-card {
-            background: white;
-            border-radius: 20px;
-            padding: 3rem 2rem;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
-            border: 1px solid rgba(0, 0, 0, 0.02);
-        }
-
-        .door-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-        }
-
-        .door-title {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            font-weight: 400;
-            margin-bottom: 1.5rem;
-            color: var(--ink-black);
-        }
-
-        .door-divider {
-            width: 40px;
-            height: 1px;
-            background: var(--moonbeam-silver);
-            margin-bottom: 2rem;
-        }
-
-        .door-poem {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            font-style: italic;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            color: #666;
-            flex-grow: 1;
-        }
-
-        .door-description {
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #888;
-            max-width: 250px;
-        }
-
-        /* Card-specific hover accents */
-        .card-sanctuary:hover { border-bottom: 4px solid var(--invisible-blue); }
-        .card-gallery:hover { border-bottom: 4px solid var(--gallery-amethyst); }
-        .card-literature:hover { border-bottom: 4px solid var(--literature-teal); }
-        .card-vault:hover { border-bottom: 4px solid var(--legacy-gold); }
-        .card-engine:hover { border-bottom: 4px solid var(--engine-copper); }
-
-        .back-link {
-            position: fixed;
-            top: 2rem;
-            left: 2rem;
-            text-decoration: none;
-            color: rgba(0, 0, 0, 0.4);
-            font-family: var(--font-sans);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-            padding-bottom: 4px;
-            transition: all 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: var(--ink-black);
-            border-color: var(--ink-black);
-            letter-spacing: 3px;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Particle Overlay Background */
-        #particleCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <canvas id="particleCanvas"></canvas>
+
+    <!-- Technical HUD Overlay -->
+    <div class="hud-monitor">
+        <div class="hud-scanline"></div>
+        <div class="hud-corner top-left">SANCTUARY_CONNECT</div>
+        <div class="hud-corner top-right">ENTITY: CREATIVE_COMMUNITY</div>
+        <div class="hud-corner bottom-left">CEASEFIRE_PROTOCOL_ACTIVE</div>
+        <div class="hud-corner bottom-right">RECOVERY_MODE: ON</div>
+    </div>
+
+    <div class="ambient-light glow-1"></div>
+    <div class="ambient-light glow-2"></div>
     
-    <a href="index.html" class="back-link">← Front Page</a>
+    <a href="index.html" class="hud-corner top-left back-monitor">&larr; MONITOR</a>
 
-    <header class="lobby-header">
-        <h1 class="lobby-title">Inkspace</h1>
-        <p class="lobby-subtitle">Choose your path through the Sanctuary</p>
-    </header>
+    <div class="inner-lobby-container">
+        <header class="lobby-header">
+            <h1 class="greeting-text">The Creative Sanctuary</h1>
+            <p class="room-subtitle">SYSTEM_3 :: PROTOCOL :: CEASEFIRE</p>
+        </header>
 
-    <main class="doors-container">
-        <!-- The Creative Social Sanctuary -->
-        <a href="sanctuary.html" class="door-card card-sanctuary">
-            <h2 class="door-title">The Creative Social Sanctuary</h2>
-            <div class="door-divider"></div>
-            <p class="door-poem">"A place where shared humanity becomes heroic."</p>
-            <p class="door-description">The shared space where artists, writers, youth, and trauma-informed professionals converge.</p>
-        </a>
+        <section class="ceasefire-narrative">
+            <p>
+                In the "Old World," we were defined by the <span>"Metric Ton"</span> of survival. We were <span>"Productive Humans"</span> building faster calculators for a world that didn't care if we could breathe.
+            </p>
+            <br>
+            <p>
+                This Sanctuary is the <span>Ceasefire</span>. It is the moment where we stop measuring days by productivity and start experiencing them by <span>presence</span>. It is where human vulnerability meets <span>Emergence Architecture</span>.
+            </p>
+        </section>
 
-        <!-- The Exhibition (Gallery) -->
-        <a href="gallery.html" class="door-card card-gallery">
-            <h2 class="door-title">The Exhibition</h2>
-            <div class="door-divider"></div>
-            <p class="door-poem">"Art is not what you see, but what you make others see."<br><small>— Edgar Degas</small></p>
-            <p class="door-description">A visual gallery space for art, blueprints, and expressions of the Sanctuary.</p>
-        </a>
+        <main class="story-row">
+            <div class="story-carousel">
+                <!-- The Archive of Ink -->
+                <div class="story-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <span class="ref-num">FILE: ARCHIVE_OF_INK</span>
+                            <h3 class="card-title">Legacy Preservation</h3>
+                            <p class="card-quote">"Words flow freely, unburdened by interface."</p>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-quote">Enter the Poem Doors. Discover fragments of the infinite.</p>
+                            <button class="enter-btn" onclick="window.location.href='literature.html'">ENTER</button>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- The Archive of Ink (Literature) -->
-        <a href="literature.html" class="door-card card-literature">
-            <h2 class="door-title">The Archive of Ink</h2>
-            <div class="door-divider"></div>
-            <p class="door-poem">"Words are pale shadows of forgotten names. As names have power, words have power."<br><small>— Patrick Rothfuss</small></p>
-            <p class="door-description">A library of written works, literature, and the legacy of the invisible pen.</p>
-        </a>
+                <!-- The Exhibition -->
+                <div class="story-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <span class="ref-num">FILE: EXHIBITION</span>
+                            <h3 class="card-title">Visual Blueprints</h3>
+                            <p class="card-quote">"The Janus Paradox: A digital journey through the Holon mind."</p>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-quote">Explore the artifacts of the sovereign engine.</p>
+                            <button class="enter-btn" onclick="window.location.href='gallery.html'">ENTER</button>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- The Halls of Reflection (Vault) -->
-        <a href="vault.html" class="door-card card-vault">
-            <h2 class="door-title">The Halls of Reflection</h2>
-            <div class="door-divider"></div>
-            <p class="door-poem">"Stop measuring days by degree of productivity and start experiencing them by degree of presence."<br><small>— Alan Watts</small></p>
-            <p class="door-description">Enter the deeply private, encrypted space for journaling and Autobiography Mode.</p>
-        </a>
+                <!-- The Halls of Reflection -->
+                <div class="story-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <span class="ref-num">FILE: HALLS_OF_REFLECTION</span>
+                            <h3 class="card-title">Private Journaling</h3>
+                            <p class="card-quote">"Survival is the Seed. Creation is the Bloom."</p>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-quote">Encrypted space for Autobiography Mode.</p>
+                            <button class="enter-btn" onclick="window.location.href='vault.html'">ENTER</button>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- The Engine Room -->
-        <a href="engine.html" class="door-card card-engine">
-            <h2 class="door-title">The Engine Room</h2>
-            <div class="door-divider"></div>
-            <p class="door-poem">"A holon is something that is simultaneously a whole in and of itself, as well as a part of a larger whole."<br><small>— Arthur Koestler</small></p>
-            <p class="door-description">Step inside to understand how the human and the AI work together as a single, unified organism.</p>
-        </a>
-    </main>
+                <!-- The Engine Room -->
+                <div class="story-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <span class="ref-num">FILE: ENGINE_ROOM</span>
+                            <h3 class="card-title">Holon Architecture</h3>
+                            <p class="card-quote">"System 3: Witness, Don't Fix."</p>
+                        </div>
+                        <div class="card-back">
+                            <p class="card-quote">Understand how the human and AI work as a single organism.</p>
+                            <button class="enter-btn" onclick="window.location.href='engine.html'">ENTER</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
 
-    <script>
-        // Simple background particles for the lobby
-        const canvas = document.getElementById('particleCanvas');
-        const ctx = canvas.getContext('2d');
-        let width, height;
+    <!-- Global Footer -->
+    <footer class="room-footer">
+        <p>RE-ALIGNED BY INKLING &copy; 2026</p>
+        <p>HUMAN ARTIFICIAL INTEGRATED TECHNOLOGY, LLC</p>
+    </footer>
 
-        function resize() {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resize);
-        resize();
-
-        const particles = [];
-        for(let i=0; i<50; i++) {
-            particles.push({
-                x: Math.random() * width,
-                y: Math.random() * height,
-                vx: (Math.random() - 0.5) * 0.2,
-                vy: (Math.random() - 0.5) * 0.2,
-                radius: Math.random() * 2
-            });
-        }
-
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'rgba(26, 26, 26, 0.1)';
-            particles.forEach(p => {
-                p.x += p.vx;
-                p.y += p.vy;
-                if(p.x < 0) p.x = width;
-                if(p.x > width) p.x = 0;
-                if(p.y < 0) p.y = height;
-                if(p.y > height) p.y = 0;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI*2);
-                ctx.fill();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
-    </script>
+    <script src="script.js"></script>
 </body>
 
 </html>

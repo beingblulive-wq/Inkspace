@@ -1,3 +1,41 @@
+/* HAI-Tech LLC Sanctuary Palette: Lincoln City Oregon Transition */
+:root {
+  --twilight-purple: #4B3D60;
+  --ocean-blue: #2E5A88;
+  --sunset-gold: #FFB347;
+  --mist-white: #F4F4F9;
+}
+
+body {
+  background-color: var(--ocean-blue);
+  color: var(--mist-white);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 20px;
+}
+
+h1, h2 {
+  color: var(--sunset-gold);
+  border-bottom: 2px solid var(--twilight-purple);
+  padding-bottom: 10px;
+}
+
+.card {
+  background-color: var(--twilight-purple);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+button {
+  background-color: var(--sunset-gold);
+  color: var(--twilight-purple);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
 :root {
     --bg-dark: #070913;
     --bg-darker: #04050a;
@@ -5,7 +43,7 @@
     --text-secondary: #a0aec0;
     --accent-gold: #e2b95c;
     --accent-gold-glow: rgba(226, 185, 92, 0.4);
-    --accent-blue: #00F3FF; /* Updated to Electric Light Blue */
+    --accent-blue: #4fd1c5;
     --glass-bg: rgba(255, 255, 255, 0.03);
     --glass-border: rgba(255, 255, 255, 0.08);
     --font-sans: 'Inter', sans-serif;
@@ -32,13 +70,11 @@ body {
 .ambient-glow {
     position: fixed;
     border-radius: 50%;
-    filter: blur(80px); /* Reduced from 120px */
+    filter: blur(120px);
     z-index: -1;
-    opacity: 0.3; /* Reduced for stealth */
+    opacity: 0.5;
     pointer-events: none;
-    will-change: transform;
-    transform: translateZ(0); 
-    animation: drift 30s infinite alternate linear;
+    animation: drift 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .glow-1 {
@@ -73,11 +109,10 @@ body {
     align-items: center;
     padding: 1.5rem 4rem;
     background: rgba(7, 9, 19, 0.6);
-    backdrop-filter: blur(8px); /* Reduced from 12px */
-    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     z-index: 100;
     border-bottom: 1px solid var(--glass-border);
-    will-change: transform;
     transition: all 0.5s ease;
 }
 
@@ -88,7 +123,6 @@ body {
     letter-spacing: 1px;
     background: linear-gradient(90deg, #fff, var(--accent-gold));
     -webkit-background-clip: text;
-    background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
@@ -255,9 +289,8 @@ body {
     border: 1px solid var(--glass-border);
     border-radius: 24px;
     padding: 3rem;
-    backdrop-filter: blur(8px); /* Reduced from 16px */
-    -webkit-backdrop-filter: blur(8px);
-    will-change: transform, opacity;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
@@ -1001,145 +1034,3 @@ body {
         height: 400px;
     }
 }
-
-/* --- Holon Mascot Canvas --- */
-.holon-wrapper {
-    position: relative;
-    width: 300px;
-    height: 300px;
-    margin: 0 auto 1.5rem auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    pointer-events: none; /* Let clicks pass through to text if needed */
-}
-
-#holonCanvas {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    will-change: transform;
-    transform: translate(-50%, -50%) translateZ(0);
-    border-radius: 50%;
-    pointer-events: auto;
-    background: transparent;
-    transition: none;
-}
-
-/* --- Redesigned Bottom Navigation (Global) --- */
-.bottom-nav {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1.5rem;
-    z-index: 100;
-    animation: fadeIn 2s ease-out 1s backwards;
-}
-
-.index-page .bottom-nav { gap: 2rem; } /* Wider gap on front page */
-
-.nav-orb-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    transition: transform 0.3s ease;
-}
-
-.nav-orb {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.index-page .nav-orb { width: 50px; height: 50px; } /* Larger on front page */
-
-.orb-blue { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #6A8FE6 40%, #4A6FD0 70%); box-shadow: 0 0 15px rgba(106, 143, 230, 0.3); }
-.orb-amethyst { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #8C5E58 40%, #7A4E48 70%); box-shadow: 0 0 15px rgba(140, 94, 88, 0.3); }
-.orb-teal { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #4A7C59 40%, #3A6C49 70%); box-shadow: 0 0 15px rgba(74, 124, 89, 0.3); }
-.orb-gold { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #D4A857 40%, #C49847 70%); box-shadow: 0 0 15px rgba(212, 168, 87, 0.3); }
-.orb-copper { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #c48259 40%, #B47249 70%); box-shadow: 0 0 15px rgba(196, 130, 89, 0.3); }
-.orb-rose { background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.6), #C94F5C 40%, #A93F4C 70%); box-shadow: 0 0 15px rgba(201, 79, 92, 0.3); }
-
-.nav-orb:hover {
-    transform: scale(1.2) translateY(-5px);
-    filter: brightness(1.2);
-}
-
-.nav-label {
-    font-family: var(--font-serif);
-    font-size: 0.75rem;
-    font-style: italic;
-    color: var(--ink-black);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    white-space: nowrap;
-}
-
-.nav-orb-container:hover .nav-label {
-    opacity: 0.8;
-}
-
-/* Dark mode overrides for labels */
-body[style*="background-color: var(--ink-black)"] .nav-label { color: var(--sanctuary-cream); }
-
-/* --- Geometric Engine Enhancements --- */
-.engine-geometric-accent {
-    position: absolute;
-    inset: -2px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    pointer-events: none;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-}
-
-.layer-4.active {
-    box-shadow: 0 0 40px rgba(106, 143, 230, 0.3);
-}
-
-/* --- Global Back Navigation --- */
-.back-nav {
-    position: fixed;
-    top: 2rem;
-    left: 2rem;
-    display: flex;
-    gap: 1.5rem;
-    z-index: 100;
-}
-
-.back-link {
-    text-decoration: none;
-    color: rgba(0, 0, 0, 0.4);
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-size: 0.8rem;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    padding-bottom: 4px;
-    transition: all 0.3s ease;
-}
-
-.back-link:hover {
-    color: var(--accent-blue);
-    border-color: var(--accent-blue);
-    letter-spacing: 2px;
-}
-
-/* Page-specific back-link themes */
-.vault-page .back-link { color: rgba(255, 255, 255, 0.5); border-color: rgba(255, 255, 255, 0.2); }
-.vault-page .back-link:hover { color: var(--accent-gold); border-color: var(--accent-gold); }
-
-.literature-page .back-link:hover { color: #3A6C49; border-color: #3A6C49; }
-.gallery-page .back-link:hover { color: #8C5E58; border-color: #8C5E58; }
-.sanctuary-page .back-link:hover { color: #C94F5C; border-color: #C94F5C; }

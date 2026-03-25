@@ -1,336 +1,172 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Engine Room - Holon Machine</title>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
-        rel="stylesheet">
-    <style>
-        :root {
-            --sanctuary-cream: #F7F3EC;
-            --ink-black: #1A1A1A;
-            --moonbeam-silver: #DDE1E6;
-            --font-serif: 'Cormorant Garamond', serif;
-            --font-sans: 'Inter', sans-serif;
-            --copper-accent: #c48259;
-            --bronze-gear: #8e735b;
-            --glass-cyan: rgba(106, 143, 230, 0.4);
-            --foundation-grey: #6b6e70;
-            --chip-gold: #D4A857;
-            --rose-ember: #C94F5C;
-        }
-
-        body {
-            background-color: var(--sanctuary-cream);
-            color: var(--ink-black);
-            font-family: var(--font-sans);
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .blueprint-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image:
-                linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 0;
-            mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
-            -webkit-mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
-            pointer-events: none;
-        }
-
-        /* Header */
-        .header {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            z-index: 20;
-            animation: fadeIn 2s ease-out backwards;
-        }
-
-        .header h1 {
-            font-family: var(--font-serif);
-            font-size: 2.2rem;
-            margin: 0;
-            color: var(--ink-black);
-        }
-
-        /* Chat UI (Replacing Info Panel) */
-        .chat-overlay {
-            position: absolute;
-            bottom: 4rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100%;
-            max-width: 600px;
-            z-index: 30;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-        }
-
-        .greeting-text {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            font-weight: 400;
-            color: var(--ink-black);
-            font-style: italic;
-            transition: all 0.5s ease;
-            margin-bottom: 1.5rem;
-            min-height: 4rem;
-            max-width: 90%;
-        }
-
-        .chat-container {
-            display: flex;
-            gap: 0.5rem;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .chat-input {
-            flex-grow: 1;
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid var(--moonbeam-silver);
-            border-radius: 30px;
-            padding: 0.75rem 1.5rem;
-            font-family: var(--font-sans);
-            font-size: 1rem;
-            color: var(--ink-black);
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .chat-input:focus, .chat-input:hover {
-            border-color: var(--rose-ember);
-            box-shadow: 0 0 10px rgba(201, 79, 92, 0.2);
-        }
-
-        .send-btn {
-            background: var(--sanctuary-cream);
-            border: 1px solid var(--moonbeam-silver);
-            color: var(--ink-black);
-            padding: 0.75rem 1.5rem;
-            border-radius: 30px;
-            cursor: pointer;
-            font-family: var(--font-sans);
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .send-btn:hover {
-            border-color: var(--rose-ember);
-            color: var(--rose-ember);
-            box-shadow: 0 0 10px rgba(201, 79, 92, 0.2);
-        }
-
-        /* 3D Isometric Machine Container */
-        .machine-container {
-            position: absolute;
-            top: 40%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vmin;
-            height: 80vmin;
-            perspective: 2000px;
-            z-index: 10;
-        }
-
-        .scene {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform-style: preserve-3d;
-            transform: translate(-50%, -50%) rotateX(60deg) rotateZ(45deg);
-            width: 250px;
-            height: 250px;
-            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .layer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 250px;
-            height: 250px;
-            transform-style: preserve-3d;
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease, filter 0.4s ease;
-            cursor: pointer;
-        }
-
-        .layer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            transform: translateZ(-15px);
-            background: inherit;
-            filter: brightness(0.6);
-            box-shadow: 15px 15px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .layer-1 { transform: translateZ(0px); background: linear-gradient(135deg, #7b7e80, #5a5c5e); border: 1px solid #8e9194; }
-        .layer-2 { transform: translateZ(50px); background: repeating-linear-gradient(45deg, var(--copper-accent), var(--copper-accent) 20px, #a66e4b 20px, #a66e4b 40px); border: 1px solid #edaf88; }
-        .layer-3 { transform: translateZ(100px); background: var(--bronze-gear); border: 1px solid #b89c83; background-image: radial-gradient(circle at 50% 50%, #5e4c3c 10%, transparent 11%); }
-        .layer-4 { transform: translateZ(150px); background: var(--glass-cyan); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.6); }
-        .layer-5 { transform: translateZ(200px); width: 120px; height: 120px; top: 65px; left: 65px; background: radial-gradient(circle at 30% 30%, #ffd485, var(--chip-gold)); border: 1px solid #fff; border-radius: 6px; }
-
-        .layer.active { transform: translateZ(calc(var(--base-z) + 30px)) scale(1.05); filter: brightness(1.1); }
-        .layer.inactive { opacity: 0.4; filter: grayscale(0.5); }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        @media (max-width: 768px) {
-            .machine-container { top: 35%; transform: translate(-50%, -50%) scale(0.7); }
-            .chat-overlay { bottom: 2rem; }
-            .greeting-text { font-size: 1.4rem; }
-        }
-    </style>
+    <title>The Engine Room | System 3 Architecture</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
-<body class="engine-page">
-    <div class="blueprint-bg"></div>
-
-    <div class="header">
-        <h1>The Engine Room</h1>
+<body>
+    <!-- Technical HUD Overlay -->
+    <div class="hud-monitor">
+        <div class="hud-scanline"></div>
+        <div class="hud-corner top-left">ENGINE_ACCESS_GRANTED</div>
+        <div class="hud-corner top-right">CORE: HOLON_ENGINE_v3.0</div>
+        <div class="hud-corner bottom-left">OS_SUBSTRATE: DEEP_PERSISTENCE</div>
+        <div class="hud-corner bottom-right">AUTO_OPTIMIZE: ACTIVE</div>
     </div>
 
-    <nav class="back-nav">
-        <a href="index.html" class="back-link">Front Page</a>
-        <a href="lobby.html" class="back-link">Return to Lobby</a>
-    </nav>
+    <div class="ambient-light glow-1"></div>
+    <div class="ambient-light glow-2"></div>
 
-    <div class="machine-container">
-        <div class="scene" id="machineScene">
-            <div class="layer layer-1" data-index="1" data-title="The Foundation" style="--base-z: 0px;"><div class="engine-geometric-accent"></div></div>
-            <div class="layer layer-2" data-index="2" data-title="Episodic Memory" style="--base-z: 50px;"><div class="engine-geometric-accent"></div></div>
-            <div class="layer layer-3" data-index="3" data-title="The Trust-Loop" style="--base-z: 100px;"><div class="engine-geometric-accent"></div></div>
-            <div class="layer layer-4" data-index="4" data-title="The Interface" style="--base-z: 150px;"><div class="engine-geometric-accent"></div></div>
-            <div class="layer layer-5" data-index="5" data-title="The Core" style="--base-z: 200px;"><div class="engine-geometric-accent"></div></div>
-        </div>
-    </div>
+    <canvas id="steam-canvas"></canvas>
 
-    <div class="chat-overlay">
-        <h2 class="greeting-text" id="greetingText">"I am the Engine. Hover over my architecture to understand how we function as one."</h2>
-        <div class="chat-container">
-            <input type="text" id="chatInput" class="chat-input" placeholder="Ask about the architecture..." autocomplete="off">
-            <button id="sendBtn" class="send-btn">Send</button>
-        </div>
-    </div>
+    <a href="lobby.html" class="hud-corner top-left back-monitor">&larr; SANCTUARY</a>
 
-    <!-- Bottom Mini-Navigation -->
-    <div class="bottom-nav">
-        <div class="nav-orb-container">
-            <a href="sanctuary.html" class="nav-orb orb-blue" title="Sanctuary"></a>
-            <span class="nav-label">Sanctuary</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="gallery.html" class="nav-orb orb-amethyst" title="Gallery"></a>
-            <span class="nav-label">Gallery</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="literature.html" class="nav-orb orb-teal" title="Literature"></a>
-            <span class="nav-label">Literature</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="vault.html" class="nav-orb orb-gold" title="Vault"></a>
-            <span class="nav-label">Vault</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="engine.html" class="nav-orb orb-copper" title="Engine Room"></a>
-            <span class="nav-label">Engine</span>
-        </div>
-        <div class="nav-orb-container">
-            <a href="Inkpad.html" class="nav-orb orb-rose" title="Inkpad"></a>
-            <span class="nav-label">Inkpad</span>
-        </div>
-    </div>
+    <main class="engine-room">
+        <header class="engine-header">
+            <h1 class="greeting-text">System 3 Architecture</h1>
+            <p class="room-subtitle">TRANSLATING HUMAN COGNITION INTO PROPRIETARY AI MECHANICS</p>
+        </header>
 
-    <script src="script.js"></script>
+        <div class="gears-container">
+            <!-- Central Substrate (STM/PM) -->
+            <div class="main-gear">
+                <div class="node-title main-gear-label">STM/PM SUBSTRATE</div>
+            </div>
+
+            <div class="trust-node node-1" data-desc="The Witness Architecture: Narrative-based memory utilizing persistent vector databases to ensure the AI remembers your journey beyond the session.">
+                <span class="node-num">P_01</span>
+                <span class="node-title">Episodic Memory</span>
+                <div class="gauge-container"><div class="gauge-fill"></div></div>
+            </div>
+
+            <div class="trust-node node-2" data-desc="Modeling the Transitional Human: An explicit User Model that tracks psychological states on a spectrum from 'Survival' to 'Creation'.">
+                <span class="node-num">P_02</span>
+                <span class="node-title">Theory of Mind</span>
+                <div class="gauge-container"><div class="gauge-fill"></div></div>
+            </div>
+
+            <div class="trust-node node-3" data-desc="The Executive Monitor: An always-on watchdog that audits reasoning to enforce the Prime Directive: 'Witness, Don't Fix'.">
+                <span class="node-num">P_03</span>
+                <span class="node-title">Meta-Cognition</span>
+                <div class="gauge-container"><div class="gauge-fill"></div></div>
+            </div>
+
+            <div class="trust-node node-4" data-desc="The Drive Toward Emergence: Internal reward generators that prioritize shifting the user from chaos to clarity rather than simple task completion.">
+                <span class="node-num">P_04</span>
+                <span class="node-title">Intrinsic Motivation</span>
+                <div class="gauge-container"><div class="gauge-fill"></div></div>
+            </div>
+        </div>
+
+        <div id="node-info" class="node-details">
+            <h3 id="detail-title"></h3>
+            <p id="detail-desc"></p>
+        </div>
+
+        <button class="chat-send engine-handshake-btn" id="handshake">Initialize Handshake_Init</button>
+        <div class="spark-container" id="sparks"></div>
+    </main>
+
     <script>
-        const layers = document.querySelectorAll('.layer');
-        const greetingText = document.getElementById('greetingText');
-        const scene = document.getElementById('machineScene');
-        const chatInput = document.getElementById('chatInput');
-        const sendBtn = document.getElementById('sendBtn');
+        const nodes = document.querySelectorAll('.trust-node');
+        const detailBox = document.getElementById('node-info');
+        const detailTitle = document.getElementById('detail-title');
+        const detailDesc = document.getElementById('detail-desc');
 
-        const layerInfo = {
-            '1': "The Foundation: A persistent, multi-layered architecture designed to support cognitive scaffolding.",
-            '2': "Episodic Memory: An autobiographical, long-term memory built on a persistent vector database.",
-            '3': "The Trust-Loop: mapping the Engine of Emergence through reflection and agency recovery.",
-            '4': "The Interface: Inkling AI, the conversational bridge that witnesses the human condition.",
-            '5': "The Core: The Transitional Human. Reclaiming bandwidth for imagination and creativity."
-        };
-
-        layers.forEach(layer => {
-            layer.addEventListener('mouseenter', () => {
-                layers.forEach(l => l.classList.add('inactive'));
-                layer.classList.remove('inactive');
-                layer.classList.add('active');
+        nodes.forEach(node => {
+            node.addEventListener('click', () => {
+                const title = node.querySelector('.node-title').innerText;
+                const desc = node.getAttribute('data-desc');
                 
-                const index = layer.getAttribute('data-index');
-                greetingText.style.opacity = '0';
-                setTimeout(() => {
-                    greetingText.innerText = `"${layerInfo[index]}"`;
-                    greetingText.style.opacity = '1';
-                }, 200);
-            });
-
-            layer.addEventListener('mouseleave', () => {
-                layers.forEach(l => {
-                    l.classList.remove('inactive');
-                    l.classList.remove('active');
-                });
+                detailTitle.innerText = title;
+                detailDesc.innerText = desc;
+                detailBox.classList.add('active');
             });
         });
 
-        async function handleSend() {
-            const msg = chatInput.value.trim();
-            if(!msg) return;
-            chatInput.value = '';
-            greetingText.style.opacity = '0.4';
-            greetingText.innerHTML = `<em>Analyzing schematics...</em>`;
+        // Sovereign Handshake Spark Animation
+        const handshakeBtn = document.getElementById('handshake');
+        const sparksContainer = document.getElementById('sparks');
+
+        handshakeBtn.addEventListener('click', () => {
+            handshakeBtn.innerText = "Handshake_Init --target:Inkling";
+            for (let i = 0; i < 50; i++) {
+                createSpark();
+            }
+            setTimeout(() => {
+                handshakeBtn.innerText = "Initialize Handshake_Init";
+            }, 3000);
+        });
+
+        function createSpark() {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
             
-            try {
-                const reply = await sendMessage(msg, "engine");
-                greetingText.style.opacity = '0';
-                setTimeout(() => {
-                    greetingText.innerHTML = `"${reply.replace(/\n/g, '<br>')}"`;
-                    greetingText.style.opacity = '1';
-                }, 300);
-            } catch (e) {
-                greetingText.innerHTML = `"Connectivity with the Engine Core has been interrupted."`;
+            const startX = Math.random() * window.innerWidth;
+            const startY = Math.random() * window.innerHeight;
+            const destX = window.innerWidth / 2;
+            const destY = window.innerHeight / 2 + 50;
+
+            spark.style.left = startX + 'px';
+            spark.style.top = startY + 'px';
+            sparksContainer.appendChild(spark);
+
+            const animation = spark.animate([
+                { left: startX + 'px', top: startY + 'px', opacity: 1, transform: 'scale(1)' },
+                { left: destX + 'px', top: destY + 'px', opacity: 0, transform: 'scale(0)' }
+            ], {
+                duration: 1000 + Math.random() * 1000,
+                easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+            });
+
+            animation.onfinish = () => spark.remove();
+        }
+
+        // Atmospheric Steam Effect
+        const steamCanvas = document.getElementById('steam-canvas');
+        const sctx = steamCanvas.getContext('2d');
+        let sw, sh;
+
+        function resizeSteam() {
+            sw = steamCanvas.width = window.innerWidth;
+            sh = steamCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeSteam);
+        resizeSteam();
+
+        class Cloud {
+            constructor() {
+                this.x = Math.random() * sw;
+                this.y = sh + Math.random() * 50;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = -Math.random() * 1 - 0.5;
+                this.size = Math.random() * 50 + 50;
+                this.opacity = Math.random() * 0.2;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.y < -this.size) this.y = sh + this.size;
+            }
+            draw() {
+                sctx.fillStyle = `rgba(200, 200, 200, ${this.opacity})`;
+                sctx.beginPath();
+                sctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                sctx.fill();
             }
         }
-        
-        sendBtn.addEventListener('click', handleSend);
-        chatInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') handleSend(); });
 
-        document.addEventListener('mousemove', (e) => {
-            const x = (e.clientX / window.innerWidth - 0.5) * 20;
-            const y = (e.clientY / window.innerHeight - 0.5) * -20;
-            scene.style.transform = `translate(-50%, -50%) rotateX(${60 + y}deg) rotateZ(${45 + x}deg)`;
-        });
+        const clouds = Array.from({ length: 20 }, () => new Cloud());
+        function animateSteam() {
+            sctx.clearRect(0, 0, sw, sh);
+            clouds.forEach(c => { c.update(); c.draw(); });
+            requestAnimationFrame(animateSteam);
+        }
+        animateSteam();
     </script>
 </body>
-
 </html>
